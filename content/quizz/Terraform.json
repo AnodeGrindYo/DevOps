@@ -1,0 +1,175 @@
+{
+  "title": "Quizz sur Terraform",
+  "questions": [
+    {
+      "question": "Qu'est-ce que Terraform ?",
+      "choices": [
+        "Un outil d'infrastructure as code (IaC)",
+        "Un langage de programmation",
+        "Un service de gestion de bases de données",
+        "Un orchestrateur de conteneurs"
+      ],
+      "answer": "Un outil d'infrastructure as code (IaC)",
+      "explanation": "Terraform est un outil d'Infrastructure as Code (IaC) développé par HashiCorp permettant d'automatiser le déploiement d'infrastructure."
+    },
+    {
+      "question": "Quel langage Terraform utilise-t-il pour ses configurations ?",
+      "choices": [
+        "HCL (HashiCorp Configuration Language)",
+        "YAML",
+        "JSON",
+        "Python"
+      ],
+      "answer": "HCL (HashiCorp Configuration Language)",
+      "explanation": "Terraform utilise le langage HCL pour décrire l'infrastructure de manière déclarative."
+    },
+    {
+      "question": "Quelle commande permet d'initialiser un projet Terraform ?",
+      "choices": [
+        "terraform init",
+        "terraform plan",
+        "terraform apply",
+        "terraform validate"
+      ],
+      "answer": "terraform init",
+      "explanation": "La commande `terraform init` permet d'initialiser un projet Terraform et de télécharger les plugins nécessaires."
+    },
+    {
+      "question": "Quelle commande permet de vérifier la validité d'un fichier de configuration Terraform ?",
+      "choices": [
+        "terraform validate",
+        "terraform check",
+        "terraform plan",
+        "terraform apply"
+      ],
+      "answer": "terraform validate",
+      "explanation": "La commande `terraform validate` vérifie si les fichiers de configuration Terraform sont syntaxiquement corrects."
+    },
+    {
+      "question": "Quel fichier Terraform stocke l'état de l'infrastructure ?",
+      "choices": [
+        "terraform.tfstate",
+        "terraform.config",
+        "terraform.yaml",
+        "terraform.log"
+      ],
+      "answer": "terraform.tfstate",
+      "explanation": "Le fichier `terraform.tfstate` stocke l'état actuel de l'infrastructure gérée par Terraform."
+    },
+    {
+      "question": "Quel est le rôle des providers dans Terraform ?",
+      "choices": [
+        "Permettre l'interaction avec différentes plateformes cloud",
+        "Stocker les logs des exécutions",
+        "Gérer la configuration réseau",
+        "Assurer la réplication des bases de données"
+      ],
+      "answer": "Permettre l'interaction avec différentes plateformes cloud",
+      "explanation": "Les providers dans Terraform permettent d'interagir avec différentes plateformes cloud comme AWS, Azure, et GCP."
+    },
+    {
+      "question": "Quelle commande permet d'afficher les modifications prévues avant de les appliquer ?",
+      "choices": [
+        "terraform plan",
+        "terraform apply",
+        "terraform show",
+        "terraform init"
+      ],
+      "answer": "terraform plan",
+      "explanation": "La commande `terraform plan` affiche un aperçu des modifications qui seront effectuées avant leur application."
+    },
+    {
+      "question": "Comment paramétrer une ressource en fonction d'une variable dans Terraform ?",
+      "choices": [
+        "Utiliser `var.nom_de_variable`",
+        "Utiliser `$nom_de_variable`",
+        "Utiliser `terraform.variable.nom_de_variable`",
+        "Utiliser `env.nom_de_variable`"
+      ],
+      "answer": "Utiliser `var.nom_de_variable`",
+      "explanation": "Dans Terraform, on fait référence aux variables en utilisant `var.nom_de_variable`."
+    },
+    {
+      "question": "Quelle commande permet de détruire toutes les ressources gérées par Terraform ?",
+      "choices": [
+        "terraform destroy",
+        "terraform delete",
+        "terraform reset",
+        "terraform remove"
+      ],
+      "answer": "terraform destroy",
+      "explanation": "La commande `terraform destroy` supprime toutes les ressources gérées par Terraform."
+    },
+    {
+      "question": "Quelle est la meilleure pratique pour éviter de perdre l'état Terraform ?",
+      "choices": [
+        "Stocker le fichier `terraform.tfstate` dans un backend distant comme S3",
+        "Supprimer le fichier `terraform.tfstate` après chaque exécution",
+        "Ne pas utiliser de fichier `terraform.tfstate`",
+        "Exécuter `terraform destroy` après chaque modification"
+      ],
+      "answer": "Stocker le fichier `terraform.tfstate` dans un backend distant comme S3",
+      "explanation": "Stocker l'état Terraform dans un backend distant permet de collaborer en toute sécurité et d'éviter la perte des données d'infrastructure."
+    },
+    {
+      "question": "Quel est le rôle des outputs dans Terraform ?",
+      "choices": ["Afficher des informations après l'exécution", "Stocker l'état de l'infrastructure", "Créer des ressources supplémentaires", "Automatiser les mises à jour de Terraform"],
+      "answer": "Afficher des informations après l'exécution",
+      "explanation": "Les outputs permettent d'afficher des valeurs utiles après l'exécution, comme l'IP d'une machine virtuelle."
+    },
+    {
+      "question": "Comment stocker l'état Terraform de manière sécurisée pour un projet collaboratif ?",
+      "choices": ["Utiliser un backend distant comme AWS S3", "Stocker le fichier `terraform.tfstate` sur chaque machine locale", "Ne pas sauvegarder l'état", "Utiliser un fichier texte partagé par e-mail"],
+      "answer": "Utiliser un backend distant comme AWS S3",
+      "explanation": "L'utilisation d'un backend distant permet de centraliser et sécuriser l'état Terraform tout en évitant les conflits."
+    },
+    {
+      "question": "Quelle commande permet de récupérer les valeurs des outputs après application de la configuration Terraform ?",
+      "choices": ["terraform output", "terraform show", "terraform logs", "terraform describe"],
+      "answer": "terraform output",
+      "explanation": "La commande `terraform output` affiche les valeurs des outputs définis dans la configuration Terraform."
+    },
+    {
+      "question": "Quel est l'avantage principal des modules Terraform ?",
+      "choices": ["Réutiliser du code pour standardiser les déploiements", "Accélérer l'exécution des commandes Terraform", "Réduire la consommation CPU", "Éviter l'utilisation de variables"],
+      "answer": "Réutiliser du code pour standardiser les déploiements",
+      "explanation": "Les modules permettent d'organiser et réutiliser des configurations Terraform, ce qui facilite la gestion d'infrastructure."
+    },
+    {
+      "question": "Comment appliquer des modifications sur l'infrastructure en utilisant Terraform ?",
+      "choices": ["terraform apply", "terraform update", "terraform execute", "terraform deploy"],
+      "answer": "terraform apply",
+      "explanation": "La commande `terraform apply` applique les modifications définies dans les fichiers de configuration à l'infrastructure."
+    },
+    {
+      "question": "Quelle section permet de déclarer un module dans Terraform ?",
+      "choices": ["module", "resource", "provider", "variable"],
+      "answer": "module",
+      "explanation": "La section `module` permet d'inclure et d'utiliser un module Terraform dans un projet."
+    },
+    {
+      "question": "Quelle commande Terraform permet d'afficher l'état actuel des ressources gérées ?",
+      "choices": ["terraform show", "terraform describe", "terraform output", "terraform state list"],
+      "answer": "terraform show",
+      "explanation": "La commande `terraform show` affiche l'état actuel des ressources définies dans Terraform."
+    },
+    {
+      "question": "Quel est le rôle des variables dans Terraform ?",
+      "choices": ["Paramétrer les ressources de manière dynamique", "Remplacer le fichier `terraform.tfstate`", "Supprimer les anciennes configurations", "Automatiser les mises à jour du code"],
+      "answer": "Paramétrer les ressources de manière dynamique",
+      "explanation": "Les variables permettent de rendre la configuration flexible et réutilisable en paramétrant dynamiquement les ressources."
+    },
+    {
+      "question": "Comment éviter d'exposer des informations sensibles dans les fichiers Terraform ?",
+      "choices": ["Utiliser des variables d'environnement ou des solutions comme HashiCorp Vault", "Stocker les informations dans un fichier texte", "Ne pas utiliser de variables", "Ajouter directement les clés API dans le code"],
+      "answer": "Utiliser des variables d'environnement ou des solutions comme HashiCorp Vault",
+      "explanation": "Terraform recommande d'utiliser des variables d'environnement ou des outils comme HashiCorp Vault pour protéger les données sensibles."
+    },
+    {
+      "question": "Quelle est la meilleure pratique avant d'exécuter `terraform apply` ?",
+      "choices": ["Exécuter `terraform plan` pour vérifier les changements", "Supprimer le fichier `terraform.tfstate`", "Relancer le serveur Terraform", "Modifier manuellement l'état Terraform"],
+      "answer": "Exécuter `terraform plan` pour vérifier les changements",
+      "explanation": "Il est recommandé d'exécuter `terraform plan` avant `terraform apply` pour visualiser les modifications qui seront appliquées."
+    }
+  ]
+}

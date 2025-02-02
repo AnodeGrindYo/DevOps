@@ -1,0 +1,101 @@
+{
+  "title": "Quizz sur la gestion de code source et workflows",
+  "questions": [
+    {
+      "question": "Quelle commande permet d'initialiser un dépôt Git localement ?",
+      "choices": ["git start", "git init", "git create", "git new"],
+      "answer": "git init",
+      "explanation": "La commande `git init` permet d'initialiser un dépôt Git localement."
+    },
+    {
+      "question": "Quelle commande permet de cloner un dépôt distant ?",
+      "choices": ["git clone", "git copy", "git fetch", "git pull"],
+      "answer": "git clone",
+      "explanation": "La commande `git clone URL` permet de cloner un dépôt distant sur votre machine."
+    },
+    {
+      "question": "Quelle commande permet d'ajouter un fichier au suivi Git ?",
+      "choices": ["git add", "git track", "git include", "git stage"],
+      "answer": "git add",
+      "explanation": "La commande `git add fichier` permet d'ajouter un fichier au suivi Git avant de le committer."
+    },
+    {
+      "question": "Quelle commande permet de créer un commit ?",
+      "choices": ["git commit -m", "git save", "git snapshot", "git push"],
+      "answer": "git commit -m",
+      "explanation": "La commande `git commit -m 'message'` permet d'enregistrer les modifications dans un commit."
+    },
+    {
+      "question": "Quelle commande permet de voir l'état actuel du dépôt Git ?",
+      "choices": ["git status", "git check", "git log", "git branch"],
+      "answer": "git status",
+      "explanation": "La commande `git status` affiche les fichiers modifiés et les fichiers en attente d'ajout ou de commit."
+    },
+    {
+      "question": "Quelle commande permet de créer une nouvelle branche ?",
+      "choices": ["git branch", "git checkout", "git switch", "git create-branch"],
+      "answer": "git branch",
+      "explanation": "La commande `git branch nom_branche` permet de créer une nouvelle branche."
+    },
+    {
+      "question": "Quelle commande permet de changer de branche ?",
+      "choices": ["git switch", "git checkout", "git branch", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "Depuis Git 2.23, `git switch` peut être utilisé à la place de `git checkout` pour changer de branche."
+    },
+    {
+      "question": "Quelle commande permet de fusionner une branche dans une autre ?",
+      "choices": ["git merge", "git join", "git integrate", "git combine"],
+      "answer": "git merge",
+      "explanation": "La commande `git merge nom_branche` permet de fusionner une branche dans la branche courante."
+    },
+    {
+      "question": "Quelle commande permet de récupérer les modifications d'un dépôt distant ?",
+      "choices": ["git pull", "git fetch", "git sync", "git update"],
+      "answer": "git pull",
+      "explanation": "La commande `git pull` récupère et fusionne les modifications d'un dépôt distant."
+    },
+    {
+      "question": "Quelle est la différence entre `git pull` et `git fetch` ?",
+      "choices": ["git pull fusionne les modifications, git fetch les télécharge seulement", "git fetch et git pull sont identiques", "git fetch supprime les fichiers obsolètes", "git pull est plus rapide que git fetch"],
+      "answer": "git pull fusionne les modifications, git fetch les télécharge seulement",
+      "explanation": "La commande `git fetch` récupère les modifications distantes sans les fusionner, tandis que `git pull` les applique directement."
+    },
+    {
+      "question": "Quelle commande permet d'annuler les modifications d'un fichier avant un commit ?",
+      "choices": ["git reset", "git revert", "git stash", "git checkout"],
+      "answer": "git checkout",
+      "explanation": "La commande `git checkout -- fichier` permet d'annuler les modifications d'un fichier avant un commit."
+    },
+    {
+      "question": "Quelle commande permet de voir l'historique des commits ?",
+      "choices": ["git log", "git history", "git commits", "git show"],
+      "answer": "git log",
+      "explanation": "La commande `git log` affiche l'historique des commits d'un dépôt."
+    },
+    {
+      "question": "Quelle commande permet de créer un tag sur un commit ?",
+      "choices": ["git tag", "git label", "git mark", "git checkpoint"],
+      "answer": "git tag",
+      "explanation": "La commande `git tag nom_du_tag` permet de créer un tag sur un commit."
+    },
+    {
+      "question": "Quelle commande permet d'envoyer les tags vers un dépôt distant ?",
+      "choices": ["git push --tags", "git sync tags", "git publish-tags", "git send-tags"],
+      "answer": "git push --tags",
+      "explanation": "La commande `git push --tags` envoie les tags locaux vers le dépôt distant."
+    },
+    {
+      "question": "Quelle commande permet de supprimer un commit de l'historique ?",
+      "choices": ["git reset", "git remove", "git delete", "git erase"],
+      "answer": "git reset",
+      "explanation": "La commande `git reset --hard HEAD~1` permet de supprimer le dernier commit."
+    },
+    {
+      "question": "Quelle commande permet de sauvegarder temporairement des modifications sans les committer ?",
+      "choices": ["git stash", "git save", "git park", "git temp"],
+      "answer": "git stash",
+      "explanation": "La commande `git stash` permet de sauvegarder temporairement des modifications non committées."
+    }
+  ]
+}

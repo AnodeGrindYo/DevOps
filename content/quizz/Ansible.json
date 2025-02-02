@@ -1,0 +1,175 @@
+{
+  "title": "Quizz sur Ansible",
+  "questions": [
+    {
+      "question": "Qu'est-ce qu'Ansible ?",
+      "choices": [
+        "Un outil d'automatisation open-source",
+        "Un langage de programmation",
+        "Un système d'exploitation",
+        "Un serveur web"
+      ],
+      "answer": "Un outil d'automatisation open-source",
+      "explanation": "Ansible est un outil d'automatisation permettant la gestion de la configuration, le déploiement d’applications et l'orchestration d'infrastructure."
+    },
+    {
+      "question": "Quel est le format utilisé par Ansible pour ses configurations ?",
+      "choices": [
+        "YAML",
+        "JSON",
+        "XML",
+        "TOML"
+      ],
+      "answer": "YAML",
+      "explanation": "Ansible utilise le format YAML pour écrire ses playbooks et configurations."
+    },
+    {
+      "question": "Quel est l'avantage principal d'Ansible par rapport à d'autres outils d'automatisation ?",
+      "choices": [
+        "Il est sans agent",
+        "Il nécessite une installation complexe",
+        "Il fonctionne uniquement sur Windows",
+        "Il est basé sur Java"
+      ],
+      "answer": "Il est sans agent",
+      "explanation": "Ansible ne nécessite aucun agent sur les machines gérées, ce qui simplifie son déploiement et son utilisation."
+    },
+    {
+      "question": "Comment installer Ansible sur une distribution Debian/Ubuntu ?",
+      "choices": [
+        "sudo apt install ansible",
+        "yum install ansible",
+        "brew install ansible",
+        "pip install ansible"
+      ],
+      "answer": "sudo apt install ansible",
+      "explanation": "Sur Debian et Ubuntu, Ansible peut être installé via le gestionnaire de paquets avec la commande `sudo apt install ansible`."
+    },
+    {
+      "question": "Quel fichier définit les hôtes gérés par Ansible ?",
+      "choices": [
+        "L'inventaire",
+        "Le playbook",
+        "Le module",
+        "Le handler"
+      ],
+      "answer": "L'inventaire",
+      "explanation": "L'inventaire est un fichier qui définit les hôtes et groupes d'hôtes gérés par Ansible."
+    },
+    {
+      "question": "Quel est le rôle d'un playbook Ansible ?",
+      "choices": [
+        "Définir des tâches à exécuter sur les hôtes",
+        "Stocker les logs des exécutions Ansible",
+        "Créer une base de données",
+        "Générer automatiquement du code Python"
+      ],
+      "answer": "Définir des tâches à exécuter sur les hôtes",
+      "explanation": "Un playbook est un fichier YAML qui contient une série de tâches à exécuter sur des hôtes gérés par Ansible."
+    },
+    {
+      "question": "Quelle commande permet d'exécuter un playbook Ansible ?",
+      "choices": [
+        "ansible-playbook",
+        "ansible-run",
+        "ansible-exec",
+        "ansible-launch"
+      ],
+      "answer": "ansible-playbook",
+      "explanation": "La commande `ansible-playbook` permet d'exécuter un playbook Ansible."
+    },
+    {
+      "question": "Quel module Ansible permet de vérifier si un hôte est joignable ?",
+      "choices": [
+        "ping",
+        "shell",
+        "copy",
+        "command"
+      ],
+      "answer": "ping",
+      "explanation": "Le module `ping` d'Ansible permet de vérifier si un hôte est accessible via SSH."
+    },
+    {
+      "question": "Quelle section d'un playbook Ansible permet de notifier un handler ?",
+      "choices": [
+        "notify",
+        "trigger",
+        "listen",
+        "action"
+      ],
+      "answer": "notify",
+      "explanation": "La section `notify` d'Ansible permet d'exécuter un handler lorsqu'une tâche le requiert."
+    },
+    {
+      "question": "Quelle commande permet de crypter un fichier avec Ansible Vault ?",
+      "choices": [
+        "ansible-vault encrypt",
+        "ansible-vault secure",
+        "ansible-vault lock",
+        "ansible-vault hide"
+      ],
+      "answer": "ansible-vault encrypt",
+      "explanation": "La commande `ansible-vault encrypt` permet de chiffrer un fichier contenant des informations sensibles avec Ansible Vault."
+    },
+    {
+      "question": "Quel module Ansible permet de copier un fichier vers un hôte distant ?",
+      "choices": ["copy", "fetch", "synchronize", "template"],
+      "answer": "copy",
+      "explanation": "Le module `copy` permet de copier un fichier depuis la machine de contrôle vers un hôte distant."
+    },
+    {
+      "question": "Quel module Ansible permet d'exécuter des commandes shell sur un hôte distant ?",
+      "choices": ["command", "shell", "script", "raw"],
+      "answer": "shell",
+      "explanation": "Le module `shell` permet d'exécuter des commandes shell sur un hôte distant avec plus de flexibilité que `command`."
+    },
+    {
+      "question": "Comment exécuter un playbook Ansible avec un fichier d'inventaire spécifique ?",
+      "choices": ["ansible-playbook -i hosts.ini playbook.yml", "ansible-playbook playbook.yml", "ansible run playbook.yml", "ansible-exec playbook.yml -inventory hosts.ini"],
+      "answer": "ansible-playbook -i hosts.ini playbook.yml",
+      "explanation": "La commande `ansible-playbook -i hosts.ini playbook.yml` permet de spécifier un fichier d'inventaire lors de l'exécution d'un playbook."
+    },
+    {
+      "question": "Quel fichier est utilisé pour définir des variables par défaut dans un rôle Ansible ?",
+      "choices": ["defaults/main.yml", "vars/main.yml", "meta/main.yml", "tasks/main.yml"],
+      "answer": "defaults/main.yml",
+      "explanation": "Le fichier `defaults/main.yml` est utilisé pour définir des variables par défaut dans un rôle Ansible."
+    },
+    {
+      "question": "Quelle est la commande pour afficher les variables disponibles sur un hôte cible ?",
+      "choices": ["ansible -m setup", "ansible-inventory --list", "ansible -m debug", "ansible -m vars"],
+      "answer": "ansible -m setup",
+      "explanation": "La commande `ansible -m setup` permet d'afficher toutes les variables système disponibles sur un hôte cible."
+    },
+    {
+      "question": "Quelle est la commande permettant d'éditer un fichier chiffré avec Ansible Vault ?",
+      "choices": ["ansible-vault edit", "ansible-vault open", "ansible-vault modify", "ansible-vault decrypt"],
+      "answer": "ansible-vault edit",
+      "explanation": "La commande `ansible-vault edit` permet d'ouvrir et de modifier un fichier chiffré directement."
+    },
+    {
+      "question": "Dans quel fichier se trouvent les métadonnées d’un rôle Ansible ?",
+      "choices": ["meta/main.yml", "vars/main.yml", "tasks/main.yml", "handlers/main.yml"],
+      "answer": "meta/main.yml",
+      "explanation": "Le fichier `meta/main.yml` contient les métadonnées et dépendances d'un rôle Ansible."
+    },
+    {
+      "question": "Quelle commande permet de tester la syntaxe d'un playbook Ansible sans l'exécuter ?",
+      "choices": ["ansible-playbook --syntax-check playbook.yml", "ansible --check playbook.yml", "ansible-test playbook.yml", "ansible-validate playbook.yml"],
+      "answer": "ansible-playbook --syntax-check playbook.yml",
+      "explanation": "La commande `ansible-playbook --syntax-check playbook.yml` permet de vérifier la syntaxe du playbook sans l'exécuter."
+    },
+    {
+      "question": "Quel module Ansible est utilisé pour gérer les services système ?",
+      "choices": ["service", "systemctl", "supervisor", "upstart"],
+      "answer": "service",
+      "explanation": "Le module `service` permet de gérer les services système sur les hôtes distants."
+    },
+    {
+      "question": "Quel module Ansible est utilisé pour installer des paquets sur un système basé sur Debian ?",
+      "choices": ["apt", "yum", "dnf", "zypper"],
+      "answer": "apt",
+      "explanation": "Le module `apt` est utilisé pour gérer les paquets sur les systèmes Debian et Ubuntu."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "title": "Quizz sur les conteneurs et l'orchestration",
+  "questions": [
+    {
+      "question": "Qu'est-ce que Docker ?",
+      "choices": ["Un système d'exploitation", "Un outil de virtualisation", "Une plateforme de gestion de conteneurs", "Un service de stockage cloud"],
+      "answer": "Une plateforme de gestion de conteneurs",
+      "explanation": "Docker est une plateforme qui permet de créer, exécuter et gérer des conteneurs." 
+    },
+    {
+      "question": "Quelle commande permet de lister les conteneurs en cours d'exécution ?",
+      "choices": ["docker ps", "docker list", "docker show", "docker status"],
+      "answer": "docker ps",
+      "explanation": "La commande `docker ps` affiche la liste des conteneurs en cours d'exécution." 
+    },
+    {
+      "question": "Quel fichier est utilisé pour définir une image Docker personnalisée ?",
+      "choices": ["docker-compose.yml", "Dockerfile", "docker-config.json", "container.yaml"],
+      "answer": "Dockerfile",
+      "explanation": "Le `Dockerfile` contient les instructions pour construire une image Docker." 
+    },
+    {
+      "question": "Quelle commande permet de construire une image Docker ?",
+      "choices": ["docker build", "docker make", "docker create", "docker compile"],
+      "answer": "docker build",
+      "explanation": "La commande `docker build -t nom_image .` permet de construire une image Docker." 
+    },
+    {
+      "question": "Quelle commande permet d'exécuter un conteneur à partir d'une image ?",
+      "choices": ["docker start", "docker run", "docker exec", "docker launch"],
+      "answer": "docker run",
+      "explanation": "La commande `docker run nom_image` exécute un conteneur basé sur une image." 
+    },
+    {
+      "question": "Quel est l'outil d'orchestration de conteneurs le plus utilisé ?",
+      "choices": ["Docker Swarm", "Nomad", "Kubernetes", "Mesos"],
+      "answer": "Kubernetes",
+      "explanation": "Kubernetes est la solution la plus utilisée pour orchestrer et gérer les conteneurs en production." 
+    },
+    {
+      "question": "Que représente un Pod dans Kubernetes ?",
+      "choices": ["Un groupe de conteneurs", "Un fichier de configuration", "Un cluster Kubernetes", "Une image Docker"],
+      "answer": "Un groupe de conteneurs",
+      "explanation": "Un Pod est l'unité de base dans Kubernetes et peut contenir un ou plusieurs conteneurs." 
+    },
+    {
+      "question": "Quelle commande permet d'afficher les pods en cours d'exécution sur Kubernetes ?",
+      "choices": ["kubectl get pods", "kubectl list pods", "kubectl show pods", "kubectl status pods"],
+      "answer": "kubectl get pods",
+      "explanation": "La commande `kubectl get pods` liste tous les pods en cours d'exécution." 
+    },
+    {
+      "question": "Quel fichier est utilisé pour définir un déploiement Kubernetes ?",
+      "choices": ["deployment.yaml", "k8s-config.json", "kubernetes-compose.yml", "docker-deploy.yml"],
+      "answer": "deployment.yaml",
+      "explanation": "Le fichier `deployment.yaml` permet de définir un déploiement Kubernetes." 
+    },
+    {
+      "question": "Quelle commande permet d'appliquer une configuration à un cluster Kubernetes ?",
+      "choices": ["kubectl apply", "kubectl deploy", "kubectl set", "kubectl load"],
+      "answer": "kubectl apply",
+      "explanation": "La commande `kubectl apply -f fichier.yaml` permet d'appliquer une configuration à un cluster Kubernetes." 
+    },
+    {
+      "question": "Quelle commande permet de stopper un conteneur Docker en cours d'exécution ?",
+      "choices": ["docker stop", "docker kill", "docker halt", "docker end"],
+      "answer": "docker stop",
+      "explanation": "La commande `docker stop id_conteneur` permet d'arrêter un conteneur en cours d'exécution." 
+    },
+    {
+      "question": "Quel service Docker permet de stocker et partager des images ?",
+      "choices": ["Docker Hub", "Docker Registry", "Docker Store", "Docker Repo"],
+      "answer": "Docker Hub",
+      "explanation": "Docker Hub est un registre d'images où les utilisateurs peuvent stocker et partager leurs images Docker." 
+    },
+    {
+      "question": "Quelle commande permet de supprimer un conteneur Docker ?",
+      "choices": ["docker rm", "docker delete", "docker remove", "docker clean"],
+      "answer": "docker rm",
+      "explanation": "La commande `docker rm id_conteneur` supprime un conteneur arrêté." 
+    },
+    {
+      "question": "Quel type de service Kubernetes permet de rendre une application accessible depuis l'extérieur du cluster ?",
+      "choices": ["Service LoadBalancer", "Service ClusterIP", "Service NodePort", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "Kubernetes offre plusieurs types de services, y compris LoadBalancer, ClusterIP et NodePort pour exposer les applications." 
+    },
+    {
+      "question": "Quelle est la commande permettant de visualiser les logs d'un conteneur Docker ?",
+      "choices": ["docker logs", "docker show-logs", "docker view-logs", "docker inspect-logs"],
+      "answer": "docker logs",
+      "explanation": "La commande `docker logs id_conteneur` permet de voir les logs d'un conteneur en cours ou stoppé." 
+    },
+    {
+      "question": "Quel composant Kubernetes permet de mettre à jour une application sans interruption ?",
+      "choices": ["Deployment", "Pod", "ReplicaSet", "Service"],
+      "answer": "Deployment",
+      "explanation": "Un Deployment Kubernetes gère la mise à jour progressive des applications sans interruption de service." 
+    },
+    {
+      "question": "Quelle commande permet de redémarrer un pod dans Kubernetes ?",
+      "choices": ["kubectl delete pod", "kubectl restart pod", "kubectl reload pod", "kubectl refresh pod"],
+      "answer": "kubectl delete pod",
+      "explanation": "Supprimer un pod avec `kubectl delete pod nom_pod` forcera Kubernetes à recréer un nouveau pod automatiquement." 
+    },
+    {
+      "question": "Quel est l'avantage principal de l'utilisation de conteneurs par rapport aux machines virtuelles ?",
+      "choices": ["Moins d'empreinte mémoire et CPU", "Isolation plus stricte", "Supporte plusieurs systèmes d'exploitation en parallèle", "Ne nécessite pas de système d'exploitation hôte"],
+      "answer": "Moins d'empreinte mémoire et CPU",
+      "explanation": "Les conteneurs partagent le noyau du système d'exploitation, ce qui les rend plus légers que les machines virtuelles."
+    },
+    {
+      "question": "Quelle commande permet de supprimer une image Docker localement ?",
+      "choices": ["docker rmi", "docker image delete", "docker remove", "docker delete-image"],
+      "answer": "docker rmi",
+      "explanation": "La commande `docker rmi nom_image` permet de supprimer une image Docker stockée localement."
+    },
+    {
+      "question": "Quel est le rôle d'un Ingress dans Kubernetes ?",
+      "choices": ["Gérer l'accès HTTP/HTTPS aux services", "Exposer un port d'un pod", "Créer une base de données pour Kubernetes", "Assigner une adresse IP publique à un pod"],
+      "answer": "Gérer l'accès HTTP/HTTPS aux services",
+      "explanation": "Un Ingress dans Kubernetes permet de gérer les accès externes aux services en utilisant des règles HTTP/HTTPS."
+    }
+  ]
+}

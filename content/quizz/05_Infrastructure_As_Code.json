@@ -1,0 +1,125 @@
+{
+  "title": "Quizz sur l'Infrastructure as Code (IaC)",
+  "questions": [
+    {
+      "question": "Qu'est-ce que Terraform ?",
+      "choices": ["Un système de gestion de bases de données", "Un outil d'Infrastructure as Code (IaC)", "Un langage de programmation", "Un service cloud"],
+      "answer": "Un outil d'Infrastructure as Code (IaC)",
+      "explanation": "Terraform est un outil permettant de gérer des infrastructures via du code déclaratif."
+    },
+    {
+      "question": "Quel langage est utilisé par Terraform pour définir l'infrastructure ?",
+      "choices": ["JSON", "YAML", "HCL", "XML"],
+      "answer": "HCL",
+      "explanation": "Terraform utilise HashiCorp Configuration Language (HCL) pour définir l'infrastructure."
+    },
+    {
+      "question": "Quelle commande Terraform permet d'initialiser un projet ?",
+      "choices": ["terraform plan", "terraform init", "terraform apply", "terraform start"],
+      "answer": "terraform init",
+      "explanation": "La commande `terraform init` initialise un projet Terraform en téléchargeant les plugins nécessaires."
+    },
+    {
+      "question": "Quel fichier Terraform stocke l'état actuel de l'infrastructure ?",
+      "choices": ["terraform.tfstate", "terraform.hcl", "terraform.json", "statefile.tf"],
+      "answer": "terraform.tfstate",
+      "explanation": "Terraform stocke l'état actuel de l'infrastructure dans le fichier `terraform.tfstate`."
+    },
+    {
+      "question": "Quelle commande permet de voir les modifications prévues sans les appliquer ?",
+      "choices": ["terraform apply", "terraform preview", "terraform plan", "terraform validate"],
+      "answer": "terraform plan",
+      "explanation": "La commande `terraform plan` permet de voir les modifications prévues avant leur application."
+    },
+    {
+      "question": "Quel est le rôle des modules Terraform ?",
+      "choices": ["Exécuter du code Terraform", "Regrouper des configurations réutilisables", "Créer une nouvelle instance AWS", "Remplacer les variables"],
+      "answer": "Regrouper des configurations réutilisables",
+      "explanation": "Les modules Terraform permettent de regrouper des configurations pour les réutiliser dans plusieurs projets."
+    },
+    {
+      "question": "Quel fichier Terraform contient les définitions des ressources ?",
+      "choices": ["main.tf", "terraform.tfvars", "variables.tf", "providers.tf"],
+      "answer": "main.tf",
+      "explanation": "Le fichier `main.tf` contient les définitions des ressources dans un projet Terraform."
+    },
+    {
+      "question": "Quelle commande Terraform permet de supprimer une infrastructure ?",
+      "choices": ["terraform remove", "terraform destroy", "terraform delete", "terraform clean"],
+      "answer": "terraform destroy",
+      "explanation": "La commande `terraform destroy` permet de supprimer toutes les ressources définies dans Terraform."
+    },
+    {
+      "question": "Quel est l'objectif principal d'Ansible ?",
+      "choices": ["Gérer des infrastructures cloud", "Automatiser la configuration des serveurs", "Créer des conteneurs Docker", "Superviser des bases de données"],
+      "answer": "Automatiser la configuration des serveurs",
+      "explanation": "Ansible est un outil permettant d'automatiser la configuration des serveurs via des playbooks."
+    },
+    {
+      "question": "Quel langage est utilisé pour écrire les playbooks Ansible ?",
+      "choices": ["YAML", "JSON", "HCL", "Python"],
+      "answer": "YAML",
+      "explanation": "Les playbooks Ansible sont écrits en YAML pour décrire les tâches à exécuter sur les serveurs."
+    },
+    {
+      "question": "Quelle commande permet d'exécuter un playbook Ansible ?",
+      "choices": ["ansible-run", "ansible-exec", "ansible-playbook", "ansible-start"],
+      "answer": "ansible-playbook",
+      "explanation": "La commande `ansible-playbook nom_du_playbook.yml` permet d'exécuter un playbook Ansible."
+    },
+    {
+      "question": "Quel fichier est utilisé pour définir l'inventaire des machines cibles sous Ansible ?",
+      "choices": ["inventory.ini", "hosts.yml", "machines.conf", "inventory.json"],
+      "answer": "inventory.ini",
+      "explanation": "Le fichier `inventory.ini` permet de définir les machines cibles sur lesquelles Ansible doit exécuter ses tâches."
+    },
+    {
+      "question": "Quel fournisseur cloud n'est pas pris en charge par Terraform ?",
+      "choices": ["AWS", "GCP", "Azure", "Facebook Cloud"],
+      "answer": "Facebook Cloud",
+      "explanation": "Terraform prend en charge AWS, GCP et Azure, mais il n'existe pas de fournisseur 'Facebook Cloud'."
+    },
+    {
+      "question": "Quelle est la commande permettant de valider la syntaxe d'un fichier Terraform ?",
+      "choices": ["terraform validate", "terraform check", "terraform syntax", "terraform lint"],
+      "answer": "terraform validate",
+      "explanation": "La commande `terraform validate` permet de vérifier la syntaxe et la cohérence du fichier Terraform."
+    },
+    {
+      "question": "Quelle extension est utilisée pour les fichiers Terraform ?",
+      "choices": [".yaml", ".hcl", ".tf", ".json"],
+      "answer": ".tf",
+      "explanation": "Les fichiers Terraform utilisent l'extension `.tf` pour définir les ressources et configurations."
+    },
+    {
+      "question": "Quel outil permet de gérer les configurations et l'automatisation en complément de Terraform ?",
+      "choices": ["Ansible", "Docker", "Kubernetes", "Prometheus"],
+      "answer": "Ansible",
+      "explanation": "Ansible est couramment utilisé en complément de Terraform pour gérer la configuration des serveurs après leur provisionnement."
+    },
+    {
+      "question": "Quelle commande permet de lister toutes les ressources gérées par Terraform ?",
+      "choices": ["terraform state list", "terraform show", "terraform output", "terraform describe"],
+      "answer": "terraform state list",
+      "explanation": "La commande `terraform state list` affiche toutes les ressources actuellement suivies par Terraform."
+    },
+    {
+      "question": "Quel service AWS est souvent utilisé avec Terraform pour stocker l'état de l'infrastructure ?",
+      "choices": ["S3", "EC2", "RDS", "EBS"],
+      "answer": "S3",
+      "explanation": "Terraform peut stocker son état dans un bucket S3 afin de permettre la collaboration et d'assurer la persistance des modifications."
+    },
+    {
+      "question": "Quel avantage offre l'approche Infrastructure as Code ?",
+      "choices": ["Automatisation du déploiement", "Documentation du système via le code", "Reproductibilité des environnements", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "L'Infrastructure as Code permet d'automatiser, documenter et reproduire facilement des environnements."
+    },
+    {
+      "question": "Quel outil permet de tester les configurations Terraform avant leur application ?",
+      "choices": ["terraform fmt", "terraform validate", "terraform test", "terraform check"],
+      "answer": "terraform validate",
+      "explanation": "La commande `terraform validate` permet de s'assurer que les fichiers Terraform sont bien écrits et sans erreurs de syntaxe."
+    }
+  ]
+}

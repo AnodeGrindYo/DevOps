@@ -1,0 +1,225 @@
+{
+  "title": "Quizz sur la Sécurité",
+  "questions": [
+    {
+      "question": "Pourquoi est-il important de gérer les secrets dans une application ?",
+      "choices": [
+        "Pour éviter les fuites de données sensibles",
+        "Pour améliorer la performance de l'application",
+        "Pour réduire la consommation de mémoire",
+        "Pour optimiser le référencement SEO"
+      ],
+      "answer": "Pour éviter les fuites de données sensibles",
+      "explanation": "Les secrets, tels que les mots de passe et les clés API, doivent être protégés contre les fuites afin de garantir la sécurité de l'application."
+    },
+    {
+      "question": "Quel outil est couramment utilisé pour la gestion des secrets ?",
+      "choices": [
+        "HashiCorp Vault",
+        "Docker Compose",
+        "Prometheus",
+        "Grafana"
+      ],
+      "answer": "HashiCorp Vault",
+      "explanation": "HashiCorp Vault est un outil de gestion des secrets qui permet de stocker et sécuriser des données sensibles."
+    },
+    {
+      "question": "Quelle commande permet de stocker un secret dans Vault ?",
+      "choices": [
+        "vault kv put",
+        "vault store",
+        "vault insert",
+        "vault add secret"
+      ],
+      "answer": "vault kv put",
+      "explanation": "La commande `vault kv put` permet de stocker un secret dans HashiCorp Vault."
+    },
+    {
+      "question": "Quelle est la commande pour récupérer un secret depuis Vault ?",
+      "choices": [
+        "vault kv get",
+        "vault retrieve",
+        "vault show",
+        "vault export"
+      ],
+      "answer": "vault kv get",
+      "explanation": "La commande `vault kv get` permet de récupérer un secret stocké dans Vault."
+    },
+    {
+      "question": "Quel est l'avantage principal d'utiliser Vault au lieu d'un fichier .env ?",
+      "choices": [
+        "Vault chiffre et contrôle l'accès aux secrets",
+        "Vault permet d'exécuter plus rapidement l'application",
+        "Vault réduit la consommation de CPU",
+        "Vault optimise la gestion des logs"
+      ],
+      "answer": "Vault chiffre et contrôle l'accès aux secrets",
+      "explanation": "Contrairement à un fichier .env, Vault chiffre les secrets et permet de contrôler précisément qui peut y accéder."
+    },
+    {
+      "question": "Quel outil open-source est utilisé pour scanner les images Docker à la recherche de vulnérabilités ?",
+      "choices": [
+        "Trivy",
+        "Nmap",
+        "Metasploit",
+        "Nikto"
+      ],
+      "answer": "Trivy",
+      "explanation": "Trivy est un outil open-source qui permet d'analyser les images Docker pour identifier les vulnérabilités connues."
+    },
+    {
+      "question": "Quelle commande permet d'analyser une image Docker avec Trivy ?",
+      "choices": [
+        "trivy image",
+        "trivy scan",
+        "trivy check",
+        "trivy analyze"
+      ],
+      "answer": "trivy image",
+      "explanation": "La commande `trivy image nom_de_l_image` permet d'analyser une image Docker avec Trivy."
+    },
+    {
+      "question": "Comment automatiser le scan de vulnérabilités dans un pipeline CI/CD ?",
+      "choices": [
+        "En ajoutant une étape Trivy dans le pipeline",
+        "En exécutant manuellement un scan après chaque déploiement",
+        "En utilisant un pare-feu",
+        "En activant le mode sécurisé dans Docker"
+      ],
+      "answer": "En ajoutant une étape Trivy dans le pipeline",
+      "explanation": "L'intégration de Trivy dans un pipeline CI/CD permet de détecter les vulnérabilités avant la mise en production."
+    },
+    {
+      "question": "Pourquoi est-il important de scanner les dépendances d'une application ?",
+      "choices": [
+        "Pour détecter des vulnérabilités potentielles",
+        "Pour améliorer la vitesse d'exécution",
+        "Pour optimiser la taille de l'application",
+        "Pour réduire le nombre de fichiers dans le dépôt Git"
+      ],
+      "answer": "Pour détecter des vulnérabilités potentielles",
+      "explanation": "Scanner les dépendances permet d'identifier les vulnérabilités connues et d'appliquer des correctifs avant une exploitation malveillante."
+    },
+    {
+      "question": "Quelle est la meilleure pratique pour protéger les secrets dans un dépôt Git ?",
+      "choices": [
+        "Ne jamais stocker les secrets en clair dans le dépôt",
+        "Utiliser un fichier texte chiffré dans le dépôt",
+        "Partager les secrets entre les développeurs via e-mail",
+        "Stocker les secrets dans un fichier .env commité dans Git"
+      ],
+      "answer": "Ne jamais stocker les secrets en clair dans le dépôt",
+      "explanation": "Les secrets ne doivent jamais être stockés en clair dans un dépôt Git afin d'éviter tout risque de fuite."
+    },
+    {
+      "question": "Quelle est la meilleure méthode pour chiffrer les secrets dans une application ?",
+      "choices": [
+        "Utiliser un chiffrement AES-256",
+        "Stocker les secrets en clair",
+        "Utiliser une base de données non sécurisée",
+        "Les écrire directement dans le code source"
+      ],
+      "answer": "Utiliser un chiffrement AES-256",
+      "explanation": "Le chiffrement AES-256 est une méthode sécurisée pour protéger les secrets contre les attaques."
+    },
+    {
+      "question": "Quel principe de sécurité permet de limiter les accès aux secrets ?",
+      "choices": [
+        "Le principe du moindre privilège",
+        "Le stockage en texte brut",
+        "L'accès root pour tous les utilisateurs",
+        "Le partage des clés via e-mail"
+      ],
+      "answer": "Le principe du moindre privilège",
+      "explanation": "Limiter les accès uniquement aux utilisateurs qui en ont besoin améliore la sécurité des secrets."
+    },
+    {
+      "question": "Quel outil permet d'auditer les permissions des secrets dans Vault ?",
+      "choices": [
+        "vault policy",
+        "vault audit",
+        "vault scan",
+        "vault analyze"
+      ],
+      "answer": "vault policy",
+      "explanation": "La commande `vault policy` permet de vérifier et d’auditer les permissions des secrets dans Vault."
+    },
+    {
+      "question": "Pourquoi est-il recommandé de faire une rotation des secrets ?",
+      "choices": [
+        "Pour éviter qu'un secret compromis soit utilisé trop longtemps",
+        "Pour ralentir l'exécution de l'application",
+        "Pour ajouter plus de complexité dans la gestion des accès",
+        "Parce que c'est une exigence de GitHub"
+      ],
+      "answer": "Pour éviter qu'un secret compromis soit utilisé trop longtemps",
+      "explanation": "Changer régulièrement les secrets réduit le risque d'exploitation en cas de fuite."
+    },
+    {
+      "question": "Quel outil peut être utilisé pour détecter les secrets exposés dans un dépôt Git ?",
+      "choices": [
+        "Gitleaks",
+        "Wireshark",
+        "Metasploit",
+        "Snort"
+      ],
+      "answer": "Gitleaks",
+      "explanation": "Gitleaks est un outil permettant d’analyser un dépôt Git pour détecter des secrets exposés accidentellement."
+    },
+    {
+      "question": "Quel mécanisme permet d'empêcher les injections SQL dans une application ?",
+      "choices": [
+        "L'utilisation de requêtes paramétrées",
+        "Le stockage des mots de passe en texte brut",
+        "Le partage des accès administrateurs",
+        "L'activation de l'auto-commit dans la base de données"
+      ],
+      "answer": "L'utilisation de requêtes paramétrées",
+      "explanation": "Les requêtes paramétrées empêchent les injections SQL en séparant les instructions des données."
+    },
+    {
+      "question": "Quelle est la meilleure pratique pour stocker les mots de passe ?",
+      "choices": [
+        "Les hacher avec bcrypt ou Argon2",
+        "Les stocker en clair dans une base de données",
+        "Les envoyer par e-mail aux utilisateurs",
+        "Utiliser le même mot de passe pour tous les comptes"
+      ],
+      "answer": "Les hacher avec bcrypt ou Argon2",
+      "explanation": "Les mots de passe doivent être stockés sous forme de hachages sécurisés avec des algorithmes robustes comme bcrypt ou Argon2."
+    },
+    {
+      "question": "Quel protocole est recommandé pour sécuriser les communications réseau ?",
+      "choices": [
+        "TLS (Transport Layer Security)",
+        "HTTP en clair",
+        "FTP non sécurisé",
+        "Telnet"
+      ],
+      "answer": "TLS (Transport Layer Security)",
+      "explanation": "TLS est un protocole de sécurité permettant de chiffrer les communications sur Internet."
+    },
+    {
+      "question": "Quel outil permet d'identifier les vulnérabilités dans le code source d'une application ?",
+      "choices": [
+        "SonarQube",
+        "Docker",
+        "PostgreSQL",
+        "Terraform"
+      ],
+      "answer": "SonarQube",
+      "explanation": "SonarQube est un outil d'analyse de code permettant de détecter des vulnérabilités et des mauvaises pratiques."
+    },
+    {
+      "question": "Quel est le but de l'authentification à double facteur (2FA) ?",
+      "choices": [
+        "Ajouter une couche de sécurité supplémentaire",
+        "Accélérer le processus de connexion",
+        "Permettre aux utilisateurs d'accéder à plusieurs comptes avec un seul mot de passe",
+        "Remplacer les certificats TLS"
+      ],
+      "answer": "Ajouter une couche de sécurité supplémentaire",
+      "explanation": "L'authentification à double facteur ajoute une sécurité supplémentaire en nécessitant une seconde vérification (code SMS, application d'authentification, etc.)."
+    }
+  ]
+}

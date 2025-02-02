@@ -1,0 +1,215 @@
+/* components/LoadingRobot.module.css */
+
+.scene {
+  width: 600px;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  background: #44475a; 
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.robot {
+  width: 80px;
+  height: 120px;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  animation: move 8s infinite;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  background: #6272a4; 
+  border-radius: 25px;
+  position: relative;
+}
+
+.eyes {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.eye {
+  width: 12px;
+  height: 12px;
+  background: #f8f8f2; 
+  border-radius: 50%;
+  position: relative;
+}
+
+.eye::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #000;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  animation: blink 3s infinite;
+}
+
+.antenna {
+  width: 4px;
+  height: 15px;
+  background: #bd93f9; 
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.body {
+  width: 60px;
+  height: 70px;
+  background: #6272a4; 
+  border-radius: 10px;
+  position: relative;
+  left: -5px;
+}
+
+.arms {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+}
+
+.arm {
+  width: 12px;
+  height: 40px;
+  background: #6272a4; 
+  position: absolute;
+  border-radius: 6px;
+}
+
+.arm.left {
+  left: -10px;
+  animation: leftArmMove 1s infinite;
+}
+
+.arm.right {
+  right: -10px;
+  animation: rightArmMove 1s infinite;
+}
+
+.legs {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+}
+
+.leg {
+  width: 12px;
+  height: 40px;
+  background: #6272a4; 
+  position: absolute;
+  border-radius: 6px;
+}
+
+.leg.left {
+  left: 12px;
+  animation: leftLegMove 0.5s infinite;
+}
+
+.leg.right {
+  right: 12px;
+  animation: rightLegMove 0.5s infinite;
+}
+
+.thought-bubble {
+  position: absolute;
+  top: 20px;
+  left: 100px;
+  background: #44475a; 
+  color: #f8f8f2; 
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  max-width: 200px;
+  animation: float 3s infinite;
+}
+
+.thought-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  background: #44475a; 
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.thought-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 10px;
+  width: 10px;
+  height: 10px;
+  background: #44475a; 
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.items {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.item {
+  position: absolute;
+  font-size: 2em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.book { top: 70%; left: 70%; }
+.coffee { top: 60%; left: 80%; }
+.computer { top: 50%; left: 75%; }
+.lightbulb { top: 40%; left: 85%; }
+
+@keyframes move {
+  0%, 100% { left: 50px; transform: scaleX(1); }
+  25% { left: 150px; }
+  50% { left: 400px; transform: scaleX(-1); }
+  75% { left: 150px; transform: scaleX(1); }
+}
+
+@keyframes blink {
+  0%, 96%, 98% { transform: scale(1); }
+  97% { transform: scaleY(0.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes leftArmMove {
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+}
+
+@keyframes rightArmMove {
+  0%, 100% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
+}
+
+@keyframes leftLegMove {
+  0%, 100% { transform: rotate(-20deg); }
+  50% { transform: rotate(20deg); }
+}
+
+@keyframes rightLegMove {
+  0%, 100% { transform: rotate(20deg); }
+  50% { transform: rotate(-20deg); }
+}

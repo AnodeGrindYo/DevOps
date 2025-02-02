@@ -1,0 +1,175 @@
+{
+  "title": "Quizz sur la Résilience et la Haute Disponibilité",
+  "questions": [
+    {
+      "question": "Quelle est la principale différence entre résilience et haute disponibilité ?",
+      "choices": [
+        "La haute disponibilité vise à minimiser les interruptions, tandis que la résilience permet de récupérer après une panne",
+        "La résilience concerne uniquement les bases de données, alors que la haute disponibilité concerne les applications",
+        "Ces deux concepts sont identiques",
+        "La haute disponibilité repose sur la sauvegarde des données, alors que la résilience concerne uniquement les performances"
+      ],
+      "answer": "La haute disponibilité vise à minimiser les interruptions, tandis que la résilience permet de récupérer après une panne",
+      "explanation": "La haute disponibilité garantit un service continu, tandis que la résilience permet au système de se rétablir après une défaillance."
+    },
+    {
+      "question": "Que signifie RTO (Recovery Time Objective) ?",
+      "choices": [
+        "Durée maximale d'interruption tolérée",
+        "Perte maximale de données acceptable",
+        "Temps nécessaire pour redémarrer un serveur",
+        "Durée maximale pour migrer une application vers un autre cloud"
+      ],
+      "answer": "Durée maximale d'interruption tolérée",
+      "explanation": "Le RTO représente le temps maximal qu’un système peut rester indisponible avant d’impacter gravement l’activité."
+    },
+    {
+      "question": "Quel outil est couramment utilisé pour équilibrer la charge entre plusieurs serveurs ?",
+      "choices": [
+        "Nginx",
+        "Prometheus",
+        "Terraform",
+        "PostgreSQL"
+      ],
+      "answer": "Nginx",
+      "explanation": "Nginx est un serveur web qui peut aussi être utilisé comme load balancer pour répartir la charge entre plusieurs serveurs."
+    },
+    {
+      "question": "Quelle solution permet d’assurer la haute disponibilité d’une base de données MySQL ?",
+      "choices": [
+        "MySQL Master-Slave Replication",
+        "Stocker la base de données dans un fichier local",
+        "Utiliser uniquement un cache Redis",
+        "Éteindre la base de données lorsqu’elle est peu utilisée"
+      ],
+      "answer": "MySQL Master-Slave Replication",
+      "explanation": "La réplication MySQL Master-Slave permet d’assurer une redondance et un basculement en cas de panne du serveur principal."
+    },
+    {
+      "question": "Quel est l'avantage d’un déploiement multi-régions ?",
+      "choices": [
+        "Réduire la latence et améliorer la disponibilité",
+        "Diminuer les coûts des serveurs",
+        "Éviter l’utilisation d’un CDN",
+        "Supprimer la nécessité d’un load balancer"
+      ],
+      "answer": "Réduire la latence et améliorer la disponibilité",
+      "explanation": "Un déploiement multi-régions permet d’assurer une meilleure tolérance aux pannes et de réduire la latence pour les utilisateurs."
+    },
+    {
+      "question": "Quel mécanisme permet de rediriger automatiquement le trafic en cas de panne ?",
+      "choices": [
+        "DNS Failover",
+        "CDN Edge Cache",
+        "Monitoring Prometheus",
+        "Sauvegarde journalière"
+      ],
+      "answer": "DNS Failover",
+      "explanation": "Le DNS Failover redirige le trafic vers une instance de secours en cas de défaillance de l’instance principale."
+    },
+    {
+      "question": "Quel outil permet de surveiller en temps réel les performances d’une infrastructure ?",
+      "choices": [
+        "Prometheus",
+        "Terraform",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "answer": "Prometheus",
+      "explanation": "Prometheus est une solution open-source de monitoring et d’alerting permettant d’analyser les performances d’un système."
+    },
+    {
+      "question": "Quelle est la principale fonction d’un circuit breaker (ex. Hystrix) ?",
+      "choices": [
+        "Prévenir les surcharges en coupant temporairement les connexions défaillantes",
+        "Récupérer automatiquement les données perdues",
+        "Accélérer les temps de réponse des requêtes HTTP",
+        "Augmenter la fréquence des sauvegardes"
+      ],
+      "answer": "Prévenir les surcharges en coupant temporairement les connexions défaillantes",
+      "explanation": "Un circuit breaker empêche un service surchargé de devenir totalement indisponible en bloquant temporairement certaines requêtes."
+    },
+    {
+      "question": "Quel service AWS est recommandé pour gérer les bases de données haute disponibilité ?",
+      "choices": [
+        "Amazon RDS Multi-AZ",
+        "AWS Lambda",
+        "Amazon S3 Glacier",
+        "AWS Route 53"
+      ],
+      "answer": "Amazon RDS Multi-AZ",
+      "explanation": "Amazon RDS Multi-AZ assure une réplication des bases de données sur plusieurs zones de disponibilité pour garantir une continuité de service."
+    },
+    {
+      "question": "Quelle technique est utilisée pour éviter les interruptions lors d’un déploiement ?",
+      "choices": [
+        "Rolling Update",
+        "Cold Deployment",
+        "Arrêt complet du service",
+        "Suppression des anciennes instances"
+      ],
+      "answer": "Rolling Update",
+      "explanation": "Un Rolling Update permet de mettre à jour progressivement les services sans causer d’interruption du service."
+    },
+    {
+      "question": "Quel mécanisme permet d’adapter dynamiquement les ressources d’un cluster Kubernetes ?",
+      "choices": ["Horizontal Pod Autoscaler (HPA)", "Rolling Update", "Terraform", "Load Balancer"],
+      "answer": "Horizontal Pod Autoscaler (HPA)",
+      "explanation": "HPA ajuste dynamiquement le nombre de pods en fonction de la charge de travail pour améliorer la résilience."
+    },
+    {
+      "question": "Quel type de sauvegarde est le plus efficace pour minimiser les pertes de données ?",
+      "choices": ["Sauvegarde incrémentale", "Sauvegarde complète", "Backup sur bande", "Archivage manuel"],
+      "answer": "Sauvegarde incrémentale",
+      "explanation": "Les sauvegardes incrémentales enregistrent uniquement les modifications depuis la dernière sauvegarde, minimisant ainsi les pertes de données."
+    },
+    {
+      "question": "Quel outil permet de centraliser les logs pour mieux analyser les incidents ?",
+      "choices": ["ELK Stack (Elasticsearch, Logstash, Kibana)", "Docker", "Terraform", "Kubernetes"],
+      "answer": "ELK Stack (Elasticsearch, Logstash, Kibana)",
+      "explanation": "ELK Stack est couramment utilisé pour collecter, stocker et analyser les logs d’une infrastructure afin de détecter les problèmes rapidement."
+    },
+    {
+      "question": "Quelle technique est utilisée pour tester la résilience d’une infrastructure cloud ?",
+      "choices": ["Chaos Engineering", "Unit Testing", "A/B Testing", "Continuous Deployment"],
+      "answer": "Chaos Engineering",
+      "explanation": "Le Chaos Engineering consiste à introduire volontairement des pannes pour tester la capacité du système à s’adapter et se rétablir."
+    },
+    {
+      "question": "Quelle architecture est recommandée pour assurer une haute disponibilité sur plusieurs régions cloud ?",
+      "choices": ["Active-Active", "Single Node", "Cold Standby", "Monolithique"],
+      "answer": "Active-Active",
+      "explanation": "L'architecture Active-Active permet à plusieurs régions de fonctionner simultanément, garantissant une disponibilité optimale."
+    },
+    {
+      "question": "Quel est le principal avantage d’utiliser un CDN comme CloudFront ?",
+      "choices": ["Réduire la latence et la charge sur les serveurs", "Augmenter le stockage disponible", "Optimiser l’usage des bases de données", "Éviter l'utilisation d’un load balancer"],
+      "answer": "Réduire la latence et la charge sur les serveurs",
+      "explanation": "Les CDN distribuent le contenu à partir de serveurs situés plus près des utilisateurs finaux, réduisant ainsi la latence."
+    },
+    {
+      "question": "Quel protocole est utilisé pour synchroniser des bases de données répliquées en temps réel ?",
+      "choices": ["Streaming Replication", "DNS Load Balancing", "Terraform State", "Backup Rotation"],
+      "answer": "Streaming Replication",
+      "explanation": "La réplication en streaming permet de synchroniser les bases de données en temps réel pour garantir une continuité de service."
+    },
+    {
+      "question": "Quelle solution cloud permet d’automatiser la gestion des basculements en cas de panne ?",
+      "choices": ["AWS Route 53 DNS Failover", "Cloud Storage", "Terraform", "Docker Swarm"],
+      "answer": "AWS Route 53 DNS Failover",
+      "explanation": "AWS Route 53 permet de rediriger le trafic vers une instance de secours en cas de défaillance de l’instance principale."
+    },
+    {
+      "question": "Pourquoi est-il essentiel de tester régulièrement un plan de reprise après sinistre (DRP) ?",
+      "choices": ["Pour s’assurer que la récupération fonctionne correctement", "Pour réduire les coûts d’infrastructure", "Pour améliorer la vitesse des sauvegardes", "Pour diminuer l’usage du CPU"],
+      "answer": "Pour s’assurer que la récupération fonctionne correctement",
+      "explanation": "Tester un DRP permet d’identifier les failles potentielles et d’améliorer les processus de récupération des systèmes après une panne majeure."
+    },
+    {
+      "question": "Quel est le rôle d’un observability tool comme Datadog ou Prometheus ?",
+      "choices": ["Surveiller les performances et détecter les incidents", "Gérer les bases de données", "Automatiser les déploiements Kubernetes", "Optimiser les coûts de stockage"],
+      "answer": "Surveiller les performances et détecter les incidents",
+      "explanation": "Les outils d'observabilité comme Prometheus permettent de surveiller la performance des systèmes et d’identifier les anomalies en temps réel."
+    }
+  ]
+}

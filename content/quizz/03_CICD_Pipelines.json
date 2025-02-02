@@ -1,0 +1,83 @@
+{
+  "title": "Quizz sur l'intégration et le déploiement continus (CI/CD)",
+  "questions": [
+    {
+      "question": "Que signifie CI/CD ?",
+      "choices": ["Continuous Integration / Continuous Deployment", "Code Integration / Code Deployment", "Continuous Improvement / Continuous Development", "Centralized Integration / Centralized Deployment"],
+      "answer": "Continuous Integration / Continuous Deployment",
+      "explanation": "CI/CD signifie Intégration Continue et Déploiement Continu, des pratiques visant à automatiser les tests et le déploiement du code."
+    },
+    {
+      "question": "Quel est l'objectif principal de l'intégration continue (CI) ?",
+      "choices": ["Automatiser l'intégration du code et les tests", "Automatiser les déploiements en production", "Assurer un contrôle manuel du code", "Remplacer les développeurs"],
+      "answer": "Automatiser l'intégration du code et les tests",
+      "explanation": "L'intégration continue vise à automatiser le processus d'intégration du code et d'exécution des tests pour détecter rapidement les erreurs."
+    },
+    {
+      "question": "Quel est l'objectif principal du déploiement continu (CD) ?",
+      "choices": ["Automatiser les tests unitaires", "Automatiser la mise en production après validation des tests", "Remplacer les branches Git", "Optimiser la gestion des dépendances"],
+      "answer": "Automatiser la mise en production après validation des tests",
+      "explanation": "Le déploiement continu assure que chaque version validée peut être déployée automatiquement en production sans intervention manuelle."
+    },
+    {
+      "question": "Quel outil est souvent utilisé pour automatiser les workflows CI/CD sur GitHub ?",
+      "choices": ["GitHub Actions", "Jenkins", "GitLab CI/CD", "CircleCI"],
+      "answer": "GitHub Actions",
+      "explanation": "GitHub Actions permet d'automatiser des workflows CI/CD directement dans les dépôts GitHub."
+    },
+    {
+      "question": "Quel fichier est utilisé pour définir un pipeline CI/CD dans GitHub Actions ?",
+      "choices": [".github/workflows/*.yml", "gitlab-ci.yml", "jenkinsfile", "ci-pipeline.json"],
+      "answer": ".github/workflows/*.yml",
+      "explanation": "Les workflows GitHub Actions sont définis dans des fichiers YAML situés dans le répertoire `.github/workflows/`."
+    },
+    {
+      "question": "Quelle est la première étape d'un pipeline CI/CD typique ?",
+      "choices": ["Tests", "Déploiement", "Compilation", "Linting"],
+      "answer": "Compilation",
+      "explanation": "La compilation est souvent la première étape d'un pipeline CI/CD pour s'assurer que le code peut être construit avec succès."
+    },
+    {
+      "question": "Quel outil permet d'exécuter des tâches CI/CD sur un serveur local ?",
+      "choices": ["Jenkins", "TravisCI", "CircleCI", "AWS CodeBuild"],
+      "answer": "Jenkins",
+      "explanation": "Jenkins est un outil populaire qui permet d'exécuter des pipelines CI/CD sur des serveurs locaux ou dans le cloud."
+    },
+    {
+      "question": "Quel service cloud offre une solution CI/CD entièrement managée ?",
+      "choices": ["AWS CodePipeline", "Docker Hub", "Grafana", "Nginx"],
+      "answer": "AWS CodePipeline",
+      "explanation": "AWS CodePipeline est un service CI/CD entièrement managé qui permet d'automatiser la livraison du code."
+    },
+    {
+      "question": "Quel format de fichier est couramment utilisé pour définir un pipeline CI/CD ?",
+      "choices": ["YAML", "JSON", "XML", "INI"],
+      "answer": "YAML",
+      "explanation": "Les fichiers YAML sont couramment utilisés pour définir des pipelines CI/CD dans des outils comme GitHub Actions et GitLab CI/CD."
+    },
+    {
+      "question": "Quelle est l'importance des tests automatisés dans un pipeline CI/CD ?",
+      "choices": ["Détecter les erreurs rapidement", "Remplacer les développeurs", "Accélérer le codage", "Éliminer le besoin de commits"],
+      "answer": "Détecter les erreurs rapidement",
+      "explanation": "Les tests automatisés permettent de s'assurer que les modifications n'introduisent pas de régressions avant le déploiement."
+    },
+    {
+      "question": "Quelle commande permet d'exécuter un pipeline GitLab CI/CD localement ?",
+      "choices": ["gitlab-runner exec", "gitlab pipeline run", "ci-run local", "gitlab-ci start"],
+      "answer": "gitlab-runner exec",
+      "explanation": "La commande `gitlab-runner exec` permet d'exécuter un pipeline GitLab CI/CD en local pour tester sa configuration."
+    },
+    {
+      "question": "Quel outil est recommandé pour orchestrer plusieurs conteneurs Docker dans un environnement CI/CD ?",
+      "choices": ["Kubernetes", "Docker Swarm", "Terraform", "Puppet"],
+      "answer": "Kubernetes",
+      "explanation": "Kubernetes est utilisé pour orchestrer plusieurs conteneurs et est souvent intégré dans des pipelines CI/CD pour les déploiements."
+    },
+    {
+      "question": "Quel outil permet d'automatiser le déploiement sur un serveur distant via SSH ?",
+      "choices": ["Ansible", "Chef", "Puppet", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "Ansible, Chef et Puppet permettent d'automatiser le déploiement sur des serveurs distants via SSH."
+    }
+  ]
+}

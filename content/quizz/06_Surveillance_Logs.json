@@ -1,0 +1,125 @@
+{
+  "title": "Quizz sur la Surveillance et les Logs",
+  "questions": [
+    {
+      "question": "Quel est l'objectif principal du monitoring en DevOps ?",
+      "choices": ["Réduire les coûts des serveurs", "Anticiper les pannes et optimiser les performances", "Remplacer les administrateurs système", "Augmenter la latence des applications"],
+      "answer": "Anticiper les pannes et optimiser les performances",
+      "explanation": "Le monitoring permet de surveiller l'état des systèmes et d'identifier rapidement les anomalies." 
+    },
+    {
+      "question": "Quel outil est utilisé pour collecter les métriques système et applicatives ?",
+      "choices": ["Grafana", "Elasticsearch", "Prometheus", "Logstash"],
+      "answer": "Prometheus",
+      "explanation": "Prometheus est un outil de collecte de métriques utilisé pour le monitoring des systèmes et des applications." 
+    },
+    {
+      "question": "Quel est le rôle de Grafana ?",
+      "choices": ["Collecter les logs des applications", "Visualiser les métriques sous forme de tableaux de bord", "Indexer les données dans Elasticsearch", "Gérer les bases de données relationnelles"],
+      "answer": "Visualiser les métriques sous forme de tableaux de bord",
+      "explanation": "Grafana est une plateforme de visualisation permettant d'afficher les métriques sous forme de graphiques et de dashboards interactifs." 
+    },
+    {
+      "question": "Quelle commande permet d'installer Prometheus sur un serveur Linux ?",
+      "choices": ["sudo apt install prometheus", "wget prometheus && make install", "docker pull prometheus", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "Prometheus peut être installé via un gestionnaire de paquets, téléchargé manuellement ou exécuté dans un conteneur Docker." 
+    },
+    {
+      "question": "Quel fichier de configuration est utilisé par Prometheus pour définir les sources de métriques ?",
+      "choices": ["prometheus.conf", "config.yaml", "prometheus.yml", "metrics.json"],
+      "answer": "prometheus.yml",
+      "explanation": "Le fichier `prometheus.yml` contient la configuration de Prometheus, y compris les endpoints à surveiller." 
+    },
+    {
+      "question": "Comment Grafana se connecte-t-il à Prometheus ?",
+      "choices": ["Via un fichier de configuration local", "En ajoutant Prometheus comme source de données", "En exécutant une requête SQL", "En utilisant Elasticsearch"],
+      "answer": "En ajoutant Prometheus comme source de données",
+      "explanation": "Dans Grafana, Prometheus est ajouté comme source de données pour afficher les métriques collectées." 
+    },
+    {
+      "question": "Quels outils composent la stack ELK ?",
+      "choices": ["Elasticsearch, Logstash, Kibana", "Elasticsearch, Kubernetes, Kafka", "Grafana, Prometheus, Loki", "Docker, Jenkins, Terraform"],
+      "answer": "Elasticsearch, Logstash, Kibana",
+      "explanation": "ELK est une suite open-source utilisée pour collecter, stocker et visualiser des logs en temps réel." 
+    },
+    {
+      "question": "Quel outil de la stack ELK est responsable de l'indexation des logs ?",
+      "choices": ["Kibana", "Logstash", "Elasticsearch", "Grafana"],
+      "answer": "Elasticsearch",
+      "explanation": "Elasticsearch est le moteur de recherche et d'indexation des logs dans la stack ELK." 
+    },
+    {
+      "question": "Quel est le rôle de Logstash ?",
+      "choices": ["Collecter, transformer et envoyer les logs", "Générer des logs applicatifs", "Afficher des dashboards interactifs", "Créer des conteneurs Docker"],
+      "answer": "Collecter, transformer et envoyer les logs",
+      "explanation": "Logstash collecte et transforme les logs avant de les envoyer à Elasticsearch pour indexation." 
+    },
+    {
+      "question": "Quel outil est utilisé pour visualiser les logs collectés dans Elasticsearch ?",
+      "choices": ["Prometheus", "Grafana", "Kibana", "Logstash"],
+      "answer": "Kibana",
+      "explanation": "Kibana est l'outil utilisé pour explorer et analyser les logs stockés dans Elasticsearch." 
+    },
+    {
+      "question": "Quelle est la principale différence entre les métriques et les logs ?",
+      "choices": ["Les métriques sont des données chiffrées tandis que les logs sont des enregistrements textuels", "Les logs sont stockés dans Prometheus et les métriques dans Elasticsearch", "Les métriques sont utilisées pour les erreurs système tandis que les logs concernent uniquement les performances", "Les logs sont toujours en temps réel alors que les métriques sont historisées"],
+      "answer": "Les métriques sont des données chiffrées tandis que les logs sont des enregistrements textuels",
+      "explanation": "Les métriques fournissent des valeurs numériques sur l'état du système, tandis que les logs enregistrent des événements détaillés sous forme textuelle."
+    },
+    {
+      "question": "Quelle est la fonction principale d'une alerte dans Prometheus ?",
+      "choices": ["Notifier en cas de dépassement d'un seuil critique", "Supprimer automatiquement les instances non utilisées", "Réinitialiser les métriques après une panne", "Exécuter des scripts de maintenance"],
+      "answer": "Notifier en cas de dépassement d'un seuil critique",
+      "explanation": "Les alertes dans Prometheus permettent d'informer les administrateurs lorsqu'une métrique dépasse un seuil défini."
+    },
+    {
+      "question": "Quelle commande permet de tester la configuration d'Elasticsearch ?",
+      "choices": ["curl -X GET http://localhost:9200", "elasticsearch --test-config", "systemctl status elasticsearch", "elk verify"],
+      "answer": "curl -X GET http://localhost:9200",
+      "explanation": "La commande `curl -X GET http://localhost:9200` permet de vérifier si Elasticsearch fonctionne correctement et répond aux requêtes HTTP."
+    },
+    {
+      "question": "Quel est le format de stockage des logs dans Elasticsearch ?",
+      "choices": ["JSON", "XML", "YAML", "CSV"],
+      "answer": "JSON",
+      "explanation": "Elasticsearch stocke les logs sous forme de documents JSON indexés et recherchables."
+    },
+    {
+      "question": "Quelle est la commande permettant de redémarrer le service Kibana ?",
+      "choices": ["systemctl restart kibana", "kibana --restart", "restart-kibana", "service kibana reload"],
+      "answer": "systemctl restart kibana",
+      "explanation": "La commande `systemctl restart kibana` est utilisée pour redémarrer le service Kibana sur un système Linux."
+    },
+    {
+      "question": "Quelle commande permet de voir les logs système sous Linux ?",
+      "choices": ["journalctl", "logview", "syslog", "dmesg"],
+      "answer": "journalctl",
+      "explanation": "La commande `journalctl` permet d'afficher et de filtrer les logs système sur les distributions Linux utilisant systemd."
+    },
+    {
+      "question": "Quel type d’alerting peut être configuré avec Prometheus Alertmanager ?",
+      "choices": ["Emails", "Slack", "Webhook", "Toutes les réponses sont correctes"],
+      "answer": "Toutes les réponses sont correctes",
+      "explanation": "Prometheus Alertmanager permet d'envoyer des alertes via email, Slack, Webhook et bien d'autres canaux."
+    },
+    {
+      "question": "Quelle est la fréquence typique de scrapping par défaut dans Prometheus ?",
+      "choices": ["1 seconde", "15 secondes", "30 secondes", "1 minute"],
+      "answer": "15 secondes",
+      "explanation": "Par défaut, Prometheus interroge ses endpoints de métriques toutes les 15 secondes."
+    },
+    {
+      "question": "Quel format est utilisé par Prometheus pour exposer les métriques ?",
+      "choices": ["JSON", "YAML", "OpenMetrics", "CSV"],
+      "answer": "OpenMetrics",
+      "explanation": "Prometheus utilise le format OpenMetrics, qui est une norme ouverte pour l’exposition de métriques."
+    },
+    {
+      "question": "Quelle commande permet d'afficher les logs d’un conteneur Docker ?",
+      "choices": ["docker logs", "docker show logs", "kubectl logs", "docker view logs"],
+      "answer": "docker logs",
+      "explanation": "La commande `docker logs nom_du_conteneur` permet d'afficher les logs d’un conteneur Docker en cours d'exécution."
+    }
+  ]
+}

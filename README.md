@@ -1,40 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🚀 Formation DevOps - Plateforme interactive
 
-## Getting Started
+Bienvenue sur **Formation DevOps**, une plateforme d'apprentissage ludique et interactive pour maîtriser le DevOps ! Ici, vous trouverez des **cours dynamiques**, des **exercices pratiques**, et des **quiz amusants** pour tester vos connaissances. 🎯
 
-First, run the development server:
+## ✨ Fonctionnalités
+- 📚 **Cours détaillés** : Apprenez les bases et concepts avancés du DevOps.
+- 🛠 **Tutoriels pratiques** : Installez et configurez vos outils DevOps.
+- 🎯 **Quiz interactifs** : Testez vos connaissances et améliorez-vous en rejouant les questions où vous vous êtes trompé.
+- 📱 **Interface responsive** : Utilisable sur PC et mobile.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Installation
+
+Quel que soit votre système d'exploitation, voici comment démarrer le projet localement.
+
+### 🔹 1. Prérequis
+Assurez-vous d'avoir installé :
+- **Node.js** (v18+) : [Télécharger Node.js](https://nodejs.org/)
+- **Git** : [Télécharger Git](https://git-scm.com/)
+
+Pour vérifier :
+```sh
+node -v  # Doit afficher une version >= 18
+npm -v   # Vérification du gestionnaire de paquets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔹 2. Cloner le projet
+Dans un terminal, exécutez :
+```sh
+git clone https://github.com/votre-utilisateur/formation-devops.git
+cd formation-devops
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### 🔹 3. Installer les dépendances
+```sh
+npm install
+```
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### 🔹 4. Lancer le serveur en mode développement
+```sh
+npm run dev
+```
+Ensuite, ouvrez **http://localhost:3000/** dans votre navigateur.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Déploiement
 
-## Learn More
+Vous pouvez facilement déployer le projet sur **Vercel**, **Netlify** ou tout autre hébergeur Next.js.
 
-To learn more about Next.js, take a look at the following resources:
+### 🔹 Déploiement sur Vercel
+1. Installez Vercel CLI si ce n'est pas encore fait :
+   ```sh
+   npm install -g vercel
+   ```
+2. Connectez-vous à votre compte Vercel :
+   ```sh
+   vercel login
+   ```
+3. Déployez ! 🚀
+   ```sh
+   vercel
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🎯 Amusez-vous bien !
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ce site est conçu pour **rendre l'apprentissage du DevOps accessible et fun**. N'hésitez pas à explorer les cours, tester vos connaissances et progresser à votre rythme !
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+🛠 Happy DevOps! 🚀
+

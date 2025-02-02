@@ -1,0 +1,89 @@
+{
+  "title": "Quizz sur les bases indispensables de Linux",
+  "questions": [
+    {
+      "question": "Quelle commande permet de lister les fichiers d'un répertoire en détail ?",
+      "choices": ["ls", "ls -l", "cd", "pwd"],
+      "answer": "ls -l",
+      "explanation": "La commande `ls -l` affiche la liste des fichiers avec des détails comme les permissions, le propriétaire et la taille."
+    },
+    {
+      "question": "Quelle commande permet de changer de répertoire ?",
+      "choices": ["cd", "mv", "mkdir", "rm"],
+      "answer": "cd",
+      "explanation": "La commande `cd` permet de changer de répertoire. Exemple : `cd /home/user`."
+    },
+    {
+      "question": "Comment supprimer un fichier en ligne de commande ?",
+      "choices": ["rm", "delete", "erase", "remove"],
+      "answer": "rm",
+      "explanation": "La commande `rm` permet de supprimer un fichier. Exemple : `rm fichier.txt`."
+    },
+    {
+      "question": "Quelle commande permet de copier un fichier ?",
+      "choices": ["cp", "mv", "copy", "scopy"],
+      "answer": "cp",
+      "explanation": "La commande `cp` permet de copier un fichier. Exemple : `cp source.txt destination.txt`."
+    },
+    {
+      "question": "Comment créer un répertoire en ligne de commande ?",
+      "choices": ["mkdir", "touch", "create", "md"],
+      "answer": "mkdir",
+      "explanation": "La commande `mkdir` permet de créer un répertoire. Exemple : `mkdir mon_dossier`."
+    },
+    {
+      "question": "Quelle commande affiche le chemin absolu du répertoire courant ?",
+      "choices": ["pwd", "path", "ls", "cd"],
+      "answer": "pwd",
+      "explanation": "La commande `pwd` affiche le chemin absolu du répertoire courant."
+    },
+    {
+      "question": "Quelle commande permet de lister tous les processus en cours d'exécution ?",
+      "choices": ["ps aux", "top", "htop", "listproc"],
+      "answer": "ps aux",
+      "explanation": "La commande `ps aux` liste tous les processus en cours d'exécution avec des détails."
+    },
+    {
+      "question": "Comment arrêter un processus en utilisant son PID ?",
+      "choices": ["kill PID", "stop PID", "halt PID", "end PID"],
+      "answer": "kill PID",
+      "explanation": "La commande `kill PID` permet d'arrêter un processus en utilisant son identifiant (PID)."
+    },
+    {
+      "question": "Quelle commande permet de redémarrer un service avec systemd ?",
+      "choices": ["sudo systemctl restart service", "sudo restart service", "service restart", "sudo systemctl reload service"],
+      "answer": "sudo systemctl restart service",
+      "explanation": "La commande `sudo systemctl restart service` redémarre un service sous systemd."
+    },
+    {
+      "question": "Quelle commande permet de changer les permissions d'un fichier ?",
+      "choices": ["chmod", "chown", "chperm", "perm"],
+      "answer": "chmod",
+      "explanation": "La commande `chmod` permet de changer les permissions d'un fichier. Exemple : `chmod 755 fichier`."
+    },
+    {
+      "question": "Quelle commande permet d'ajouter une clé SSH au serveur distant ?",
+      "choices": ["ssh-copy-id", "ssh-add", "scp", "rsync"],
+      "answer": "ssh-copy-id",
+      "explanation": "La commande `ssh-copy-id` permet d'ajouter une clé SSH publique au serveur distant."
+    },
+    {
+      "question": "Quelle commande permet d'installer un paquet avec APT ?",
+      "choices": ["sudo apt install", "sudo install", "apt-get add", "package install"],
+      "answer": "sudo apt install",
+      "explanation": "La commande `sudo apt install` permet d'installer un paquet sous Debian/Ubuntu. Exemple : `sudo apt install git`."
+    },
+    {
+      "question": "Quelle commande permet de mettre à jour la liste des paquets sous Debian/Ubuntu ?",
+      "choices": ["sudo apt update", "sudo apt upgrade", "apt-get refresh", "package update"],
+      "answer": "sudo apt update",
+      "explanation": "La commande `sudo apt update` met à jour la liste des paquets disponibles dans les dépôts."
+    },
+    {
+      "question": "Quelle commande permet d'afficher l'adresse IP de la machine ?",
+      "choices": ["ip a", "ifconfig", "netstat", "showip"],
+      "answer": "ip a",
+      "explanation": "La commande `ip a` affiche les interfaces réseau et leurs adresses IP."
+    }
+  ]
+}
