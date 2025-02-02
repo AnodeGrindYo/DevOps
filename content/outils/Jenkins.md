@@ -1,4 +1,10 @@
-# Cours Complet sur Jenkins
+---
+title: "Jenkins"
+description: "Jenkins est un outil d'intégration continue et de livraison continue (CI/CD) open-source permettant d'automatiser le développement, les tests et le déploiement des applications. Il offre une interface web et de nombreuses fonctionnalités via des plugins."
+category: "outils"
+---
+
+# Jenkins
 
 ## Introduction à Jenkins
 

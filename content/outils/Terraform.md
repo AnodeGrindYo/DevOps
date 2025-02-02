@@ -1,4 +1,10 @@
-# Cours Complet sur Terraform
+---
+title: "Terraform"
+description: "Terraform est un outil d'infrastructure as code (IaC) développé par HashiCorp. Il permet de gérer et d'automatiser le déploiement d'infrastructures en utilisant une configuration déclarative. Il est compatible avec divers fournisseurs cloud tels qu'AWS, Azure, GCP, et d'autres services."
+category: "outils"
+---
+
+# Terraform
 
 ## Introduction à Terraform
 Terraform est un outil d'infrastructure as code (IaC) développé par HashiCorp. Il permet de gérer et d'automatiser le déploiement d'infrastructures en utilisant une configuration déclarative. Il est compatible avec divers fournisseurs cloud tels qu'AWS, Azure, GCP, et d'autres services.

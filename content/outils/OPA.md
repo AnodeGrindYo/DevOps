@@ -1,4 +1,10 @@
-# Cours Complet sur Open Policy Agent (OPA)
+---
+title: "Open Policy Agent (OPA)"
+description: "Open Policy Agent (OPA) est un moteur de décision open-source permettant d’appliquer des politiques de contrôle d’accès et de gouvernance sur divers systèmes tels que Kubernetes, API, microservices et CI/CD."
+category: "outils"
+---
+
+# Open Policy Agent (OPA)
 
 ## Introduction à Open Policy Agent (OPA)
 Open Policy Agent (OPA) est un moteur de décision open-source permettant d’appliquer des politiques de contrôle d’accès et de gouvernance sur divers systèmes tels que Kubernetes, API, microservices et CI/CD.

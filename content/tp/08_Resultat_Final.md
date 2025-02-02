@@ -1,3 +1,10 @@
+---
+title: "08 Résultat Final"
+description: ""
+category: "tp"
+---
+
+
 # 8. Résultat Final
 
 ## 8.1 Objectifs atteints

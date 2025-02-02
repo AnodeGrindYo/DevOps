@@ -1,199 +1,122 @@
-### Module 4 : Conteneurs et orchestration
+---
+title: "Infrastructure as Code (IaC)"
+description: "Automatiser le déploiement de l’infrastructure pour TaskManagerPro avec Terraform."
+category: "cours-devops"
+---
+
+### Module 5 : Infrastructure as Code (IaC)
 
 ---
 
-#### **4.1. Docker : Comprendre et utiliser les conteneurs**
+#### **5.1. Introduction à Terraform**
 
-**Objectif :** Apprendre à créer et gérer des conteneurs Docker pour déployer des applications.
-
----
-
-#### **Cours : Concepts fondamentaux de Docker**
-
-##### **1. Qu'est-ce que Docker ?**
-- **Définition :** Docker est un outil permettant de créer, d’exécuter et de gérer des conteneurs, des environnements isolés pour exécuter des applications.
-- **Avantages :**
-  - Portabilité : Fonctionne sur toutes les plateformes supportant Docker.
-  - Isolation : Chaque conteneur a son propre environnement.
-  - Scalabilité : Facilite la mise à l’échelle horizontale.
-
-##### **2. Composants clés :**
-- **Image :** Modèle statique pour créer des conteneurs.
-- **Conteneur :** Instance exécutable d'une image.
-- **Dockerfile :** Fichier de configuration pour créer des images Docker.
-- **Registry :** Dépôt pour stocker et partager des images Docker (ex. Docker Hub).
-
-##### **3. Commandes Docker essentielles :**
-- **Images :**
-  - Construire une image :
-    ```bash
-    docker build -t nom_image .
-    ```
-  - Lister les images disponibles :
-    ```bash
-    docker images
-    ```
-  - Supprimer une image :
-    ```bash
-    docker rmi nom_image
-    ```
-
-- **Conteneurs :**
-  - Créer et démarrer un conteneur :
-    ```bash
-    docker run -d -p 8080:3000 nom_image
-    ```
-  - Lister les conteneurs en cours d’exécution :
-    ```bash
-    docker ps
-    ```
-  - Arrêter un conteneur :
-    ```bash
-    docker stop id_conteneur
-    ```
-  - Supprimer un conteneur :
-    ```bash
-    docker rm id_conteneur
-    ```
+**Objectif :** Automatiser le déploiement de l’infrastructure pour TaskManagerPro avec Terraform.
 
 ---
 
-#### **Exercice pratique 1 : Conteneuriser TaskManagerPro**
+#### **Cours : Notions fondamentales de Terraform**
 
-1. **Créer un Dockerfile pour le backend :**
-   - Dans le répertoire `TaskManagerPro/backend`, créez un fichier nommé `Dockerfile` :
-     ```dockerfile
-     FROM node:18
+##### **1. Qu'est-ce que Terraform ?**
+- Terraform est un outil d’Infrastructure as Code (IaC) permettant de définir et gérer des infrastructures via des fichiers de configuration.
+- Il utilise un langage déclaratif appelé HCL (HashiCorp Configuration Language).
+- Terraform fonctionne avec plusieurs fournisseurs cloud : AWS, GCP, Azure, etc.
 
-     # Créer un répertoire de travail
-     WORKDIR /app
+##### **2. Installation de Terraform**
+1. **Télécharger et installer Terraform**
+   ```bash
+   curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+   sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+   sudo apt update && sudo apt install terraform
+   ```
+2. **Vérifier l’installation**
+   ```bash
+   terraform version
+   ```
 
-     # Copier les fichiers package.json et package-lock.json
-     COPY package*.json ./
+##### **3. Concepts clés de Terraform**
+- **Providers** : Définissent les services cloud à utiliser (ex. AWS, GCP, Azure).
+- **Resources** : Représentent les objets à déployer (ex. une instance EC2, un bucket S3).
+- **Variables** : Permettent de paramétrer la configuration.
+- **State** : Fichier stockant l’état actuel de l’infrastructure.
+- **Modules** : Groupes réutilisables de configurations Terraform.
 
-     # Installer les dépendances
-     RUN npm install
+##### **4. Exemple de fichier Terraform pour AWS**
+```hcl
+provider "aws" {
+  region = "us-east-1"
+}
 
-     # Copier le reste du code
-     COPY . .
+resource "aws_instance" "taskmanager_server" {
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "TaskManagerPro-Server"
+  }
+}
+```
 
-     # Exposer le port de l'application
-     EXPOSE 3000
+##### **5. Commandes essentielles**
+```bash
+terraform init      # Initialise Terraform
+terraform plan      # Prévisualise les modifications
+terraform apply     # Applique la configuration
+terraform destroy   # Supprime l’infrastructure
+```
 
-     # Commande par défaut
-     CMD ["npm", "start"]
-     ```
-
-2. **Construire l’image Docker :**
-   - Depuis le répertoire `TaskManagerPro/backend`, exécutez :
-     ```bash
-     docker build -t taskmanagerpro-backend .
-     ```
-
-3. **Démarrer un conteneur :**
-   - Lancez un conteneur basé sur l’image construite :
-     ```bash
-     docker run -d -p 3000:3000 taskmanagerpro-backend
-     ```
-   - Accédez à l’application via `http://localhost:3000`.
-
----
-
-#### **4.2. Kubernetes : Orchestration de conteneurs**
-
-**Objectif :** Utiliser Kubernetes pour déployer et gérer des applications conteneurisées de manière scalable.
-
----
-
-#### **Cours : Concepts clés de Kubernetes**
-
-##### **1. Qu'est-ce que Kubernetes ?**
-- **Définition :** Kubernetes (K8s) est une plateforme d'orchestration pour déployer, gérer et mettre à l’échelle des conteneurs.
-- **Fonctionnalités :**
-  - Gestion des pods (groupes de conteneurs).
-  - Mise à l’échelle automatique.
-  - Équilibrage de charge.
-  - Reprise automatique après panne.
-
-##### **2. Composants principaux :**
-- **Pod :** L’unité de base de déploiement, regroupant un ou plusieurs conteneurs.
-- **Service :** Point d’accès réseau pour un ensemble de pods.
-- **Ingress :** Gère l’accès HTTP/HTTPS externe.
-- **Deployment :** Contrôle les mises à jour des pods.
-- **Namespace :** Permet de regrouper des ressources isolées.
+##### **Exercice pratique : Déploiement d’un serveur EC2 AWS**
+1. **Créer un fichier `main.tf` avec la configuration AWS.**
+2. **Initialiser Terraform et appliquer la configuration.**
+   ```bash
+   terraform init
+   terraform apply -auto-approve
+   ```
+3. **Vérifier que l’instance est bien créée sur AWS.**
 
 ---
 
-#### **Exercice pratique 2 : Déployer TaskManagerPro sur un cluster Kubernetes**
+#### **5.2. Gestion de la configuration avec Ansible**
 
-1. **Installer Minikube :**
-   - Installez Minikube pour créer un cluster Kubernetes local :
-     ```bash
-     sudo apt update && sudo apt install -y minikube
-     ```
-   - Lancez Minikube :
-     ```bash
-     minikube start
-     ```
+**Objectif :** Automatiser la configuration des serveurs avec Ansible.
 
-2. **Créer un fichier de déploiement :**
-   - Dans le répertoire `TaskManagerPro`, créez un fichier `deployment.yml` :
-     ```yaml
-     apiVersion: apps/v1
-     kind: Deployment
-     metadata:
-       name: taskmanagerpro-backend
-     spec:
-       replicas: 2
-       selector:
-         matchLabels:
-           app: taskmanagerpro-backend
-       template:
-         metadata:
-           labels:
-             app: taskmanagerpro-backend
-         spec:
-           containers:
-           - name: backend
-             image: taskmanagerpro-backend
-             ports:
-             - containerPort: 3000
-     ```
+##### **1. Qu'est-ce qu’Ansible ?**
+- Outil d'automatisation sans agent utilisant SSH.
+- Utilise des playbooks (fichiers YAML) pour déployer des configurations.
+- Facilite la gestion des mises à jour et des installations logicielles.
 
-3. **Appliquer le déploiement :**
-   - Déployez l’application sur Kubernetes :
-     ```bash
-     kubectl apply -f deployment.yml
-     ```
+##### **2. Installation d’Ansible**
+```bash
+sudo apt update && sudo apt install ansible -y
+```
 
-4. **Exposer l’application :**
-   - Créez un service pour rendre l’application accessible :
-     ```yaml
-     apiVersion: v1
-     kind: Service
-     metadata:
-       name: backend-service
-     spec:
-       selector:
-         app: taskmanagerpro-backend
-       ports:
-       - protocol: TCP
-         port: 3000
-         targetPort: 3000
-       type: LoadBalancer
-     ```
-   - Appliquez le service :
-     ```bash
-     kubectl apply -f service.yml
-     ```
+##### **3. Exemple de playbook Ansible pour TaskManagerPro**
+```yaml
+- name: Configuration du serveur TaskManagerPro
+  hosts: all
+  become: yes
+  tasks:
+    - name: Installer Node.js et Git
+      apt:
+        name:
+          - nodejs
+          - git
+        state: present
+    - name: Cloner le dépôt
+      git:
+        repo: 'https://github.com/TechNovaCorp/TaskManagerPro.git'
+        dest: /var/www/TaskManagerPro
+```
 
-5. **Tester l’application :**
-   - Récupérez l’URL publique :
-     ```bash
-     minikube service backend-service --url
-     ```
-   - Accédez à l’application via l’URL affichée.
+##### **4. Exécuter un playbook**
+```bash
+ansible-playbook -i inventory.ini playbook.yml
+```
+
+##### **Exercice pratique : Configuration automatique du serveur**
+1. **Créer un fichier `inventory.ini` avec l’IP du serveur.**
+2. **Écrire un playbook Ansible pour installer Node.js et cloner TaskManagerPro.**
+3. **Exécuter le playbook pour configurer automatiquement le serveur.**
 
 ---
 
+Grâce à Terraform et Ansible, nous avons automatisé le déploiement et la configuration de l’infrastructure de TaskManagerPro. Vous êtes désormais prêts à gérer des infrastructures cloud efficacement !
 

@@ -1,141 +1,170 @@
-# Cours Complet sur AWS pour les DevOps
+---
+title: "06 CI/CD Pipelines"
+description: ""
+category: "tp"
+---
 
-## Introduction à AWS pour les DevOps
-Amazon Web Services (AWS) est une plateforme cloud offrant divers services pour l’infrastructure, le déploiement, l’automatisation et la gestion des applications. AWS est essentiel pour les DevOps, permettant une intégration et une livraison continues (CI/CD), une gestion efficace des infrastructures et une haute disponibilité des applications.
+# 6. Mise en place d'un pipeline CI/CD
 
-## Principaux Services AWS pour DevOps
+## 6.1 Objectif
+L'objectif de cette section est de **mettre en place un pipeline CI/CD** permettant d'automatiser l'intégration, les tests, la construction de l'image Docker et le déploiement sur Kubernetes.
 
-### 1. **AWS IAM (Identity and Access Management)**
-- Gestion des utilisateurs, groupes et rôles.
-- Attribution de permissions granulaires via des politiques JSON.
-- Meilleures pratiques : Principe du moindre privilège, MFA, rotation des clés.
+## 6.2 Technologies utilisées
+- **GitHub Actions / GitLab CI / Jenkins / ArgoCD** : Pour l'automatisation des pipelines CI/CD.
+- **Docker** : Conteneurisation de l'application.
+- **Kubernetes** : Déploiement et orchestration.
+- **Helm** : Gestion des déploiements Kubernetes.
+- **Prometheus & Grafana** : Surveillance des performances après déploiement.
 
-### 2. **Amazon EC2 (Elastic Compute Cloud)**
-- Machines virtuelles évolutives.
-- Utilisation des AMI (Amazon Machine Images) pour automatiser les déploiements.
-- Auto Scaling et Elastic Load Balancer (ELB) pour la haute disponibilité.
+## 6.3 Étapes du pipeline CI/CD
 
-### 3. **Amazon S3 (Simple Storage Service)**
-- Stockage d’objets sécurisé et durable.
-- Utilisation de versioning et de lifecycle policies pour optimiser les coûts.
-- Intégration avec CI/CD pour stocker des artefacts de build.
+### 6.3.1 Déclenchement du pipeline
+Le pipeline est déclenché automatiquement lors de :
+- Un **push** sur la branche principale (`main` ou `master`).
+- Une **création de pull request**.
+- Un **tagging** pour les versions.
 
-### 4. **AWS VPC (Virtual Private Cloud)**
-- Création de réseaux privés pour sécuriser les ressources AWS.
-- Configuration des sous-réseaux, passerelles NAT et VPN.
-- Utilisation de Security Groups et NACL pour la sécurité réseau.
+### 6.3.2 Étape 1 : Tests unitaires et linting
+Avant de construire l'image, il est essentiel de **vérifier la qualité du code**.
 
-### 5. **AWS Lambda (Serverless Computing)**
-- Exécution de code sans gestion de serveurs.
-- Déclencheurs à partir d’API Gateway, S3, DynamoDB, CloudWatch.
-- Automatisation des tâches DevOps, gestion des événements et intégration CI/CD.
+#### Exemple de script GitHub Actions pour exécuter les tests :
+```yaml
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
-### 6. **AWS RDS (Relational Database Service)**
-- Bases de données managées (MySQL, PostgreSQL, SQL Server, etc.).
-- Réplication multi-AZ et sauvegardes automatiques.
-- Intégration avec les applications et gestion des connexions via IAM.
-
-### 7. **Amazon DynamoDB**
-- Base de données NoSQL rapide et évolutive.
-- Idéale pour les applications serverless et les microservices.
-- Intégration avec AWS Lambda et API Gateway.
-
-### 8. **AWS CodePipeline, CodeBuild, CodeDeploy et CodeCommit**
-- Services CI/CD natifs d'AWS pour gérer le cycle de vie des applications.
-- **CodeCommit** : Gestion de versions Git.
-- **CodeBuild** : Compilation et tests des applications.
-- **CodeDeploy** : Déploiement automatisé sur EC2, Lambda et ECS.
-- **CodePipeline** : Orchestration complète du pipeline CI/CD.
-
-### 9. **Amazon ECS et EKS (Gestion des Conteneurs)**
-- **ECS** (Elastic Container Service) pour l’orchestration de conteneurs Docker.
-- **EKS** (Elastic Kubernetes Service) pour Kubernetes managé.
-- Intégration avec Fargate pour exécuter des conteneurs sans gérer l’infrastructure.
-
-### 10. **AWS CloudFormation et Terraform**
-- **CloudFormation** : IaC (Infrastructure as Code) propre à AWS.
-- **Terraform** : Outil IaC multi-cloud.
-- Déploiement automatique des infrastructures via des templates JSON/YAML.
-
-### 11. **Amazon CloudWatch**
-- Surveillance des logs et métriques des services AWS.
-- Création d’alertes et automatisation des réponses.
-- Dashboard personnalisés et intégration avec AWS Lambda.
-
-### 12. **AWS Secrets Manager et Parameter Store**
-- Gestion des secrets et variables d’environnement.
-- Sécurisation des identifiants et clés API.
-- Rotation automatique des secrets.
-
-## Mise en Place d’un Pipeline CI/CD sur AWS
-
-### 1. **Création d’un Repository avec AWS CodeCommit**
-```bash
-git remote add origin https://git-codecommit.us-east-1.amazonaws.com/v1/repos/mon-repo
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run linting
+        run: npm run lint
+      
+      - name: Run unit tests
+        run: npm test
 ```
 
-### 2. **Configuration d’un Build avec AWS CodeBuild**
-Fichier `buildspec.yml` :
+### 6.3.3 Étape 2 : Construction et publication de l’image Docker
+Si les tests passent, on construit et publie l’image Docker dans un **registre Docker**.
+
+#### Dockerfile utilisé pour la construction
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+#### Ajout de l’étape dans le pipeline CI/CD
 ```yaml
-version: 0.2
-phases:
-  install:
-    runtime-versions:
-      nodejs: 14
   build:
-    commands:
-      - echo "Building the application..."
-      - npm install
-      - npm run build
-artifacts:
-  files:
-    - '**/*'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      
+      - name: Build Docker image
+        run: |
+          docker build -t myrepo/myapp:${{ github.sha }} .
+          docker tag myrepo/myapp:${{ github.sha }} myrepo/myapp:latest
+      
+      - name: Push Docker image
+        run: |
+          docker push myrepo/myapp:${{ github.sha }}
+          docker push myrepo/myapp:latest
 ```
 
-### 3. **Déploiement Automatisé avec AWS CodeDeploy**
-- Configuration d’un groupe de déploiement.
-- Utilisation d’un fichier `appspec.yml` :
+### 6.3.4 Étape 3 : Déploiement sur Kubernetes
+Après la construction de l’image, elle est déployée sur un **cluster Kubernetes**.
+
+#### Exemple de `deployment.yaml`
 ```yaml
-version: 0.0
-os: linux
-files:
-  - source: /
-    destination: /var/www/html
-hooks:
-  AfterInstall:
-    - location: scripts/restart.sh
-      timeout: 300
-      runas: root
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: myrepo/myapp:latest
+        ports:
+        - containerPort: 3000
 ```
 
-### 4. **Orchestration du Pipeline avec AWS CodePipeline**
-- Définition des sources (CodeCommit, S3, GitHub).
-- Ajout des étapes CodeBuild et CodeDeploy.
-- Déploiement automatique après chaque commit.
+#### Ajout de l’étape de déploiement dans le pipeline CI/CD
+```yaml
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+      
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl set image deployment/myapp-deployment myapp=myrepo/myapp:${{ github.sha }}
+```
 
-## Surveillance et Sécurité sur AWS
+### 6.3.5 Étape 4 : Surveillance du déploiement
+Une fois le déploiement terminé, nous utilisons **Prometheus et Grafana** pour surveiller les performances.
 
-### 1. **Surveillance avec CloudWatch et CloudTrail**
-- Création d’alertes sur les logs d’applications et l’usage CPU.
-- Activation d’AWS CloudTrail pour suivre les modifications d’infrastructure.
+#### Vérification de l'état des pods et des services
+```bash
+kubectl get pods
+kubectl get services
+```
 
-### 2. **Sécurisation des Applications**
-- IAM : Utilisation de rôles et permissions minimales.
-- Sécurisation des accès avec AWS WAF et Shield.
-- Chiffrement des données avec KMS (Key Management Service).
+#### Affichage des logs de l’application
+```bash
+kubectl logs -f myapp-pod
+```
 
-### 3. **Gestion des Backups et Disaster Recovery**
-- Sauvegarde automatique des bases de données avec RDS Snapshots.
-- Configuration des politiques de sauvegarde S3 et Glacier.
-- Implémentation de Multi-AZ et Route 53 pour assurer la continuité des services.
+## 6.4 Gestion des rollback et versioning
+Si une nouvelle version introduit des bugs, il est possible de **revenir à une version précédente**.
 
-## Bonnes Pratiques DevOps sur AWS
-- **Automatiser les déploiements avec IaC (Terraform, CloudFormation).**
-- **Utiliser les services managés AWS pour réduire l’overhead opérationnel.**
-- **Mettre en place des tests automatiques dans le pipeline CI/CD.**
-- **Appliquer le principe du moindre privilège dans IAM.**
-- **Surveiller et optimiser les coûts AWS avec AWS Cost Explorer.**
+### 6.4.1 Vérification de l’historique des déploiements
+```bash
+kubectl rollout history deployment myapp-deployment
+```
 
-## Conclusion
-AWS offre un écosystème puissant pour les DevOps, permettant l’automatisation complète du cycle de vie des applications, de l’infrastructure et des pipelines CI/CD. En maîtrisant ces outils et en adoptant les bonnes pratiques, les équipes DevOps peuvent améliorer la fiabilité, la scalabilité et la sécurité de leurs applications.
+### 6.4.2 Annulation d’un déploiement
+```bash
+kubectl rollout undo deployment myapp-deployment
+```
 
+## 6.5 Améliorations possibles
+- Utilisation de **Helm** pour simplifier la gestion des déploiements.
+- Mise en place d’**ArgoCD** pour une approche GitOps.
+- Ajout de **tests de charge** avec K6 ou JMeter.
+- Automatisation des alertes en cas de défaillance via **Prometheus Alertmanager**.
+
+## 6.6 Conclusion
+Grâce à ce pipeline CI/CD, chaque modification du code est automatiquement **testée, construite, publiée et déployée** en production sans intervention manuelle. Cela assure un déploiement rapide, fiable et sécurisé.

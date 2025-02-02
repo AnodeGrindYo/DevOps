@@ -1,3 +1,9 @@
+---
+title: "HashiCorp Vault"
+description: "HashiCorp Vault est un outil permettant la gestion sécurisée des secrets, des tokens d'authentification et du chiffrement des données sensibles."
+category: "outils"
+---
+
 # Cours Complet sur HashiCorp Vault
 
 ## Introduction à HashiCorp Vault

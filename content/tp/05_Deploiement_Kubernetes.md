@@ -1,3 +1,9 @@
+---
+title: "05 Déploiement sur Kubernetes"
+description: ""
+category: "tp"
+---
+
 # 5. Déploiement sur Kubernetes
 
 ## 5.1 Objectif

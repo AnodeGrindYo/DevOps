@@ -1,4 +1,10 @@
-# Cours complet sur Podman
+---
+title: "Podman"
+description: "Podman est un moteur de conteneurs open-source conçu pour exécuter, gérer et déployer des conteneurs sans nécessiter de daemon en arrière-plan. Contrairement à Docker, Podman ne fonctionne pas en tant que service root unique et permet l'exécution de conteneurs sans privilèges root, améliorant ainsi la sécurité."
+category: "outils"
+---
+
+# Podman
 
 ## Introduction à Podman
 Podman est un moteur de conteneurs open-source conçu pour exécuter, gérer et déployer des conteneurs sans nécessiter de daemon en arrière-plan. Contrairement à Docker, Podman ne fonctionne pas en tant que service root unique et permet l'exécution de conteneurs sans privilèges root, améliorant ainsi la sécurité.

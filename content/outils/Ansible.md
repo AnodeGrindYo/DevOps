@@ -1,4 +1,10 @@
-# Cours complet sur Ansible
+---
+title: "Ansible"
+description: "Ansible est un outil open-source d'automatisation permettant la gestion de la configuration, le déploiement d’applications et l'orchestration d'infrastructure. Il est conçu pour être simple à utiliser, efficace et sans agent."
+category: "outils"
+---
+
+# Ansible
 
 ## Introduction à Ansible
 

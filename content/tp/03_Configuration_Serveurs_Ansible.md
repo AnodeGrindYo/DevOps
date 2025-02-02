@@ -1,3 +1,9 @@
+---
+title: "Configuration des serveurs avec Ansible"
+description: ""
+category: "tp"
+---
+
 # 3. Configuration des serveurs avec Ansible
 
 ## 3.1 Objectif

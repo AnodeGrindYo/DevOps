@@ -1,3 +1,9 @@
+---
+title: "Docker"
+description: "Docker est une plateforme de conteneurisation permettant de créer, déployer et exécuter des applications de manière isolée et portable."
+category: "outils"
+---
+
 # Cours Complet sur Docker
 
 ## Introduction à Docker

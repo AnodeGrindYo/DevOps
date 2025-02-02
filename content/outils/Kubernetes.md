@@ -1,4 +1,11 @@
-# Cours complet sur Kubernetes
+---
+title: "Kubernetes"
+description: "Kubernetes (ou K8s) est un système open-source conçu pour automatiser le déploiement, la mise à l'échelle et la gestion des applications conteneurisées. Il a été initialement développé par Google et est maintenant maintenu par la Cloud Native Computing Foundation (CNCF)."
+category: "outils"
+---
+
+
+# Kubernetes
 
 ## Introduction à Kubernetes
 

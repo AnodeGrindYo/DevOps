@@ -1,4 +1,10 @@
-# Cours complet sur Pulumi
+---
+title: "Pulumi"
+description: "Pulumi est une plateforme open-source d'Infrastructure as Code (IaC) permettant de gérer des infrastructures cloud en utilisant des langages de programmation généralistes comme Python, TypeScript, Go, et C#. Contrairement à Terraform qui utilise un langage déclaratif (HCL), Pulumi permet une approche plus flexible grâce à une programmation impérative."
+category: "outils"
+---
+
+# Pulumi
 
 ## Introduction à Pulumi
 Pulumi est une plateforme open-source d'Infrastructure as Code (IaC) permettant de gérer des infrastructures cloud en utilisant des langages de programmation généralistes comme Python, TypeScript, Go, et C#. Contrairement à Terraform qui utilise un langage déclaratif (HCL), Pulumi permet une approche plus flexible grâce à une programmation impérative.

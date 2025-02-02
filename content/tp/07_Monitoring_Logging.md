@@ -1,3 +1,9 @@
+---
+title: "07 Mise en place du Monitoring et Logging"
+description: ""
+category: "tp"
+---
+
 # 7. Mise en place du Monitoring et Logging
 
 ## 7.1 Objectif

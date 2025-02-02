@@ -1,3 +1,9 @@
+---
+title: "GitLab CI/CD"
+description: "GitLab CI/CD permet l'automatisation des tests, builds et déploiements grâce à des pipelines intégrés dans la plateforme GitLab."
+category: "outils"
+---
+
 # Cours Complet sur GitLab CI/CD
 
 ## Introduction à GitLab CI/CD

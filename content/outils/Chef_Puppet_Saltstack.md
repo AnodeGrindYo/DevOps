@@ -1,3 +1,9 @@
+---
+title: "Chef, Puppet, Saltstack"
+description: "Comparaison et utilisation des outils d'automatisation de configuration Chef, Puppet et Saltstack pour la gestion des infrastructures."
+category: "outils"
+---
+
 # Cours complet sur Chef, Puppet et SaltStack
 
 ## Introduction à l'automatisation de la configuration

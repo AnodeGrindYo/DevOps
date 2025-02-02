@@ -1,3 +1,9 @@
+---
+title: "02 Provisionnement de l’infrastructure avec Terraform"
+description: ""
+category: "tp"
+---
+
 # 2. Provisionnement de l’infrastructure avec Terraform
 
 ## 2.1 Objectif

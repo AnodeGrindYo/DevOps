@@ -1,4 +1,10 @@
-# Cours Complet sur Trivy
+---
+title: "Trivy"
+description: "Trivy est un scanner de vulnérabilités open-source développé par Aqua Security. Il permet d’analyser les images Docker, les fichiers de configuration, les dépôts de code et les infrastructures en tant que code (IaC) pour détecter les vulnérabilités et les mauvaises configurations."
+category: "outils"
+---
+
+# Trivy
 
 ## Introduction à Trivy
 Trivy est un scanner de vulnérabilités open-source développé par Aqua Security. Il permet d’analyser les images Docker, les fichiers de configuration, les dépôts de code et les infrastructures en tant que code (IaC) pour détecter les vulnérabilités et les mauvaises configurations.
