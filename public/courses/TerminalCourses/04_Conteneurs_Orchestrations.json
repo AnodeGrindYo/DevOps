@@ -1,0 +1,159 @@
+{
+  "title": "Conteneurs et orchestration",
+  "description": "Apprendre à créer et gérer des conteneurs Docker pour déployer des applications.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Créer le répertoire TaskManagerPro/backend",
+      "description": "Créez le répertoire nécessaire pour le backend de TaskManagerPro.",
+      "hint": "Utilisez la commande mkdir avec l'option -p pour créer le répertoire (ex: mkdir -p TaskManagerPro/backend).",
+      "command": "mkdir -p TaskManagerPro/backend",
+      "successOutput": "Répertoire TaskManagerPro/backend créé.",
+      "errorOutput": "Échec de la création du répertoire."
+    },
+    {
+      "title": "Créer le Dockerfile pour le backend",
+      "description": "Créez un fichier Dockerfile dans TaskManagerPro/backend contenant la configuration pour construire l'image Docker.",
+      "hint": "Utilisez cat avec un here-document pour écrire le Dockerfile. Veillez à copier exactement le contenu fourni.",
+      "command": "cat << 'EOF' > TaskManagerPro/backend/Dockerfile\nFROM node:18\n\n# Créer un répertoire de travail\nWORKDIR /app\n\n# Copier les fichiers package.json et package-lock.json\nCOPY package*.json ./\n\n# Installer les dépendances\nRUN npm install\n\n# Copier le reste du code\nCOPY . .\n\n# Exposer le port de l'application\nEXPOSE 3000\n\n# Commande par défaut\nCMD [\"npm\", \"start\"]\nEOF",
+      "successOutput": "Dockerfile créé avec succès.",
+      "errorOutput": "Échec de la création du Dockerfile."
+    },
+    {
+      "title": "Construire l'image Docker pour le backend",
+      "description": "Construisez l'image Docker à partir du Dockerfile situé dans TaskManagerPro/backend.",
+      "hint": "Utilisez docker build avec l'option -t pour nommer l'image. Par exemple : docker build -t taskmanagerpro-backend TaskManagerPro/backend",
+      "command": "docker build -t taskmanagerpro-backend TaskManagerPro/backend",
+      "successOutput": "Image Docker taskmanagerpro-backend construite avec succès.",
+      "errorOutput": "Échec de la construction de l'image Docker."
+    },
+    {
+      "title": "Démarrer un conteneur pour le backend",
+      "description": "Lancez un conteneur Docker à partir de l'image construite et nommez-le pour faciliter les manipulations ultérieures.",
+      "hint": "Utilisez docker run avec -d pour le mode détaché, --name pour nommer le conteneur, et -p pour rediriger le port. Par exemple : docker run -d --name taskmanagerpro-backend-container -p 3000:3000 taskmanagerpro-backend",
+      "command": "docker run -d --name taskmanagerpro-backend-container -p 3000:3000 taskmanagerpro-backend",
+      "successOutput": "Conteneur taskmanagerpro-backend-container démarré avec succès sur le port 3000.",
+      "errorOutput": "Échec du démarrage du conteneur."
+    },
+    {
+      "title": "Lister les conteneurs Docker en cours d'exécution",
+      "description": "Affichez la liste des conteneurs actifs afin de vérifier que votre conteneur est lancé.",
+      "hint": "Utilisez la commande docker ps pour lister les conteneurs en cours d'exécution.",
+      "command": "docker ps",
+      "successOutput": "Les conteneurs actifs sont affichés.",
+      "errorOutput": "Aucun conteneur en cours d'exécution n'a été trouvé."
+    },
+    {
+      "title": "Lister les images Docker disponibles",
+      "description": "Vérifiez que l'image taskmanagerpro-backend est bien présente sur votre système.",
+      "hint": "Utilisez la commande docker images pour lister toutes les images Docker.",
+      "command": "docker images",
+      "successOutput": "Les images Docker sont affichées.",
+      "errorOutput": "Aucune image trouvée."
+    },
+    {
+      "title": "Installer Minikube",
+      "description": "Installez Minikube afin de pouvoir créer un cluster Kubernetes local pour l'orchestration.",
+      "hint": "Utilisez apt pour mettre à jour les paquets et installer Minikube. Par exemple : sudo apt update && sudo apt install -y minikube",
+      "command": "sudo apt update && sudo apt install -y minikube",
+      "successOutput": "Minikube installé avec succès.",
+      "errorOutput": "Échec de l'installation de Minikube."
+    },
+    {
+      "title": "Démarrer Minikube",
+      "description": "Lancez votre cluster Kubernetes local avec Minikube.",
+      "hint": "Utilisez la commande minikube start pour démarrer le cluster.",
+      "command": "minikube start",
+      "successOutput": "Minikube démarré avec succès.",
+      "errorOutput": "Échec du démarrage de Minikube."
+    },
+    {
+      "title": "Créer le fichier de déploiement Kubernetes",
+      "description": "Créez un fichier deployment.yml dans le répertoire TaskManagerPro pour déployer l'application sur Kubernetes.",
+      "hint": "Utilisez cat avec un here-document pour créer le fichier deployment.yml avec le contenu exact fourni.",
+      "command": "cat << 'EOF' > TaskManagerPro/deployment.yml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: taskmanagerpro-backend\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: taskmanagerpro-backend\n  template:\n    metadata:\n      labels:\n        app: taskmanagerpro-backend\n    spec:\n      containers:\n      - name: backend\n        image: taskmanagerpro-backend\n        ports:\n        - containerPort: 3000\nEOF",
+      "successOutput": "Fichier deployment.yml créé avec succès.",
+      "errorOutput": "Échec de la création du fichier deployment.yml."
+    },
+    {
+      "title": "Déployer l'application sur Kubernetes",
+      "description": "Appliquez le déploiement en utilisant le fichier deployment.yml pour lancer votre application dans le cluster.",
+      "hint": "Utilisez kubectl apply -f suivi du chemin vers le fichier deployment.yml.",
+      "command": "kubectl apply -f TaskManagerPro/deployment.yml",
+      "successOutput": "Déploiement de TaskManagerPro appliqué avec succès sur Kubernetes.",
+      "errorOutput": "Échec de l'application du déploiement."
+    },
+    {
+      "title": "Créer le fichier de service Kubernetes",
+      "description": "Créez un fichier service.yml dans TaskManagerPro pour exposer votre application via un service LoadBalancer.",
+      "hint": "Utilisez cat avec un here-document pour créer le fichier service.yml avec le contenu exact fourni.",
+      "command": "cat << 'EOF' > TaskManagerPro/service.yml\napiVersion: v1\nkind: Service\nmetadata:\n  name: backend-service\nspec:\n  selector:\n    app: taskmanagerpro-backend\n  ports:\n  - protocol: TCP\n    port: 3000\n    targetPort: 3000\n  type: LoadBalancer\nEOF",
+      "successOutput": "Fichier service.yml créé avec succès.",
+      "errorOutput": "Échec de la création du fichier service.yml."
+    },
+    {
+      "title": "Exposer l'application sur Kubernetes",
+      "description": "Créez le service en appliquant le fichier service.yml pour rendre l'application accessible.",
+      "hint": "Utilisez kubectl apply -f suivi du chemin vers le fichier service.yml.",
+      "command": "kubectl apply -f TaskManagerPro/service.yml",
+      "successOutput": "Service backend-service créé avec succès.",
+      "errorOutput": "Échec de la création du service."
+    },
+    {
+      "title": "Obtenir l'URL publique du service",
+      "description": "Récupérez l'URL d'accès à votre application déployée sur Kubernetes.",
+      "hint": "Utilisez la commande minikube service backend-service --url pour afficher l'URL publique.",
+      "command": "minikube service backend-service --url",
+      "successOutput": "URL publique récupérée. Accédez à l'application via l'URL affichée.",
+      "errorOutput": "Échec de la récupération de l'URL du service."
+    },
+    {
+      "title": "Vérifier le déploiement sur Kubernetes",
+      "description": "Affichez la liste des déploiements pour vérifier l'état du déploiement de TaskManagerPro.",
+      "hint": "Utilisez kubectl get deployments pour lister les déploiements.",
+      "command": "kubectl get deployments",
+      "successOutput": "Déploiement vérifié avec succès.",
+      "errorOutput": "Aucun déploiement trouvé."
+    },
+    {
+      "title": "Vérifier les pods sur Kubernetes",
+      "description": "Affichez la liste des pods pour vérifier que les instances de votre application sont bien lancées.",
+      "hint": "Utilisez kubectl get pods pour lister les pods déployés.",
+      "command": "kubectl get pods",
+      "successOutput": "Liste des pods affichée.",
+      "errorOutput": "Aucun pod trouvé."
+    },
+    {
+      "title": "Afficher les logs du conteneur TaskManagerPro",
+      "description": "Affichez les logs du conteneur Docker afin de vérifier que l'application s'exécute correctement.",
+      "hint": "Utilisez docker logs suivi du nom du conteneur (ici taskmanagerpro-backend-container).",
+      "command": "docker logs taskmanagerpro-backend-container",
+      "successOutput": "Logs du conteneur affichés.",
+      "errorOutput": "Échec de l'affichage des logs."
+    },
+    {
+      "title": "Arrêter le conteneur TaskManagerPro",
+      "description": "Arrêtez le conteneur Docker en cours d'exécution pour libérer des ressources.",
+      "hint": "Utilisez docker stop suivi du nom du conteneur.",
+      "command": "docker stop taskmanagerpro-backend-container",
+      "successOutput": "Conteneur arrêté avec succès.",
+      "errorOutput": "Échec de l'arrêt du conteneur."
+    },
+    {
+      "title": "Supprimer le conteneur TaskManagerPro",
+      "description": "Supprimez le conteneur Docker arrêté afin de nettoyer votre environnement.",
+      "hint": "Utilisez docker rm suivi du nom du conteneur.",
+      "command": "docker rm taskmanagerpro-backend-container",
+      "successOutput": "Conteneur supprimé avec succès.",
+      "errorOutput": "Échec de la suppression du conteneur."
+    },
+    {
+      "title": "Supprimer l'image Docker taskmanagerpro-backend",
+      "description": "Supprimez l'image Docker créée afin de libérer de l'espace et nettoyer votre environnement.",
+      "hint": "Utilisez docker rmi suivi du nom de l'image.",
+      "command": "docker rmi taskmanagerpro-backend",
+      "successOutput": "Image Docker supprimée avec succès.",
+      "errorOutput": "Échec de la suppression de l'image Docker."
+    }
+  ]
+}

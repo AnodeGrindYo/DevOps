@@ -1,0 +1,247 @@
+{
+  "title": "Les bases indispensables en Linux",
+  "description": "Apprenez les commandes essentielles pour administrer un serveur Linux et configurer un environnement de travail.",
+  "missions": [
+    {
+      "title": "Connexion au serveur",
+      "description": "Connectez-vous à un serveur distant via SSH.",
+      "hint": "Utilisez la commande `ssh user@adresse_ip`.",
+      "command": "ssh user@adresse_ip",
+      "successOutput": "Connexion réussie à user@adresse_ip.",
+      "errorOutput": "Connexion échouée. Vérifiez votre accès SSH."
+    },
+    {
+      "title": "Mise à jour du système",
+      "description": "Assurez-vous que le système est à jour en exécutant une mise à jour des paquets.",
+      "hint": "Utilisez `sudo apt update && sudo apt upgrade -y`.",
+      "command": "sudo apt update && sudo apt upgrade -y",
+      "successOutput": "Mise à jour du système terminée.",
+      "errorOutput": "Erreur lors de la mise à jour."
+    },
+    {
+      "title": "Lister les fichiers du répertoire courant",
+      "description": "Affichez les fichiers présents dans votre répertoire actuel.",
+      "hint": "Utilisez `ls` pour voir les fichiers.",
+      "command": "ls",
+      "successOutput": "Documents  Images  projet1  projet2",
+      "errorOutput": "Commande incorrecte. Essayez `ls`."
+    },
+    {
+      "title": "Créer un nouveau répertoire",
+      "description": "Créez un répertoire nommé `devops-project`.",
+      "hint": "Utilisez `mkdir devops-project`.",
+      "command": "mkdir devops-project",
+      "successOutput": "Répertoire 'devops-project' créé avec succès.",
+      "errorOutput": "Erreur de création. Utilisez `mkdir devops-project`."
+    },
+    {
+      "title": "Se déplacer dans un répertoire",
+      "description": "Accédez au répertoire `devops-project`.",
+      "hint": "Utilisez `cd devops-project`.",
+      "command": "cd devops-project",
+      "successOutput": "Vous êtes maintenant dans ~/devops-project.",
+      "errorOutput": "Erreur de déplacement. Essayez `cd devops-project`."
+    },
+    {
+      "title": "Créer un fichier de configuration",
+      "description": "Créez un fichier vide nommé `config.txt`.",
+      "hint": "Utilisez `touch config.txt`.",
+      "command": "touch config.txt",
+      "successOutput": "Fichier 'config.txt' créé avec succès.",
+      "errorOutput": "Commande incorrecte. Utilisez `touch config.txt`."
+    },
+    {
+      "title": "Modifier les permissions d'un fichier",
+      "description": "Rendez le fichier `config.txt` exécutable.",
+      "hint": "Utilisez `chmod +x config.txt`.",
+      "command": "chmod +x config.txt",
+      "successOutput": "Permissions modifiées avec succès.",
+      "errorOutput": "Commande incorrecte. Essayez `chmod +x config.txt`."
+    },
+    {
+      "title": "Modifier le propriétaire d'un fichier",
+      "description": "Changez le propriétaire de `config.txt` en `admin`.",
+      "hint": "Utilisez `sudo chown admin config.txt`.",
+      "command": "sudo chown admin config.txt",
+      "successOutput": "Propriétaire modifié avec succès.",
+      "errorOutput": "Commande incorrecte. Essayez `sudo chown admin config.txt`."
+    },
+    {
+      "title": "Lister les processus actifs",
+      "description": "Affichez les processus en cours sur votre machine.",
+      "hint": "Utilisez `ps aux`.",
+      "command": "ps aux",
+      "successOutput": "Liste des processus affichée.",
+      "errorOutput": "Commande incorrecte. Essayez `ps aux`."
+    },
+    {
+      "title": "Arrêter un processus spécifique",
+      "description": "Tuez un processus en utilisant son PID (exemple : `kill 1234`).",
+      "hint": "Utilisez `kill PID` avec un vrai PID.",
+      "command": "kill 1234",
+      "successOutput": "Processus 1234 arrêté avec succès.",
+      "errorOutput": "Commande incorrecte. Vérifiez le PID et essayez `kill PID`."
+    },
+    {
+      "title": "Vérifier l'état du service SSH",
+      "description": "Vérifiez si le service SSH est actif.",
+      "hint": "Utilisez `sudo systemctl status ssh`.",
+      "command": "sudo systemctl status ssh",
+      "successOutput": "Le service SSH est actif.",
+      "errorOutput": "Le service SSH est inactif. Essayez `sudo systemctl start ssh`."
+    },
+    {
+      "title": "Démarrer un service avec systemctl",
+      "description": "Démarrez le service Apache si ce n'est pas déjà fait.",
+      "hint": "Utilisez `sudo systemctl start apache2`.",
+      "command": "sudo systemctl start apache2",
+      "successOutput": "Service Apache démarré avec succès.",
+      "errorOutput": "Commande incorrecte. Essayez `sudo systemctl start apache2`."
+    },
+    {
+      "title": "Configurer l'accès SSH sécurisé",
+      "description": "Générez une clé SSH et ajoutez-la au serveur.",
+      "hint": "Utilisez `ssh-keygen -t rsa -b 4096`, puis `ssh-copy-id user@adresse_ip`.",
+      "command": "ssh-copy-id user@adresse_ip",
+      "successOutput": "Clé SSH ajoutée avec succès.",
+      "errorOutput": "Échec de l'ajout de la clé SSH."
+    },
+    {
+      "title": "Tester la connexion SSH sans mot de passe",
+      "description": "Connectez-vous au serveur sans utiliser de mot de passe.",
+      "hint": "Utilisez `ssh user@adresse_ip`.",
+      "command": "ssh user@adresse_ip",
+      "successOutput": "Connexion SSH établie sans mot de passe.",
+      "errorOutput": "Connexion échouée. Assurez-vous d'avoir ajouté la clé."
+    },
+    {
+      "title": "Transfert de fichiers avec SFTP",
+      "description": "Transférez un fichier de configuration via SFTP.",
+      "hint": "Utilisez `sftp user@adresse_ip`, puis `put chemin_du_fichier`.",
+      "command": "put chemin_du_fichier",
+      "successOutput": "Fichier transféré avec succès via SFTP.",
+      "errorOutput": "Échec du transfert. Vérifiez votre connexion avec `sftp user@adresse_ip`."
+    },
+    {
+      "title": "Modifier un fichier avec nano",
+      "description": "Ouvrez le fichier `config.txt` avec nano et ajoutez du texte.",
+      "hint": "Utilisez `nano config.txt`, ajoutez une ligne de texte, puis enregistrez avec `CTRL + X`, `Y` et `ENTER`.",
+      "command": "nano config.txt",
+      "successOutput": "Fichier modifié avec succès.",
+      "errorOutput": "Erreur d'édition du fichier."
+    },
+    {
+      "title": "Créer un lien symbolique",
+      "description": "Créez un lien symbolique `config_link.txt` pointant vers `config.txt`.",
+      "hint": "Utilisez `ln -s config.txt config_link.txt`.",
+      "command": "ln -s config.txt config_link.txt",
+      "successOutput": "Lien symbolique créé avec succès.",
+      "errorOutput": "Échec de la création du lien symbolique."
+    },
+    {
+      "title": "Trouver un fichier avec find",
+      "description": "Recherchez le fichier `config.txt` dans votre répertoire personnel.",
+      "hint": "Utilisez `find ~/ -name config.txt`.",
+      "command": "find ~/ -name config.txt",
+      "successOutput": "Fichier trouvé avec succès.",
+      "errorOutput": "Le fichier n'a pas été trouvé."
+    },
+    {
+      "title": "Créer un nouvel utilisateur",
+      "description": "Ajoutez un utilisateur nommé `devops`.",
+      "hint": "Utilisez `sudo adduser devops`.",
+      "command": "sudo adduser devops",
+      "successOutput": "Utilisateur 'devops' créé avec succès.",
+      "errorOutput": "Erreur lors de la création de l'utilisateur."
+    },
+    {
+      "title": "Créer un groupe et ajouter un utilisateur",
+      "description": "Créez un groupe `admin-devops` et ajoutez-y l’utilisateur `devops`.",
+      "hint": "Utilisez `sudo groupadd admin-devops && sudo usermod -aG admin-devops devops`.",
+      "command": "sudo groupadd admin-devops && sudo usermod -aG admin-devops devops",
+      "successOutput": "Groupe créé et utilisateur ajouté.",
+      "errorOutput": "Erreur lors de la création du groupe ou de l'ajout de l'utilisateur."
+    },
+    {
+      "title": "Changer d'utilisateur",
+      "description": "Passez à l’utilisateur `devops` pour tester ses permissions.",
+      "hint": "Utilisez `su - devops`.",
+      "command": "su - devops",
+      "successOutput": "Passage réussi à l'utilisateur 'devops'.",
+      "errorOutput": "Erreur de connexion en tant que 'devops'."
+    },
+    {
+      "title": "Vérifier l'adresse IP du serveur",
+      "description": "Affichez l'adresse IP assignée au serveur.",
+      "hint": "Utilisez `ip a`.",
+      "command": "ip a",
+      "successOutput": "Adresse IP affichée avec succès.",
+      "errorOutput": "Échec de l'affichage de l'adresse IP."
+    },
+    {
+      "title": "Tester la connexion à un serveur",
+      "description": "Utilisez la commande `ping` pour vérifier la connexion à `google.com`.",
+      "hint": "Utilisez `ping -c 4 google.com`.",
+      "command": "ping -c 4 google.com",
+      "successOutput": "Test de connectivité réussi.",
+      "errorOutput": "Impossible de contacter google.com."
+    },
+    {
+      "title": "Lister les ports ouverts",
+      "description": "Affichez les ports ouverts sur votre machine.",
+      "hint": "Utilisez `netstat -tulnp`.",
+      "command": "netstat -tulnp",
+      "successOutput": "Liste des ports ouverts affichée.",
+      "errorOutput": "Erreur lors de l'affichage des ports ouverts."
+    },
+    {
+      "title": "Créer un script Bash",
+      "description": "Créez un fichier `script.sh` et ajoutez un script simple.",
+      "hint": "Utilisez `nano script.sh`, ajoutez `#!/bin/bash echo Hello World`, enregistrez et fermez.",
+      "command": "nano script.sh",
+      "successOutput": "Script créé avec succès.",
+      "errorOutput": "Erreur lors de la création du script."
+    },
+    {
+      "title": "Rendre un script exécutable",
+      "description": "Attribuez les permissions d'exécution à `script.sh`.",
+      "hint": "Utilisez `chmod +x script.sh`.",
+      "command": "chmod +x script.sh",
+      "successOutput": "Script rendu exécutable.",
+      "errorOutput": "Échec de la modification des permissions."
+    },
+    {
+      "title": "Exécuter un script Bash",
+      "description": "Exécutez votre script `script.sh`.",
+      "hint": "Utilisez `./script.sh`.",
+      "command": "./script.sh",
+      "successOutput": "Hello World",
+      "errorOutput": "Erreur lors de l'exécution du script."
+    },
+    {
+      "title": "Afficher les logs du système",
+      "description": "Consultez les logs système récents.",
+      "hint": "Utilisez `sudo journalctl -xe`.",
+      "command": "sudo journalctl -xe",
+      "successOutput": "Logs système affichés.",
+      "errorOutput": "Erreur lors de l'affichage des logs."
+    },
+    {
+      "title": "Surveiller l'utilisation CPU et mémoire",
+      "description": "Utilisez `top` pour voir les processus actifs et l'utilisation des ressources.",
+      "hint": "Utilisez `top`.",
+      "command": "top",
+      "successOutput": "Processus en cours affichés.",
+      "errorOutput": "Erreur lors de l'affichage des processus."
+    },
+    {
+      "title": "Vérifier l'espace disque disponible",
+      "description": "Affichez l'espace disque utilisé sur votre serveur.",
+      "hint": "Utilisez `df -h`.",
+      "command": "df -h",
+      "successOutput": "Espace disque affiché.",
+      "errorOutput": "Erreur lors de la vérification de l'espace disque."
+    }
+    
+  ]
+}

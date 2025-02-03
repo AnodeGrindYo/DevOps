@@ -1,0 +1,103 @@
+{
+  "title": "Infrastructure as Code (IaC)",
+  "description": "Automatiser le déploiement de l’infrastructure pour TaskManagerPro avec Terraform et la configuration des serveurs avec Ansible.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Analyser la commande d'installation de Terraform",
+      "description": "Avant d'installer Terraform, prenez quelques instants pour lire et comprendre la commande qui ajoute la clé GPG, configure le dépôt HashiCorp et installe Terraform.",
+      "hint": "Décomposez la commande en plusieurs parties : quelle est la fonction de 'curl -fsSL', de 'apt-key add', de 'apt-add-repository' ? Expliquez brièvement dans vos mots (même en commentant la commande) ce que fait chaque segment.",
+      "command": "curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - && sudo apt-add-repository \"deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main\" && sudo apt update && sudo apt install terraform",
+      "successOutput": "Vous avez compris la commande d'installation de Terraform.",
+      "errorOutput": "La commande d'installation a échoué. Relisez les composants et vérifiez votre syntaxe."
+    },
+    {
+      "title": "Vérifier l'installation de Terraform",
+      "description": "Assurez-vous que Terraform est correctement installé en vérifiant sa version.",
+      "hint": "Avant d'exécuter la commande, réfléchissez à ce que 'terraform version' devrait afficher et pourquoi cette vérification est importante.",
+      "command": "terraform version",
+      "successOutput": "La version de Terraform est affichée, confirmant son installation.",
+      "errorOutput": "Terraform ne semble pas être installé correctement."
+    },
+    {
+      "title": "Créer le fichier main.tf pour AWS",
+      "description": "Écrivez le fichier de configuration Terraform qui déclare une instance AWS. Prenez le temps de lire chaque ligne pour comprendre la syntaxe HCL.",
+      "hint": "Utilisez le here-document pour créer le fichier, mais ne copiez pas aveuglément ! Essayez de repérer la définition du provider et de la resource. Pourquoi spécifier la région 'us-east-1' ?",
+      "command": "cat << 'EOF' > main.tf\nprovider \"aws\" {\n  region = \"us-east-1\"\n}\n\nresource \"aws_instance\" \"taskmanager_server\" {\n  ami           = \"ami-12345678\"\n  instance_type = \"t2.micro\"\n  tags = {\n    Name = \"TaskManagerPro-Server\"\n  }\n}\nEOF",
+      "successOutput": "Le fichier main.tf a été créé et son contenu est conforme à la configuration attendue.",
+      "errorOutput": "Échec de la création du fichier main.tf. Vérifiez la syntaxe et réessayez."
+    },
+    {
+      "title": "Initialiser Terraform",
+      "description": "Initialisez le répertoire de travail Terraform afin de préparer le déploiement de l'infrastructure.",
+      "hint": "Réfléchissez à l'importance de la commande 'terraform init' : que se passe-t-il lors de l'initialisation d'un projet Terraform ?",
+      "command": "terraform init",
+      "successOutput": "Terraform a été initialisé avec succès.",
+      "errorOutput": "L'initialisation de Terraform a échoué."
+    },
+    {
+      "title": "Générer un plan d'exécution avec Terraform",
+      "description": "Prévisualisez les modifications que Terraform va apporter en générant un plan d'exécution.",
+      "hint": "Exécutez 'terraform plan' et observez la sortie. Prenez quelques instants pour identifier les actions qui seront réalisées (création, modification ou suppression de ressources).",
+      "command": "terraform plan",
+      "successOutput": "Le plan Terraform a été généré avec succès.",
+      "errorOutput": "L'exécution de 'terraform plan' a rencontré une erreur."
+    },
+    {
+      "title": "Appliquer la configuration Terraform",
+      "description": "Déployez l'infrastructure en appliquant la configuration définie dans main.tf.",
+      "hint": "Avant d'exécuter cette commande, relisez le plan généré. Expliquez dans vos mots l'impact de 'terraform apply -auto-approve' sur votre environnement.",
+      "command": "terraform apply -auto-approve",
+      "successOutput": "L'infrastructure a été déployée avec succès.",
+      "errorOutput": "L'application de la configuration Terraform a échoué."
+    },
+    {
+      "title": "Détruire l'infrastructure déployée",
+      "description": "Nettoyez votre environnement en supprimant l'infrastructure déployée par Terraform.",
+      "hint": "Pourquoi est-il important de détruire l'infrastructure une fois l'exercice terminé ? Exécutez 'terraform destroy -auto-approve' en réfléchissant à cette question.",
+      "command": "terraform destroy -auto-approve",
+      "successOutput": "L'infrastructure a été détruite avec succès.",
+      "errorOutput": "La destruction de l'infrastructure a échoué."
+    },
+    {
+      "title": "Installer Ansible",
+      "description": "Installez Ansible pour automatiser la configuration de vos serveurs.",
+      "hint": "Avant d'exécuter la commande, pensez à l'usage d'Ansible dans l'automatisation. Pourquoi utiliser 'apt update' avant l'installation ?",
+      "command": "sudo apt update && sudo apt install ansible -y",
+      "successOutput": "Ansible a été installé avec succès.",
+      "errorOutput": "L'installation d'Ansible a échoué."
+    },
+    {
+      "title": "Créer le fichier inventory.ini",
+      "description": "Créez un fichier d'inventaire listant l'IP du serveur. Dans ce simulateur, utilisez 127.0.0.1.",
+      "hint": "Prenez un moment pour comprendre le rôle d'un inventaire dans Ansible. Ce fichier permet de définir les hôtes cibles de vos playbooks.",
+      "command": "cat << 'EOF' > inventory.ini\n[all]\n127.0.0.1\nEOF",
+      "successOutput": "Le fichier inventory.ini a été créé avec succès.",
+      "errorOutput": "Échec de la création du fichier inventory.ini."
+    },
+    {
+      "title": "Créer le playbook Ansible pour TaskManagerPro",
+      "description": "Écrivez un playbook qui installe Node.js et Git, puis clone le dépôt TaskManagerPro sur le serveur.",
+      "hint": "Avant de copier la commande, lisez chaque tâche du playbook. Pouvez-vous expliquer pourquoi il est important d'utiliser 'become: yes' ?",
+      "command": "cat << 'EOF' > playbook.yml\n- name: Configuration du serveur TaskManagerPro\n  hosts: all\n  become: yes\n  tasks:\n    - name: Installer Node.js et Git\n      apt:\n        name:\n          - nodejs\n          - git\n        state: present\n    - name: Cloner le dépôt TaskManagerPro\n      git:\n        repo: 'https://github.com/TechNovaCorp/TaskManagerPro.git'\n        dest: /var/www/TaskManagerPro\nEOF",
+      "successOutput": "Le playbook playbook.yml a été créé avec succès.",
+      "errorOutput": "Échec de la création du playbook playbook.yml."
+    },
+    {
+      "title": "Exécuter le playbook Ansible",
+      "description": "Lancez le playbook pour configurer automatiquement le serveur.",
+      "hint": "Avant d'exécuter 'ansible-playbook', pensez à vérifier que vos fichiers inventory.ini et playbook.yml sont correctement configurés. Que devrait faire ce playbook sur le serveur ?",
+      "command": "ansible-playbook -i inventory.ini playbook.yml",
+      "successOutput": "Le playbook a été exécuté avec succès et le serveur est configuré.",
+      "errorOutput": "L'exécution du playbook Ansible a échoué."
+    },
+    {
+      "title": "Vérifier le clonage du dépôt TaskManagerPro",
+      "description": "Assurez-vous que le dépôt TaskManagerPro a bien été cloné dans /var/www/TaskManagerPro.",
+      "hint": "Utilisez 'ls' pour lister le contenu du répertoire. Quelles informations attendez-vous de ce répertoire après l'exécution du playbook ?",
+      "command": "ls /var/www/TaskManagerPro",
+      "successOutput": "Le dépôt TaskManagerPro a été cloné avec succès.",
+      "errorOutput": "Le dépôt TaskManagerPro n'a pas été trouvé dans /var/www/TaskManagerPro."
+    }
+  ]
+}

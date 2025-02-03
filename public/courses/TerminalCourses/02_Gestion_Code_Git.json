@@ -1,0 +1,291 @@
+{
+  "title": "Gestion de code source avec Git",
+  "description": "Apprenez à utiliser Git pour gérer efficacement le code source et collaborer en équipe.",
+  "missions": [
+    {
+      "title": "Initialiser un dépôt Git",
+      "description": "Créez un dépôt Git dans le répertoire courant.",
+      "hint": "Utilisez `git init`.",
+      "command": "git init",
+      "successOutput": "Dépôt Git initialisé avec succès.",
+      "errorOutput": "Échec de l'initialisation du dépôt."
+    },
+    {
+      "title": "Cloner un dépôt distant",
+      "description": "Clonez le dépôt TaskManagerPro.",
+      "hint": "Utilisez `git clone https://github.com/TechNovaCorp/TaskManagerPro.git`.",
+      "command": "git clone https://github.com/TechNovaCorp/TaskManagerPro.git",
+      "successOutput": "Dépôt cloné avec succès.",
+      "errorOutput": "Échec du clonage. Vérifiez l'URL du dépôt."
+    },
+    {
+      "title": "Lister les branches existantes",
+      "description": "Affichez toutes les branches du dépôt cloné.",
+      "hint": "Utilisez `git branch -a`.",
+      "command": "git branch -a",
+      "successOutput": "Liste des branches affichée.",
+      "errorOutput": "Commande incorrecte. Essayez `git branch -a`."
+    },
+    {
+      "title": "Créer et basculer sur une nouvelle branche",
+      "description": "Créez une branche `develop` et basculez dessus.",
+      "hint": "Utilisez `git checkout -b develop`.",
+      "command": "git checkout -b develop",
+      "successOutput": "Branche 'develop' créée et sélectionnée.",
+      "errorOutput": "Échec de la création de la branche."
+    },
+    {
+      "title": "Ajouter un fichier au suivi Git",
+      "description": "Ajoutez un fichier nommé `README.md` au suivi Git.",
+      "hint": "Utilisez `git add README.md`.",
+      "command": "git add README.md",
+      "successOutput": "Fichier ajouté au suivi.",
+      "errorOutput": "Échec de l'ajout du fichier."
+    },
+    {
+      "title": "Vérifier l'état du dépôt",
+      "description": "Affichez l'état du dépôt pour voir les fichiers suivis et non suivis.",
+      "hint": "Utilisez `git status`.",
+      "command": "git status",
+      "successOutput": "État du dépôt affiché.",
+      "errorOutput": "Commande incorrecte. Essayez `git status`."
+    },
+    {
+      "title": "Créer un commit",
+      "description": "Validez les changements en créant un commit avec un message.",
+      "hint": "Utilisez `git commit -m 'Ajout du README'`.",
+      "command": "git commit -m 'Ajout du README'",
+      "successOutput": "Commit créé avec succès.",
+      "errorOutput": "Échec de la création du commit."
+    },
+    {
+      "title": "Envoyer des modifications vers le dépôt distant",
+      "description": "Poussez la branche `develop` vers le dépôt distant.",
+      "hint": "Utilisez `git push origin develop`.",
+      "command": "git push origin develop",
+      "successOutput": "Modifications envoyées avec succès.",
+      "errorOutput": "Échec de l'envoi. Vérifiez votre connexion et les permissions."
+    },
+    {
+      "title": "Fusionner une branche",
+      "description": "Fusionnez la branche `develop` dans `main`.",
+      "hint": "Utilisez `git checkout main` suivi de `git merge develop`.",
+      "command": "git checkout main && git merge develop",
+      "successOutput": "Fusion réalisée avec succès.",
+      "errorOutput": "Échec de la fusion. Vérifiez les conflits éventuels."
+    },
+    {
+      "title": "Gérer un conflit de fusion",
+      "description": "Un conflit est survenu lors de la fusion. Résolvez-le et créez un commit.",
+      "hint": "1. Affichez les fichiers en conflit avec `git status`.\n2. Ouvrez et modifiez les fichiers concernés pour résoudre les conflits.\n3. Une fois corrigé, ajoutez les fichiers résolus avec `git add fichier_conflit`.\n4. Finalisez avec `git commit -m 'Résolution du conflit'`.",
+      "command": "git status && git add fichier_conflit && git commit -m 'Résolution du conflit'",
+      "successOutput": "Conflit résolu et commit créé.",
+      "errorOutput": "Échec de la résolution du conflit."
+    },
+    {
+      "title": "Mettre à jour le dépôt local avec `pull`",
+      "description": "Récupérez les dernières modifications du dépôt distant.",
+      "hint": "Utilisez `git pull origin main`.",
+      "command": "git pull origin main",
+      "successOutput": "Mise à jour effectuée avec succès.",
+      "errorOutput": "Échec de la mise à jour. Vérifiez les conflits éventuels."
+    },
+    {
+      "title": "Créer une branche de fonctionnalité avec GitFlow",
+      "description": "Créez une branche `feature/nouvelle_fonction` depuis `develop`.",
+      "hint": "Utilisez `git checkout -b feature/nouvelle_fonction develop`.",
+      "command": "git checkout -b feature/nouvelle_fonction develop",
+      "successOutput": "Branche 'feature/nouvelle_fonction' créée et sélectionnée.",
+      "errorOutput": "Échec de la création de la branche."
+    },
+    {
+      "title": "Fusionner une branche de fonctionnalité",
+      "description": "Fusionnez `feature/nouvelle_fonction` dans `develop`.",
+      "hint": "Utilisez `git checkout develop` puis `git merge feature/nouvelle_fonction`.",
+      "command": "git checkout develop && git merge feature/nouvelle_fonction",
+      "successOutput": "Fusion réalisée avec succès.",
+      "errorOutput": "Échec de la fusion."
+    },
+    {
+      "title": "Créer une branche hotfix",
+      "description": "Créez une branche `hotfix/correction_bug` depuis `main`.",
+      "hint": "Utilisez `git checkout -b hotfix/correction_bug main`.",
+      "command": "git checkout -b hotfix/correction_bug main",
+      "successOutput": "Branche 'hotfix/correction_bug' créée et sélectionnée.",
+      "errorOutput": "Échec de la création de la branche."
+    },
+    {
+      "title": "Fusionner un hotfix dans main et develop",
+      "description": "Fusionnez `hotfix/correction_bug` dans `main` et `develop`.",
+      "hint": "Utilisez `git checkout main && git merge hotfix/correction_bug` puis `git checkout develop && git merge hotfix/correction_bug`.",
+      "command": "git checkout main && git merge hotfix/correction_bug && git push origin main && git checkout develop && git merge hotfix/correction_bug && git push origin develop",
+      "successOutput": "Hotfix fusionné avec succès.",
+      "errorOutput": "Échec de la fusion du hotfix."
+    },
+    {
+      "title": "Réécrire l'historique avec Git Rebase",
+      "description": "Rebase la branche `feature/nouvelle_fonction` sur `develop`.",
+      "hint": "Utilisez `git checkout feature/nouvelle_fonction && git rebase develop`.",
+      "command": "git checkout feature/nouvelle_fonction && git rebase develop",
+      "successOutput": "Rebase effectué avec succès.",
+      "errorOutput": "Échec du rebase. Vérifiez les conflits éventuels."
+    },
+    {
+      "missions": [
+        {
+          "title": "Appliquer un commit spécifique avec Cherry-Pick",
+          "description": "Appliquez le dernier commit de `develop` dans `main`.",
+          "hint": "D'abord, trouvez l'ID du dernier commit de `develop` avec `git log -n 1 --format=\"%H\" develop`. Ensuite, utilisez `git cherry-pick <ID_commit>` pour appliquer ce commit dans `main`.",
+          "command": "git cherry-pick $(git log -n 1 --format=\"%H\" develop)",
+          "successOutput": "Commit appliqué avec succès.",
+          "errorOutput": "Échec du cherry-pick. Vérifiez que la branche `develop` contient des commits."
+        },
+        {
+          "title": "Trouver un bug avec Git Bisect",
+          "description": "Utilisez Git Bisect pour identifier le commit qui a introduit un bug dans le fichier `app.js`.",
+          "hint": "1. Démarrez Git Bisect avec `git bisect start`.\n2. Marquez le commit actuel comme contenant le bug avec `git bisect bad HEAD`.\n3. Trouvez un commit correct en listant l'historique avec `git log --oneline` et en choisissant un commit stable (par exemple, le premier commit du projet). Marquez-le avec `git bisect good <ID_du_commit>`.\n4. Git vous proposera un commit à tester. Vérifiez s'il contient le bug et marquez-le avec `git bisect bad` ou `git bisect good` jusqu'à trouver le commit fautif.",
+          "command": "git bisect start && git bisect bad HEAD && git bisect good $(git rev-list HEAD | tail -n 1)",
+          "successOutput": "Le commit fautif a été identifié.",
+          "errorOutput": "Échec de la recherche. Vérifiez la logique du bisect et testez manuellement les commits."
+        }
+      ]
+    },
+    {
+      "title": "Sauvegarder temporairement des modifications",
+      "description": "Utilisez `git stash` pour sauvegarder des modifications en cours sans les commit.",
+      "hint": "Utilisez `git stash` pour sauvegarder, puis `git stash pop` pour restaurer.",
+      "command": "git stash",
+      "successOutput": "Modifications mises en attente.",
+      "errorOutput": "Échec de l'ajout au stash."
+    },
+    {
+      "title": "Ignorer des fichiers avec .gitignore",
+      "description": "Ajoutez `node_modules/` dans un fichier `.gitignore`.",
+      "hint": "Créez `.gitignore` et ajoutez `node_modules/`.",
+      "command": "echo 'node_modules/' >> .gitignore",
+      "successOutput": "Fichier .gitignore mis à jour.",
+      "errorOutput": "Échec de la modification de .gitignore."
+    },
+    {
+      "title": "Signer un commit avec une clé GPG",
+      "description": "Configurez une clé GPG et signez un commit.",
+      "hint": "1. Vérifiez que vous avez une clé GPG avec `gpg --list-secret-keys --keyid-format=long`.\n2. Configurez votre clé pour Git avec `git config --global user.signingkey <GPG_KEY_ID>`.\n3. Créez un commit signé avec `git commit -S -m 'Commit signé'`.",
+      "command": "git config --global user.signingkey <GPG_KEY_ID> && git commit -S -m 'Commit signé'",
+      "successOutput": "Commit signé avec succès.",
+      "errorOutput": "Échec de la signature. Vérifiez la configuration de GPG."
+    },
+    {
+      "title": "Créer un hook Git pour valider les commits",
+      "description": "Ajoutez un hook `pre-commit` pour refuser les commits vides.",
+      "hint": "Créez un fichier `.git/hooks/pre-commit` et ajoutez `if git log -1 --pretty=%B | grep -q '^$'; then exit 1; fi`.",
+      "command": "echo \"if git log -1 --pretty=%B | grep -q '^$'; then exit 1; fi\" > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
+      "successOutput": "Hook pre-commit créé avec succès.",
+      "errorOutput": "Échec de la création du hook."
+    },
+    {
+      "title": "Afficher l'historique des commits",
+      "description": "Listez les derniers commits effectués dans le projet.",
+      "hint": "Utilisez `git log` pour voir l'historique.",
+      "command": "git log",
+      "successOutput": "Historique des commits affiché.",
+      "errorOutput": "Aucun commit trouvé. Essayez d'en créer un avec `git commit -m 'Premier commit'`."
+    },
+    {
+      "title": "Afficher l'historique sous forme de graphe",
+      "description": "Utilisez une vue plus compacte de l’historique des commits.",
+      "hint": "Utilisez `git log --oneline --graph --all`.",
+      "command": "git log --oneline --graph --all",
+      "successOutput": "Historique des branches affiché sous forme de graphe.",
+      "errorOutput": "Échec de l'affichage du graphe."
+    },
+    {
+      "title": "Comparer deux commits",
+      "description": "Affichez les différences entre deux commits.",
+      "hint": "Utilisez `git diff <ID_commit_1> <ID_commit_2>`.",
+      "command": "git diff HEAD~1 HEAD",
+      "successOutput": "Différences entre les commits affichées.",
+      "errorOutput": "Échec de la comparaison. Vérifiez les ID de commits."
+    },
+    {
+      "title": "Voir qui a modifié une ligne spécifique",
+      "description": "Utilisez `git blame` pour voir l’auteur d’une ligne spécifique.",
+      "hint": "Utilisez `git blame README.md`.",
+      "command": "git blame README.md",
+      "successOutput": "Liste des modifications affichée avec les auteurs.",
+      "errorOutput": "Fichier introuvable. Essayez `git ls-files` pour voir la liste des fichiers."
+    },
+    {
+      "title": "Modifier le dernier commit",
+      "description": "Ajoutez un fichier oublié dans le dernier commit. Le fichier oublié est `README.md`, et le message de commit est 'Correction du README'.",
+      "hint": "1. Ajoutez le fichier au commit en cours avec `git add README.md`.\n2. Modifiez le dernier commit avec `git commit --amend -m 'Correction du README'`.",
+      "command": "git add README.md && git commit --amend -m 'Correction du README'",
+      "successOutput": "Dernier commit modifié avec succès.",
+      "errorOutput": "Échec de la modification du commit."
+    },
+    {
+      "title": "Annuler le dernier commit sans supprimer les fichiers",
+      "description": "Revenez au dernier commit tout en gardant les fichiers modifiés.",
+      "hint": "Utilisez `git reset --soft HEAD~1`.",
+      "command": "git reset --soft HEAD~1",
+      "successOutput": "Dernier commit annulé mais fichiers conservés.",
+      "errorOutput": "Échec du reset."
+    },
+    {
+      "title": "Annuler définitivement un commit",
+      "description": "Supprimez le dernier commit et ses fichiers.",
+      "hint": "Utilisez `git reset --hard HEAD~1` pour annuler le dernier commit et toutes ses modifications.",
+      "command": "git reset --hard HEAD~1",
+      "successOutput": "Dernier commit supprimé avec succès.",
+      "errorOutput": "Échec de l’annulation du commit."
+    },
+    {
+      "title": "Revenir à une ancienne version du projet",
+      "description": "Revenez à un état précédent du projet en utilisant `checkout`. L'ID du commit est `HEAD~3`.",
+      "hint": "Utilisez `git checkout HEAD~3` pour naviguer temporairement vers l'ancienne version. Si vous voulez revenir définitivement en supprimant les commits suivants, utilisez `git reset --hard HEAD~3`.",
+      "command": "git checkout HEAD~3",
+      "successOutput": "Ancienne version du projet chargée.",
+      "errorOutput": "Échec du retour en arrière."
+    },
+    {
+      "title": "Lister les dépôts distants",
+      "description": "Affichez la liste des dépôts Git distants configurés.",
+      "hint": "Utilisez `git remote -v`.",
+      "command": "git remote -v",
+      "successOutput": "Liste des dépôts distants affichée.",
+      "errorOutput": "Aucun dépôt distant configuré."
+    },
+    {
+      "title": "Ajouter un dépôt distant",
+      "description": "Ajoutez un nouveau dépôt distant pour votre projet. l'url est https://github.com/mon-projet.git",
+      "hint": "Utilisez `git remote add origin <URL>`.",
+      "command": "git remote add origin https://github.com/mon-projet.git",
+      "successOutput": "Dépôt distant ajouté avec succès.",
+      "errorOutput": "Échec de l'ajout du dépôt distant."
+    },
+    {
+      "title": "Récupérer les modifications sans fusionner",
+      "description": "Utilisez `git fetch` pour voir les mises à jour distantes sans les fusionner.",
+      "hint": "Utilisez `git fetch origin`.",
+      "command": "git fetch origin",
+      "successOutput": "Modifications récupérées.",
+      "errorOutput": "Échec de la récupération."
+    },
+    {
+      "title": "Créer et gérer des sous-modules Git",
+      "description": "Ajoutez un sous-module Git à votre projet pour intégrer un autre dépôt sans fusionner son historique.",
+      "hint": "1. Ajoutez un sous-module avec `git submodule add <URL> <chemin>`.\n2. Par exemple, pour ajouter `https://github.com/sous-projet.git` sous `vendor/sous-projet`, utilisez :\n```bash\ngit submodule add https://github.com/sous-projet.git vendor/sous-projet\n```\n3. Après un clonage, initialisez les sous-modules avec `git submodule update --init --recursive`.",
+      "command": "git submodule add https://github.com/sous-projet.git vendor/sous-projet && git submodule update --init --recursive",
+      "successOutput": "Sous-module ajouté avec succès.",
+      "errorOutput": "Échec de l'ajout du sous-module."
+    },
+    {
+      "title": "Mettre à jour les sous-modules",
+      "description": "Synchronisez les sous-modules avec la dernière version du dépôt.",
+      "hint": "Utilisez `git submodule update --remote`.",
+      "command": "git submodule update --remote",
+      "successOutput": "Sous-modules mis à jour avec succès.",
+      "errorOutput": "Échec de la mise à jour des sous-modules."
+    }
+    
+  ]
+}

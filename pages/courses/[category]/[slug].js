@@ -2,16 +2,18 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Navbar from "@/components/Navbar";
 import Quiz from "@/components/Quiz";
-import Link from "next/link";
+import TerminalTrainer from "@/components/TerminalTrainer";
+import { useState } from "react";
 
 export async function getStaticPaths() {
   const categories = ["cours_devops", "outils", "tp"];
   let paths = [];
-
+  
   categories.forEach((category) => {
     const folderPath = path.join(process.cwd(), "content", category);
     if (fs.existsSync(folderPath)) {
@@ -23,14 +25,14 @@ export async function getStaticPaths() {
       );
     }
   });
-
+  
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params: { category, slug } }) {
   const filePath = path.join(process.cwd(), "content", category, `${slug}.md`);
   const quizPath = path.join(process.cwd(), "content/quizz", `${slug}.json`);
-  
+
   if (!fs.existsSync(filePath)) {
     return { notFound: true };
   }
@@ -55,10 +57,34 @@ export async function getStaticProps({ params: { category, slug } }) {
     ? JSON.parse(fs.readFileSync(quizPath, "utf-8"))
     : { questions: [] };
 
-  return { props: { data, content, courses, quiz } };
+  // Correction : Vérification dans public/ et non pages/
+  const missionPath = path.join(
+    process.cwd(),
+    "public",
+    "courses",
+    "TerminalCourses",
+    `${slug}.json`
+  );
+  console.log("Vérification du fichier mission :", missionPath);
+
+  const hasTerminalMission = fs.existsSync(missionPath);
+
+  return {
+    props: {
+      data: { ...data, slug },
+      content,
+      courses,
+      quiz,
+      hasTerminalMission,
+    },
+  };
 }
 
-export default function CoursePage({ data, content, courses, quiz }) {
+export default function CoursePage({ data, content, courses, quiz, hasTerminalMission }) {
+  const [showTerminal, setShowTerminal] = useState(false);
+
+  console.log("hasTerminalMission:", hasTerminalMission);
+
   return (
     <div>
       <Navbar courses={courses} />
@@ -70,18 +96,18 @@ export default function CoursePage({ data, content, courses, quiz }) {
 
         <div className="prose prose-invert max-w-full mt-8">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
             components={{
-              h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mt-10 mb-4 text-blue-300" {...props} />, 
-              h2: ({ node, ...props }) => <h2 className="text-2xl font-bold mt-8 mb-3 text-green-300" {...props} />, 
-              h3: ({ node, ...props }) => <h3 className="text-xl font-semibold mt-6 mb-2 text-yellow-300" {...props} />, 
-              p: ({ node, ...props }) => <p className="text-gray-300 mb-4 text-base leading-relaxed" {...props} />, 
-              ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4" {...props} />, 
-              ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4" {...props} />, 
-              li: ({ node, ...props }) => <li className="mb-1" {...props} />, 
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
                 return !inline && match ? (
-                  <SyntaxHighlighter style={dracula} language={match[1]} PreTag="div" className="rounded-lg shadow-lg border border-gray-700" {...props}>
+                  <SyntaxHighlighter
+                    style={dracula}
+                    language={match[1]}
+                    PreTag="div"
+                    className="rounded-lg shadow-lg border border-gray-700"
+                    {...props}
+                  >
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 ) : (
@@ -98,11 +124,29 @@ export default function CoursePage({ data, content, courses, quiz }) {
 
         {quiz.questions.length > 0 && (
           <div className="mt-10 p-6 bg-gray-800 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-4">📘 Quiz : Teste tes connaissances !</h2>
-            <div id="quiz-section" className="mt-6">
-              <Quiz questions={quiz.questions} />
-            </div>
+            <h2 className="text-2xl font-bold text-yellow-400 mb-4">
+              📘 Quiz : Teste tes connaissances !
+            </h2>
+            <Quiz questions={quiz.questions} />
           </div>
+        )}
+
+        {/* Bouton d'ouverture du Terminal si un fichier de mission existe */}
+        {hasTerminalMission && (
+          <div className="mt-10">
+            <button
+              onClick={() => setShowTerminal(!showTerminal)}
+              className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              {showTerminal ? "Fermer le Terminal" : "Lancer le Terminal"}
+            </button>
+          </div>
+        )}
+
+        {/* Affichage du TerminalTrainer */}
+        <p className="text-red-500">hasTerminalMission: {hasTerminalMission ? "✅ Oui" : "❌ Non"}</p>
+        {showTerminal && hasTerminalMission && (
+          <TerminalTrainer missionSlug={data.slug} />
         )}
       </div>
     </div>

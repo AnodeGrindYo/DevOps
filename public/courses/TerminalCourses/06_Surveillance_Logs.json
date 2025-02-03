@@ -1,0 +1,215 @@
+{
+  "title": "Surveillance et Logs",
+  "description": "Mettre en place une solution de monitoring pour surveiller l’état de TaskManagerPro et collecter des métriques système et applicatives.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Télécharger et extraire Prometheus",
+      "description": "Installez Prometheus pour collecter des métriques.",
+      "hint": "Utilisez `wget` pour récupérer l'archive, puis `tar` pour l'extraire.",
+      "command": "wget https://github.com/prometheus/prometheus/releases/latest/download/prometheus-linux-amd64.tar.gz && tar xvf prometheus-linux-amd64.tar.gz && cd prometheus-*",
+      "successOutput": "Prometheus téléchargé et extrait.",
+      "errorOutput": "Échec du téléchargement ou de l'extraction."
+    },
+    {
+      "title": "Vérifier le fichier de configuration de Prometheus",
+      "description": "Affichez le contenu du fichier `prometheus.yml` pour voir les cibles surveillées.",
+      "hint": "Utilisez `cat` pour voir le contenu.",
+      "command": "cat prometheus.yml",
+      "successOutput": "Fichier de configuration affiché.",
+      "errorOutput": "Fichier introuvable."
+    },
+    {
+      "title": "Démarrer Prometheus",
+      "description": "Lancez Prometheus avec sa configuration actuelle.",
+      "hint": "Utilisez `./prometheus --config.file=prometheus.yml` pour exécuter Prometheus.",
+      "command": "./prometheus --config.file=prometheus.yml",
+      "successOutput": "Prometheus démarré avec succès.",
+      "errorOutput": "Échec du démarrage de Prometheus."
+    },
+    {
+      "title": "Vérifier les métriques exposées par Prometheus",
+      "description": "Interrogez l'endpoint de Prometheus pour voir les métriques collectées.",
+      "hint": "Utilisez `curl` pour voir les métriques disponibles.",
+      "command": "curl http://localhost:9090/metrics | head -n 20",
+      "successOutput": "Métriques Prometheus affichées.",
+      "errorOutput": "Échec de récupération des métriques."
+    },
+    {
+      "title": "Installer Grafana",
+      "description": "Installez Grafana pour visualiser les données collectées.",
+      "hint": "Utilisez `apt install` pour installer Grafana.",
+      "command": "sudo apt update && sudo apt install -y grafana && sudo systemctl enable --now grafana-server",
+      "successOutput": "Grafana installé et démarré.",
+      "errorOutput": "Échec de l'installation de Grafana."
+    },
+    {
+      "title": "Vérifier l'état du service Grafana",
+      "description": "Assurez-vous que Grafana est bien en cours d'exécution.",
+      "hint": "Utilisez `systemctl status grafana-server` pour voir l'état du service.",
+      "command": "systemctl status grafana-server --no-pager",
+      "successOutput": "Grafana est en cours d'exécution.",
+      "errorOutput": "Grafana n'est pas actif."
+    },
+    {
+      "title": "Vérifier l’installation d’Elasticsearch",
+      "description": "Assurez-vous qu’Elasticsearch est bien installé et en cours d’exécution.",
+      "hint": "Utilisez `curl` pour interroger Elasticsearch.",
+      "command": "curl -X GET http://localhost:9200",
+      "successOutput": "Elasticsearch est en cours d'exécution.",
+      "errorOutput": "Elasticsearch ne répond pas."
+    },
+    {
+      "title": "Installer Logstash",
+      "description": "Installez Logstash pour collecter et transformer les logs.",
+      "hint": "Utilisez `apt install` pour l'installer.",
+      "command": "sudo apt install -y logstash",
+      "successOutput": "Logstash installé avec succès.",
+      "errorOutput": "Échec de l'installation de Logstash."
+    },
+    {
+      "title": "Créer une configuration Logstash pour TaskManagerPro",
+      "description": "Ajoutez une configuration pour que Logstash collecte les logs de TaskManagerPro et les envoie à Elasticsearch.",
+      "hint": "1️⃣ Commencez par créer un fichier de configuration pour Logstash.\n2️⃣ Ajoutez-y une entrée qui lit les logs de `/var/log/taskmanagerpro.log`.\n3️⃣ Ajoutez un filtre pour extraire les niveaux d’erreur.\n4️⃣ Ajoutez une sortie qui envoie les logs à Elasticsearch.",
+      "command": "echo 'input { file { path => \"/var/log/taskmanagerpro.log\" start_position => \"beginning\" } }' > /etc/logstash/conf.d/taskmanagerpro.conf",
+      "successOutput": "Fichier de configuration de Logstash créé.",
+      "errorOutput": "Échec de la création du fichier."
+    },
+    {
+      "title": "Ajouter un filtre Logstash pour extraire les erreurs",
+      "description": "Ajoutez un filtre `grok` à Logstash pour reconnaître les logs d'erreur.",
+      "hint": "Ajoutez ce bloc dans le fichier de configuration :\n\n```\nfilter {\n  grok {\n    match => { \"message\" => \"%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} %{GREEDYDATA:message}\" }\n  }\n}\n```",
+      "command": "echo 'filter { grok { match => { \"message\" => \"%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} %{GREEDYDATA:message}\" } } }' >> /etc/logstash/conf.d/taskmanagerpro.conf",
+      "successOutput": "Filtre Logstash ajouté.",
+      "errorOutput": "Échec de l'ajout du filtre."
+    },
+    {
+      "title": "Configurer Logstash pour envoyer les logs à Elasticsearch",
+      "description": "Ajoutez la sortie vers Elasticsearch dans la configuration de Logstash.",
+      "hint": "Ajoutez ce bloc à la fin du fichier de configuration :\n\n```\noutput {\n  elasticsearch {\n    hosts => [\"http://localhost:9200\"]\n    index => \"taskmanagerpro-logs\"\n  }\n}\n```",
+      "command": "echo 'output { elasticsearch { hosts => [\"http://localhost:9200\"] index => \"taskmanagerpro-logs\" } }' >> /etc/logstash/conf.d/taskmanagerpro.conf",
+      "successOutput": "Sortie Logstash vers Elasticsearch configurée.",
+      "errorOutput": "Échec de la configuration de la sortie."
+    },
+    {
+      "title": "Démarrer Logstash avec la nouvelle configuration",
+      "description": "Lancez Logstash avec la configuration que vous venez de créer.",
+      "hint": "Utilisez `systemctl` pour démarrer Logstash.",
+      "command": "sudo systemctl restart logstash",
+      "successOutput": "Logstash redémarré avec la nouvelle configuration.",
+      "errorOutput": "Échec du redémarrage de Logstash."
+    },
+    {
+      "title": "Vérifier que Logstash collecte bien les logs",
+      "description": "Affichez les logs collectés par Logstash.",
+      "hint": "Utilisez `journalctl` pour voir les logs récents.",
+      "command": "journalctl -u logstash --no-pager | tail -n 20",
+      "successOutput": "Logs de Logstash affichés.",
+      "errorOutput": "Aucun log trouvé."
+    },
+    {
+      "title": "Vérifier que Logstash envoie bien les logs à Elasticsearch",
+      "description": "Assurez-vous que les logs de TaskManagerPro sont bien indexés dans Elasticsearch.",
+      "hint": "Utilisez `curl` pour afficher les logs enregistrés dans Elasticsearch.",
+      "command": "curl -X GET 'http://localhost:9200/taskmanagerpro-logs/_search?pretty' -H 'Content-Type: application/json'",
+      "successOutput": "Les logs de TaskManagerPro apparaissent bien dans Elasticsearch.",
+      "errorOutput": "Aucun log trouvé. Vérifiez Logstash."
+    },
+    {
+      "title": "Installer Kibana",
+      "description": "Installez Kibana pour visualiser les logs.",
+      "hint": "Utilisez `apt install` pour installer Kibana.",
+      "command": "sudo apt install -y kibana && sudo systemctl enable --now kibana",
+      "successOutput": "Kibana installé et démarré.",
+      "errorOutput": "Échec de l'installation de Kibana."
+    },
+    {
+      "title": "Vérifier l’état de Kibana",
+      "description": "Assurez-vous que Kibana est en cours d'exécution.",
+      "hint": "Utilisez `systemctl status` pour voir l’état de Kibana.",
+      "command": "systemctl status kibana --no-pager",
+      "successOutput": "Kibana est en cours d'exécution.",
+      "errorOutput": "Kibana n'est pas actif."
+    },
+    {
+      "title": "Lister les index Elasticsearch",
+      "description": "Vérifiez que les logs de TaskManagerPro sont bien indexés.",
+      "hint": "Utilisez `curl` pour voir les index Elasticsearch.",
+      "command": "curl -X GET http://localhost:9200/_cat/indices?v",
+      "successOutput": "Liste des index affichée.",
+      "errorOutput": "Aucun index trouvé."
+    },
+    {
+      "title": "Afficher un log spécifique dans Elasticsearch",
+      "description": "Recherchez un log spécifique stocké dans Elasticsearch.",
+      "hint": "Utilisez `curl` avec une requête spécifique.",
+      "command": "curl -X GET 'http://localhost:9200/taskmanagerpro-logs/_search?pretty' -H 'Content-Type: application/json' -d '{\"query\": {\"match_all\": {}}}'",
+      "successOutput": "Logs récupérés avec succès.",
+      "errorOutput": "Aucun log trouvé."
+    },
+    {
+      "title": "Ajouter un job pour surveiller l'utilisation CPU et mémoire",
+      "description": "Ajoutez une configuration pour surveiller les ressources système.",
+      "hint": "Ajoutez cette section dans `prometheus.yml` :\n\n```yaml\n  - job_name: 'node'\n    static_configs:\n      - targets: ['localhost:9100']\n```",
+      "command": "echo '- job_name: \"node\"\\n  static_configs:\\n    - targets: [\"localhost:9100\"]' >> prometheus.yml",
+      "successOutput": "Job ajouté dans la configuration Prometheus.",
+      "errorOutput": "Échec de l'ajout du job."
+    },
+    {
+      "title": "Installer Node Exporter pour surveiller les ressources système",
+      "description": "Node Exporter permet à Prometheus de collecter des métriques CPU, mémoire et disque.",
+      "hint": "Téléchargez et démarrez Node Exporter :\n\n```bash\nwget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz\n```\n\nPuis extrayez et exécutez.",
+      "command": "wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvf node_exporter-linux-amd64.tar.gz && cd node_exporter-* && ./node_exporter &",
+      "successOutput": "Node Exporter installé et démarré.",
+      "errorOutput": "Échec de l'installation de Node Exporter."
+    },
+    {
+      "title": "Vérifier que Node Exporter expose bien des métriques",
+      "description": "Interrogez l'endpoint de Node Exporter pour voir les métriques disponibles.",
+      "hint": "Utilisez `curl` :\n\n```bash\ncurl http://localhost:9100/metrics\n```",
+      "command": "curl http://localhost:9100/metrics | head -n 20",
+      "successOutput": "Métriques de Node Exporter affichées.",
+      "errorOutput": "Échec de récupération des métriques."
+    },
+    {
+      "title": "Vérifier la disponibilité des métriques CPU avant Grafana",
+      "description": "Assurez-vous que Prometheus collecte bien les données CPU nécessaires pour Grafana.",
+      "hint": "Interrogez Prometheus avec cette requête PromQL :\n\n```\ncurl 'http://localhost:9090/api/v1/query?query=rate(node_cpu_seconds_total{mode=\"idle\"}[5m])'\n```",
+      "command": "curl 'http://localhost:9090/api/v1/query?query=rate(node_cpu_seconds_total{mode=\"idle\"}[5m])'",
+      "successOutput": "Les données CPU sont bien collectées par Prometheus.",
+      "errorOutput": "Aucune donnée CPU trouvée. Vérifiez que Node Exporter est bien configuré."
+    },
+    {
+      "title": "Afficher les 10 derniers logs dans Elasticsearch",
+      "description": "Utilisez une requête pour récupérer les logs les plus récents.",
+      "hint": "Utilisez `curl` pour interroger Elasticsearch :\n\n```bash\ncurl -X GET 'http://localhost:9200/taskmanagerpro-logs/_search?pretty' -H 'Content-Type: application/json' -d '{\"size\": 10, \"sort\": [{\"timestamp\": {\"order\": \"desc\"}}]}'\n```",
+      "command": "curl -X GET 'http://localhost:9200/taskmanagerpro-logs/_search?pretty' -H 'Content-Type: application/json' -d '{\"size\": 10, \"sort\": [{\"timestamp\": {\"order\": \"desc\"}}]}'",
+      "successOutput": "Logs récents récupérés.",
+      "errorOutput": "Aucun log trouvé."
+    },
+    {
+      "title": "Créer une alerte sur les erreurs critiques",
+      "description": "Ajoutez une alerte qui déclenche une notification en cas d'erreur critique.",
+      "hint": "Ajoutez cette configuration dans Logstash pour déclencher une alerte :\n\n```json\nfilter {\n  if [level] == \"ERROR\" {\n    mutate { add_field => { \"alert\" => \"CRITICAL ERROR\" } }\n  }\n}\n```",
+      "command": "echo 'filter { if [level] == \"ERROR\" { mutate { add_field => { \"alert\" => \"CRITICAL ERROR\" } } } }' >> /etc/logstash/conf.d/taskmanagerpro.conf",
+      "successOutput": "Alerte ajoutée à la configuration Logstash.",
+      "errorOutput": "Échec de l'ajout de l'alerte."
+    },
+    {
+      "title": "Vérifier que les alertes fonctionnent",
+      "description": "Générez un log d'erreur et vérifiez s'il est bien traité par Logstash.",
+      "hint": "Ajoutez un log d'erreur factice avec :\n\n```bash\necho \"ERROR: Une erreur test\" >> /var/log/taskmanagerpro.log\n```",
+      "command": "echo \"ERROR: Une erreur test\" >> /var/log/taskmanagerpro.log",
+      "successOutput": "Log d'erreur généré.",
+      "errorOutput": "Échec de la génération du log d'erreur."
+    },
+    {
+      "title": "Lister les erreurs détectées dans Kibana (via Elasticsearch)",
+      "description": "Utilisez une requête via l'API Elasticsearch pour rechercher les logs d'erreur collectés, comme vous le feriez dans Kibana.",
+      "hint": "Utilisez la commande curl ci-dessous pour interroger Elasticsearch avec la requête suivante qui filtre les logs dont le champ 'level' contient 'ERROR':\n\n```json\n{\n  \"query\": {\n    \"match\": {\n      \"level\": \"ERROR\"\n    }\n  }\n}\n```",
+      "command": "curl -X GET 'http://localhost:9200/taskmanagerpro-logs/_search?pretty' -H 'Content-Type: application/json' -d '{\"query\": {\"match\": {\"level\": \"ERROR\"}}}'",
+      "successOutput": "Les logs d'erreur ont été récupérés avec succès.",
+      "errorOutput": "Aucun log d'erreur n'a été trouvé. Vérifiez la configuration d'Elasticsearch et assurez-vous que des erreurs ont bien été indexées."
+    }    
+  ]
+}

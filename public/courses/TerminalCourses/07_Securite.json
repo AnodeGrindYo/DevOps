@@ -1,0 +1,255 @@
+{
+  "title": "Sécurité",
+  "description": "Apprendre à gérer les secrets (clés API, mots de passe, certificats) de manière sécurisée en utilisant HashiCorp Vault et à détecter les vulnérabilités dans vos images et dépendances avec Trivy.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Télécharger et installer Vault",
+      "description": "Téléchargez l'archive de Vault, décompressez-la et déplacez l'exécutable dans /usr/local/bin pour pouvoir l'utiliser sur votre serveur.",
+      "hint": "Utilisez wget pour télécharger, unzip pour décompresser et sudo mv pour déplacer l'exécutable. Prenez le temps de comprendre chaque étape de cette commande.",
+      "command": "wget https://releases.hashicorp.com/vault/1.10.3/vault_1.10.3_linux_amd64.zip && unzip vault_1.10.3_linux_amd64.zip && sudo mv vault /usr/local/bin/",
+      "successOutput": "Vault v1.10.3\nArchive téléchargée et décompressée.\nExécutable Vault déplacé vers /usr/local/bin.",
+      "errorOutput": "L'installation de Vault a échoué. Vérifiez la commande et votre connexion réseau."
+    },
+    {
+      "title": "Démarrer Vault en mode développement",
+      "description": "Démarrez Vault en mode développement pour faciliter les tests. Ce mode permet de démarrer rapidement un serveur Vault sans configuration complexe.",
+      "hint": "Utilisez la commande 'vault server -dev'. Notez que ce mode n'est pas recommandé pour la production.",
+      "command": "vault server -dev",
+      "successOutput": "==> Vault server configuration:\n      Api Address: http://127.0.0.1:8200\n      Cluster Address: https://127.0.0.1:8201\n==> Vault server started in development mode.",
+      "errorOutput": "Échec du démarrage de Vault en mode développement."
+    },
+    {
+      "title": "Configurer l'accès à Vault",
+      "description": "Définissez la variable d'environnement VAULT_ADDR afin que le client Vault puisse se connecter au serveur.",
+      "hint": "Utilisez la commande export pour définir VAULT_ADDR avec l'URL http://127.0.0.1:8200.",
+      "command": "export VAULT_ADDR='http://127.0.0.1:8200'",
+      "successOutput": "",
+      "errorOutput": "La configuration de VAULT_ADDR a échoué."
+    },
+    {
+      "title": "Stocker un secret dans Vault",
+      "description": "Utilisez Vault pour stocker un secret pour TaskManagerPro, par exemple le mot de passe de la base de données.",
+      "hint": "Réfléchissez à l'importance de protéger les secrets. Tapez ensuite : vault kv put secret/taskmanagerpro db_password=SuperSecret123",
+      "command": "vault kv put secret/taskmanagerpro db_password=SuperSecret123",
+      "successOutput": "Success! Data written to: secret/taskmanagerpro\n\nKey          Value\n---          -----\ndb_password  SuperSecret123",
+      "errorOutput": "L'opération de stockage du secret a échoué."
+    },
+    {
+      "title": "Récupérer le secret depuis Vault",
+      "description": "Vérifiez que le secret est correctement enregistré en le récupérant à l'aide de Vault.",
+      "hint": "Utilisez la commande : vault kv get secret/taskmanagerpro. Analysez la sortie pour vérifier la présence de votre secret.",
+      "command": "vault kv get secret/taskmanagerpro",
+      "successOutput": "Key          Value\n---          -----\ndb_password  SuperSecret123\n\nPath: secret/taskmanagerpro",
+      "errorOutput": "La récupération du secret a échoué. Vérifiez la configuration de Vault."
+    },
+    {
+      "title": "Installer Trivy",
+      "description": "Installez Trivy, l'outil de scan des vulnérabilités, pour analyser vos images Docker et vos dépendances.",
+      "hint": "Utilisez sudo apt install trivy. Réfléchissez à l'importance d'automatiser les scans de sécurité dans vos pipelines CI/CD.",
+      "command": "sudo apt install trivy",
+      "successOutput": "Reading package lists... Done\nBuilding dependency tree... Done\nThe following NEW packages will be installed: trivy\n0 upgraded, 1 newly installed, 0 to remove and 5 not upgraded.\nNeed to get 20.0 MB of archives.\nAfter this operation, 100 MB of additional disk space will be used.\nGet:1 http://archive.ubuntu.com/ubuntu focal/universe amd64 trivy amd64 0.20.2-1 [20.0 MB]\nFetched 20.0 MB in 10s (2,000 kB/s)\nSelecting previously unselected package trivy.\n(Reading database ... 50000 files and directories currently installed.)\nPreparing to unpack .../trivy_0.20.2-1_amd64.deb ...\nUnpacking trivy (0.20.2-1) ...\nSetting up trivy (0.20.2-1) ...",
+      "errorOutput": "L'installation de Trivy a échoué."
+    },
+    {
+      "title": "Scanner l'image Docker avec Trivy",
+      "description": "Analysez l'image Docker de TaskManagerPro pour détecter les vulnérabilités potentielles.",
+      "hint": "Utilisez la commande : trivy image taskmanagerpro:latest. Prenez le temps d'interpréter la sortie pour comprendre les failles détectées.",
+      "command": "trivy image taskmanagerpro:latest",
+      "successOutput": "2025-02-03T12:00:00.000Z\tINFO\tDetecting OS...\n2025-02-03T12:00:01.000Z\tINFO\tDetecting image vulnerabilities...\n... (vulnerabilities list) ...",
+      "errorOutput": "Le scan de l'image Docker a échoué. Vérifiez l'image et la commande."
+    },
+    {
+      "title": "Scanner les dépendances Node.js avec Trivy",
+      "description": "Utilisez Trivy pour analyser le système de fichiers et détecter les vulnérabilités dans les dépendances de TaskManagerPro.",
+      "hint": "Exécutez la commande : trivy fs --scanners vuln . et observez les résultats pour identifier les paquets vulnérables.",
+      "command": "trivy fs --scanners vuln .",
+      "successOutput": "2025-02-03T12:05:00.000Z\tINFO\tDetecting language: Node.js\n... (vulnerabilities list) ...",
+      "errorOutput": "Le scan des dépendances a échoué. Vérifiez que vous êtes dans le bon répertoire."
+    },
+    {
+      "title": "Simuler l'ajout d'une étape de sécurité dans un pipeline CI/CD",
+      "description": "Créez un fichier de configuration YAML pour GitHub Actions intégrant une étape de scan de vulnérabilités avec Trivy.",
+      "hint": "Utilisez un here-document pour créer le fichier 'ci_scan.yml' avec la configuration suivante :\n\n```yaml\n- name: Security scan with Trivy\n  run: trivy image taskmanagerpro:latest\n```\nRéfléchissez à l'importance d'intégrer ce type de vérification dans vos pipelines.",
+      "command": "cat << 'EOF' > ci_scan.yml\n- name: Security scan with Trivy\n  run: trivy image taskmanagerpro:latest\nEOF",
+      "successOutput": "ci_scan.yml created with the following content:\n- name: Security scan with Trivy\n  run: trivy image taskmanagerpro:latest",
+      "errorOutput": "La création du fichier ci_scan.yml a échoué."
+    },
+    {
+      "title": "Configurer l'audit logging de Vault",
+      "description": "Activez la journalisation d'audit dans Vault pour suivre toutes les opérations sur les secrets.",
+      "hint": "Utilisez la commande 'vault audit enable' avec le backend 'file' pour enregistrer les logs dans /var/log/vault_audit.log.",
+      "command": "vault audit enable file file_path=/var/log/vault_audit.log",
+      "successOutput": "Success! Audit backend 'file' enabled at: /var/log/vault_audit.log",
+      "errorOutput": "Échec de l'activation de l'audit logging dans Vault."
+    },
+    {
+      "title": "Créer une politique Vault pour TaskManagerPro",
+      "description": "Créez un fichier de politique qui restreint l'accès aux secrets de TaskManagerPro.",
+      "hint": "Utilisez un here-document pour créer le fichier 'taskmanager_policy.hcl' avec une règle d'accès en lecture pour le chemin 'secret/taskmanagerpro'.",
+      "command": "cat << 'EOF' > taskmanager_policy.hcl\npath \"secret/taskmanagerpro\" {\n  capabilities = [\"read\"]\n}\nEOF",
+      "successOutput": "Fichier 'taskmanager_policy.hcl' créé avec succès.\nContenu:\npath \"secret/taskmanagerpro\" {\n  capabilities = [\"read\"]\n}",
+      "errorOutput": "Échec de la création du fichier de politique Vault."
+    },
+    {
+      "title": "Appliquer la politique Vault",
+      "description": "Chargez la politique créée dans Vault pour restreindre l'accès aux secrets.",
+      "hint": "Utilisez 'vault policy write' pour appliquer la politique en lui donnant le nom 'taskmanager_policy'.",
+      "command": "vault policy write taskmanager_policy taskmanager_policy.hcl",
+      "successOutput": "Success! Policy 'taskmanager_policy' written successfully.",
+      "errorOutput": "Échec de l'application de la politique Vault."
+    },
+    {
+      "title": "Créer un token Vault avec une politique restreinte",
+      "description": "Générez un token Vault associé à la politique 'taskmanager_policy' pour limiter l'accès aux secrets.",
+      "hint": "Utilisez 'vault token create -policy=\"taskmanager_policy\"' pour créer un token avec les droits limités.",
+      "command": "vault token create -policy=\"taskmanager_policy\"",
+      "successOutput": "Key                  Value\n---                  -----\ntoken                s.1234567890abcdef\norphan               true\nrenewable            true\nlease_duration       2764800\nPolicies             [\"default\", \"taskmanager_policy\"]\n\nToken created successfully.",
+      "errorOutput": "Échec de la création du token Vault."
+    },
+    {
+      "title": "Lire les logs d'audit de Vault",
+      "description": "Affichez le contenu du fichier de logs d'audit pour vérifier que les accès sont bien enregistrés.",
+      "hint": "Utilisez 'cat /var/log/vault_audit.log' pour consulter le fichier de logs d'audit de Vault.",
+      "command": "cat /var/log/vault_audit.log",
+      "successOutput": "Audit log entries:\n2025-02-03T12:30:00Z: WRITE secret/taskmanagerpro\n2025-02-03T12:32:10Z: READ secret/taskmanagerpro",
+      "errorOutput": "Impossible de lire le fichier de logs d'audit. Vérifiez que l'audit logging est activé."
+    },
+    {
+      "title": "Renouveler le token Vault",
+      "description": "Renouvelez la durée de vie de votre token Vault pour éviter son expiration.",
+      "hint": "Utilisez 'vault token renew' pour prolonger la validité du token actuel.",
+      "command": "vault token renew",
+      "successOutput": "Success! Token renewed. New lease duration: 2764800 seconds.",
+      "errorOutput": "Échec du renouvellement du token Vault."
+    },
+    {
+      "title": "Scanner l'image Docker avec Trivy et exporter le rapport",
+      "description": "Lancez un scan de l'image Docker et redirigez la sortie dans un fichier de rapport pour analyse.",
+      "hint": "Utilisez 'trivy image taskmanagerpro:latest > trivy_report.txt' pour sauvegarder le rapport dans 'trivy_report.txt'.",
+      "command": "trivy image taskmanagerpro:latest > trivy_report.txt",
+      "successOutput": "Trivy scan completed.\nReport saved to trivy_report.txt",
+      "errorOutput": "Échec du scan de l'image Docker ou de l'exportation du rapport."
+    },
+    {
+      "title": "Afficher le rapport de vulnérabilités",
+      "description": "Affichez les premières lignes du rapport généré par Trivy pour examiner les vulnérabilités détectées.",
+      "hint": "Utilisez 'head -n 10 trivy_report.txt' pour afficher le début du rapport.",
+      "command": "head -n 10 trivy_report.txt",
+      "successOutput": "Trivy Report (first 10 lines):\nLine 1: Vulnerability ID: CVE-2021-12345\nLine 2: Package: openssl\nLine 3: Severity: MEDIUM\nLine 4: ...\nLine 5: ...\nLine 6: ...\nLine 7: ...\nLine 8: ...\nLine 9: ...\nLine 10: ...",
+      "errorOutput": "Impossible d'afficher le rapport. Vérifiez que le fichier trivy_report.txt existe."
+    },
+    {
+      "title": "Scanner le répertoire /etc avec Trivy",
+      "description": "Utilisez Trivy pour analyser le répertoire /etc et détecter d'éventuelles vulnérabilités dans les fichiers système.",
+      "hint": "Exécutez 'trivy fs /etc' pour lancer le scan du répertoire /etc.",
+      "command": "trivy fs /etc",
+      "successOutput": "Trivy scan of /etc complete.\nDetected vulnerabilities: 5 low, 2 medium, 0 high.",
+      "errorOutput": "Le scan du répertoire /etc a échoué."
+    },
+    {
+      "title": "Créer et exécuter un script de scan de sécurité",
+      "description": "Créez un script shell qui lance un scan de l'image Docker avec Trivy, rendez-le exécutable et exécutez-le pour automatiser la vérification.",
+      "hint": "Utilisez un here-document pour créer 'run_security_scan.sh', puis rendez-le exécutable avec 'chmod +x' et exécutez-le.",
+      "command": "cat << 'EOF' > run_security_scan.sh\n#!/bin/bash\ntrivy image taskmanagerpro:latest\nEOF\nchmod +x run_security_scan.sh\n./run_security_scan.sh",
+      "successOutput": "Script 'run_security_scan.sh' created and executed.\nTrivy scan output:\n... (vulnerability details) ...",
+      "errorOutput": "L'exécution du script de scan de sécurité a échoué."
+    },
+    {
+      "title": "Activer l'authentification AppRole dans Vault",
+      "description": "Activez le backend d'authentification AppRole pour permettre aux applications d'obtenir un token de manière sécurisée.",
+      "hint": "Utilisez la commande 'vault auth enable approle'.",
+      "command": "vault auth enable approle",
+      "successOutput": "Success! Enabled approle auth method at: approle/",
+      "errorOutput": "L'activation de l'authentification AppRole a échoué."
+    },
+    {
+      "title": "Créer un rôle AppRole pour TaskManagerPro",
+      "description": "Créez un rôle AppRole dans Vault pour TaskManagerPro avec des politiques restrictives.",
+      "hint": "Utilisez 'vault write auth/approle/role/taskmanager_role token_policies=taskmanager_policy' pour créer le rôle.",
+      "command": "vault write auth/approle/role/taskmanager_role token_policies=taskmanager_policy",
+      "successOutput": "Success! Role 'taskmanager_role' created with policy 'taskmanager_policy'.",
+      "errorOutput": "Échec de la création du rôle AppRole."
+    },
+    {
+      "title": "Obtenir le Role ID de l'AppRole",
+      "description": "Récupérez le Role ID du rôle AppRole créé pour TaskManagerPro.",
+      "hint": "Utilisez 'vault read auth/approle/role/taskmanager_role/role-id'.",
+      "command": "vault read auth/approle/role/taskmanager_role/role-id",
+      "successOutput": "Key       Value\n----      -----\nrole_id   abcd-1234-efgh-5678",
+      "errorOutput": "Impossible de récupérer le Role ID."
+    },
+    {
+      "title": "Générer un Secret ID pour l'AppRole",
+      "description": "Générez un Secret ID pour l'AppRole afin de compléter les informations d'authentification.",
+      "hint": "Utilisez 'vault write -f auth/approle/role/taskmanager_role/secret-id'.",
+      "command": "vault write -f auth/approle/role/taskmanager_role/secret-id",
+      "successOutput": "Key         Value\n----        -----\nsecret_id   wxyz-9876-mnop-5432",
+      "errorOutput": "L'obtention du Secret ID a échoué."
+    },
+    {
+      "title": "Authentifier via AppRole",
+      "description": "Utilisez le Role ID et le Secret ID pour obtenir un token via l'authentification AppRole.",
+      "hint": "Utilisez 'vault write auth/approle/login role_id=<role-id> secret_id=<secret-id>' en remplaçant <role-id> et <secret-id> par les valeurs obtenues.",
+      "command": "vault write auth/approle/login role_id=abcd-1234-efgh-5678 secret_id=wxyz-9876-mnop-5432",
+      "successOutput": "Key       Value\n----      -----\ntoken     s.1234567890abcdef\npolicies  [\"default\", \"taskmanager_policy\"]",
+      "errorOutput": "L'authentification via AppRole a échoué."
+    },
+    {
+      "title": "Lister les secrets dans Vault via AppRole",
+      "description": "Utilisez le token obtenu via AppRole pour lire le secret stocké dans Vault pour TaskManagerPro.",
+      "hint": "Assurez-vous d'exporter le token obtenu via AppRole et utilisez 'vault kv get secret/taskmanagerpro'.",
+      "command": "vault kv get secret/taskmanagerpro",
+      "successOutput": "Key          Value\n----         -----\ndb_password  SuperSecret123\nPath: secret/taskmanagerpro",
+      "errorOutput": "Impossible d'accéder aux secrets avec le token AppRole."
+    },
+    {
+      "title": "Configurer le chiffrement transit dans Vault",
+      "description": "Activez le backend de chiffrement transit dans Vault pour chiffrer et déchiffrer des données sensibles à la volée.",
+      "hint": "Utilisez 'vault secrets enable transit' puis 'vault write transit/keys/taskmanager_key'.",
+      "command": "vault secrets enable transit && vault write transit/keys/taskmanager_key",
+      "successOutput": "Success! Transit secrets engine enabled.\nKey 'taskmanager_key' created.",
+      "errorOutput": "Échec de la configuration du backend de chiffrement transit."
+    },
+    {
+      "title": "Chiffrer une donnée avec Vault Transit",
+      "description": "Utilisez le backend transit de Vault pour chiffrer une donnée sensible, par exemple le mot de passe 'SuperSecret123'.",
+      "hint": "Utilisez 'vault write transit/encrypt/taskmanager_key plaintext=$(base64 <<< \"SuperSecret123\")'.",
+      "command": "vault write transit/encrypt/taskmanager_key plaintext=$(base64 <<< \"SuperSecret123\")",
+      "successOutput": "Success! Ciphertext: vault:v1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "errorOutput": "Échec du chiffrement de la donnée."
+    },
+    {
+      "title": "Déchiffrer la donnée chiffrée",
+      "description": "Utilisez Vault Transit pour déchiffrer la donnée que vous venez de chiffrer.",
+      "hint": "Utilisez 'vault write transit/decrypt/taskmanager_key ciphertext=<ciphertext>' en remplaçant <ciphertext> par la valeur obtenue.",
+      "command": "vault write transit/decrypt/taskmanager_key ciphertext=vault:v1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "successOutput": "Success! The decrypted value is:\nSuperSecret123",
+      "errorOutput": "Échec du déchiffrement de la donnée."
+    },
+    {
+      "title": "Scanner un répertoire avec Trivy et filtrer les résultats critiques",
+      "description": "Utilisez Trivy pour scanner un répertoire spécifique et affichez uniquement les vulnérabilités de sévérité CRITICAL.",
+      "hint": "Utilisez 'trivy fs --severity CRITICAL /etc | grep CRITICAL' pour filtrer les résultats critiques.",
+      "command": "trivy fs --severity CRITICAL /etc | grep CRITICAL",
+      "successOutput": "Critical vulnerabilities found:\nLine 1: Vulnerability CVE-XXXX - Package: openssl - Severity: CRITICAL",
+      "errorOutput": "Aucune vulnérabilité critique détectée ou le scan a échoué."
+    },
+    {
+      "title": "Planifier un scan de sécurité avec cron",
+      "description": "Créez une tâche cron qui exécute un scan de sécurité Trivy tous les jours à 2h du matin et envoie le rapport par e-mail.",
+      "hint": "Utilisez 'crontab -e' ou redirigez la commande via echo. Par exemple :\n'0 2 * * * trivy image taskmanagerpro:latest > /tmp/trivy_daily_report.txt && mail -s \"Daily Security Report\" user@example.com < /tmp/trivy_daily_report.txt'",
+      "command": "echo '0 2 * * * trivy image taskmanagerpro:latest > /tmp/trivy_daily_report.txt && mail -s \"Daily Security Report\" user@example.com < /tmp/trivy_daily_report.txt' | crontab -",
+      "successOutput": "Crontab updated. Daily security scan scheduled at 2 AM.",
+      "errorOutput": "Échec de la planification du scan de sécurité avec cron."
+    },
+    {
+      "title": "Créer et exécuter un script de surveillance de Vault",
+      "description": "Créez un script shell qui vérifie périodiquement l'état de Vault (par exemple, vérifier que le serveur est en ligne) et envoie un rapport.",
+      "hint": "Utilisez un here-document pour créer 'check_vault.sh', rendez-le exécutable avec 'chmod +x' et exécutez-le.",
+      "command": "cat << 'EOF' > check_vault.sh\n#!/bin/bash\nif vault status > /dev/null 2>&1; then\n  echo 'Vault is running.'\nelse\n  echo 'Vault is down!'\nfi\nEOF\nchmod +x check_vault.sh\n./check_vault.sh",
+      "successOutput": "Vault is running.",
+      "errorOutput": "Le script de vérification de Vault a échoué ou Vault n'est pas en ligne."
+    }
+  ]
+}

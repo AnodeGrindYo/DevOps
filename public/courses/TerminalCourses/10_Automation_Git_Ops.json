@@ -1,0 +1,375 @@
+{
+  "title": "Automatisation Avancée avec GitOps",
+  "description": "Comprendre les principes du GitOps et mettre en place une infrastructure automatisée avec Git comme source unique de vérité.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Initialiser un dépôt Git pour GitOps",
+      "description": "Créez un dépôt Git local pour centraliser vos fichiers de configuration GitOps.",
+      "hint": "Utilisez la commande 'mkdir -p gitops_repo && cd gitops_repo && git init' pour créer le répertoire et initialiser le dépôt.",
+      "command": "mkdir -p gitops_repo && cd gitops_repo && git init",
+      "successOutput": "Initialized empty Git repository in /chemin/vers/gitops_repo/.git",
+      "errorOutput": "Échec de l'initialisation du dépôt Git."
+    },
+    {
+      "title": "Créer un fichier YAML de déploiement Kubernetes",
+      "description": "Créez un fichier 'deployment.yaml' décrivant le déploiement de TaskManagerPro sur Kubernetes.",
+      "hint": "Utilisez un here-document pour créer le fichier avec une configuration de base.",
+      "command": "cat << 'EOF' > deployment.yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: taskmanagerpro\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: taskmanagerpro\n  template:\n    metadata:\n      labels:\n        app: taskmanagerpro\n    spec:\n      containers:\n      - name: taskmanagerpro\n        image: technovacorp/taskmanagerpro:latest\n        ports:\n        - containerPort: 3000\nEOF",
+      "successOutput": "deployment.yaml created with content:\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: taskmanagerpro\nspec:\n  replicas: 2\n  selector:\n    matchLabels:\n      app: taskmanagerpro\n  template:\n    metadata:\n      labels:\n        app: taskmanagerpro\n    spec:\n      containers:\n      - name: taskmanagerpro\n        image: technovacorp/taskmanagerpro:latest\n        ports:\n        - containerPort: 3000",
+      "errorOutput": "Échec de la création du fichier deployment.yaml."
+    },
+    {
+      "title": "Valider le fichier YAML avec kubectl",
+      "description": "Vérifiez la validité de votre fichier de déploiement avec un dry-run.",
+      "hint": "Utilisez 'kubectl apply --dry-run=client -f deployment.yaml' pour valider la configuration sans l'appliquer.",
+      "command": "kubectl apply --dry-run=client -f deployment.yaml",
+      "successOutput": "deployment.apps/taskmanagerpro configured (dry run)",
+      "errorOutput": "Échec de la validation du fichier deployment.yaml."
+    },
+    {
+      "title": "Committer le fichier YAML dans le dépôt Git",
+      "description": "Ajoutez le fichier deployment.yaml à votre dépôt Git et effectuez un commit.",
+      "hint": "Utilisez 'git add deployment.yaml && git commit -m \"Ajout du déploiement TaskManagerPro\"'.",
+      "command": "git add deployment.yaml && git commit -m \"Ajout du déploiement TaskManagerPro\"",
+      "successOutput": "[master (root-commit) abc1234] Ajout du déploiement TaskManagerPro\n 1 file changed, 20 insertions(+)\n create mode 100644 deployment.yaml",
+      "errorOutput": "Échec du commit dans Git."
+    },
+    {
+      "title": "Installer ArgoCD sur le cluster Kubernetes",
+      "description": "Déployez ArgoCD sur votre cluster pour gérer vos applications via GitOps.",
+      "hint": "Créez d'abord le namespace 'argocd' puis appliquez les manifests d'installation d'ArgoCD depuis le dépôt officiel.",
+      "command": "kubectl create namespace argocd && kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml",
+      "successOutput": "namespace/argocd created\nserviceaccount/argocd-application-controller created\nservice/argocd-server created\n... (autres ressources créées)",
+      "errorOutput": "Échec de l'installation d'ArgoCD sur le cluster."
+    },
+    {
+      "title": "Accéder à l'interface web d'ArgoCD",
+      "description": "Configurez un port-forward pour accéder à l'interface web d'ArgoCD depuis votre machine locale.",
+      "hint": "Utilisez 'kubectl port-forward svc/argocd-server -n argocd 8080:443' pour rediriger le port 443 vers 8080.",
+      "command": "kubectl port-forward svc/argocd-server -n argocd 8080:443",
+      "successOutput": "Forwarding from 127.0.0.1:8080 -> 443\nForwarding from [::1]:8080 -> 443",
+      "errorOutput": "Échec du port-forwarding pour ArgoCD."
+    },
+    {
+      "title": "Récupérer le mot de passe initial d'ArgoCD",
+      "description": "Obtenez le mot de passe initial pour vous connecter à l'interface web d'ArgoCD.",
+      "hint": "Exécutez 'kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d'.",
+      "command": "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=\"{.data.password}\" | base64 -d",
+      "successOutput": "Your initial password is: abcdefghijklmnop",
+      "errorOutput": "Échec de la récupération du mot de passe initial d'ArgoCD."
+    },
+    {
+      "title": "Créer une application ArgoCD pour TaskManagerPro",
+      "description": "Déployez TaskManagerPro via ArgoCD en liant votre application à votre dépôt Git.",
+      "hint": "Utilisez 'argocd app create' en précisant le repository, le chemin, le serveur de destination et le namespace.",
+      "command": "argocd app create taskmanagerpro --repo https://github.com/TechNovaCorp/TaskManagerPro.git --path kubernetes --dest-server https://kubernetes.default.svc --dest-namespace default",
+      "successOutput": "Application 'taskmanagerpro' created successfully.",
+      "errorOutput": "Échec de la création de l'application ArgoCD pour TaskManagerPro."
+    },
+    {
+      "title": "Synchroniser l'application ArgoCD",
+      "description": "Appliquez les changements du dépôt Git sur le cluster en synchronisant l'application.",
+      "hint": "Utilisez 'argocd app sync taskmanagerpro' pour lancer la synchronisation.",
+      "command": "argocd app sync taskmanagerpro",
+      "successOutput": "Application 'taskmanagerpro' synced successfully.\nResource tasks: 3/3 synced",
+      "errorOutput": "La synchronisation de l'application a échoué."
+    },
+    {
+      "title": "Vérifier l'état de l'application ArgoCD",
+      "description": "Consultez l'état détaillé de l'application pour vous assurer qu'elle est synchronisée et en bonne santé.",
+      "hint": "Utilisez 'argocd app get taskmanagerpro' pour afficher les détails de l'application.",
+      "command": "argocd app get taskmanagerpro",
+      "successOutput": "Name: taskmanagerpro\nProject: default\nServer: https://kubernetes.default.svc\nNamespace: default\nStatus: Synced\nHealth: Healthy",
+      "errorOutput": "Impossible de récupérer l'état de l'application ArgoCD."
+    },
+    {
+      "title": "Configurer des notifications pour ArgoCD",
+      "description": "Mettez en place des notifications pour surveiller l'activité de déploiement via ArgoCD.",
+      "hint": "Créez un fichier 'notifications.yaml' avec la configuration nécessaire puis appliquez-le dans le namespace 'argocd'.",
+      "command": "cat << 'EOF' > notifications.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: argocd-notifications-cm\n  namespace: argocd\ndata:\n  service.slack: |\n    webhook: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX\nEOF\nkubectl apply -f notifications.yaml -n argocd",
+      "successOutput": "configmap/argocd-notifications-cm created",
+      "errorOutput": "Échec de la configuration des notifications pour ArgoCD."
+    },
+    {
+      "title": "Sécuriser l'accès à ArgoCD avec RBAC",
+      "description": "Appliquez une politique RBAC pour restreindre l'accès à l'interface ArgoCD.",
+      "hint": "Créez un fichier 'rbac.yaml' avec les règles nécessaires et appliquez-le via kubectl.",
+      "command": "cat << 'EOF' > rbac.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: argocd-rbac-cm\n  namespace: argocd\ndata:\n  policy.csv: |\n    p, role:admin, applications, *, */*, allow\nEOF\nkubectl apply -f rbac.yaml -n argocd",
+      "successOutput": "configmap/argocd-rbac-cm created",
+      "errorOutput": "Échec de l'application de la configuration RBAC pour ArgoCD."
+    },
+    {
+      "title": "Créer un SealedSecret pour gérer les secrets",
+      "description": "Chiffrez vos secrets à l'aide de Sealed Secrets afin de les stocker en toute sécurité dans Git.",
+      "hint": "Créez d'abord un fichier 'secret.yaml' puis utilisez 'kubeseal' pour générer 'sealedsecret.yaml'.",
+      "command": "cat << 'EOF' > secret.yaml\napiVersion: v1\nkind: Secret\nmetadata:\n  name: taskmanagerpro-secret\n  namespace: default\ndata:\n  db_password: U3VwZXJTZWNyZXQxMjM=\nEOF\nkubeseal --format yaml < secret.yaml > sealedsecret.yaml",
+      "successOutput": "SealedSecret created and saved to sealedsecret.yaml",
+      "errorOutput": "Échec de la création du SealedSecret."
+    },
+    {
+      "title": "Appliquer le SealedSecret dans le cluster",
+      "description": "Déployez le SealedSecret afin que le controller Sealed Secrets le déchiffre automatiquement.",
+      "hint": "Utilisez 'kubectl apply -f sealedsecret.yaml' pour appliquer la configuration.",
+      "command": "kubectl apply -f sealedsecret.yaml",
+      "successOutput": "secret/taskmanagerpro-secret created",
+      "errorOutput": "Échec de l'application du SealedSecret."
+    },
+    {
+      "title": "Créer un workflow GitOps pour CI/CD",
+      "description": "Créez un fichier GitHub Actions pour automatiser la synchronisation de votre application via ArgoCD à chaque push.",
+      "hint": "Utilisez un here-document pour créer '.github/workflows/gitops.yml' avec une étape de synchronisation.",
+      "command": "cat << 'EOF' > .github/workflows/gitops.yml\nname: GitOps Deployment\non: [push]\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Checkout code\n      uses: actions/checkout@v2\n    - name: Sync ArgoCD Application\n      run: argocd app sync taskmanagerpro\nEOF",
+      "successOutput": "Workflow GitOps created at .github/workflows/gitops.yml",
+      "errorOutput": "Échec de la création du workflow GitOps."
+    },
+    {
+      "title": "Simuler un rollback automatique avec ArgoCD",
+      "description": "Simulez un rollback de votre application en revenant à une révision antérieure.",
+      "hint": "Utilisez 'argocd app rollback taskmanagerpro 1' pour revenir à la révision 1.",
+      "command": "argocd app rollback taskmanagerpro 1",
+      "successOutput": "Application 'taskmanagerpro' rolled back to revision 1 successfully.",
+      "errorOutput": "Échec du rollback de l'application."
+    },
+    {
+      "title": "Vérifier la synchronisation continue avec ArgoCD",
+      "description": "Comparez l'état actuel du cluster avec celui défini dans Git pour détecter toute dérive.",
+      "hint": "Utilisez 'argocd app diff taskmanagerpro' pour afficher les différences.",
+      "command": "argocd app diff taskmanagerpro",
+      "successOutput": "No differences found between the live cluster and the Git repository.",
+      "errorOutput": "Des différences ont été détectées ou la commande a échoué."
+    },
+    {
+      "title": "Afficher l'historique des commits Git",
+      "description": "Consultez l'historique de votre dépôt Git pour suivre l'évolution de votre configuration GitOps.",
+      "hint": "Utilisez 'git log --oneline' pour voir la liste des commits.",
+      "command": "git log --oneline",
+      "successOutput": "abc1234 Ajout du déploiement TaskManagerPro\n",
+      "errorOutput": "Échec de l'affichage de l'historique Git."
+    },
+    {
+      "title": "Afficher les événements récents d'ArgoCD",
+      "description": "Listez les événements récents dans le namespace ArgoCD pour surveiller l'activité des déploiements.",
+      "hint": "Utilisez 'kubectl get events -n argocd' pour consulter les événements.",
+      "command": "kubectl get events -n argocd",
+      "successOutput": "LAST SEEN   TYPE      REASON             OBJECT                     MESSAGE\n2m          Normal    ResourceCreated    deployment/argocd-server    created deployment \"argocd-server\"",
+      "errorOutput": "Échec de la récupération des événements ArgoCD."
+    },
+    {
+      "title": "Exporter la configuration GitOps actuelle",
+      "description": "Affichez les détails de la configuration de l'application GitOps pour documentation.",
+      "hint": "Utilisez 'argocd app get taskmanagerpro -o yaml' pour exporter la configuration en YAML.",
+      "command": "argocd app get taskmanagerpro -o yaml",
+      "successOutput": "apiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: taskmanagerpro\n  namespace: argocd\nspec:\n  destination:\n    namespace: default\n    server: https://kubernetes.default.svc\n  source:\n    repoURL: https://github.com/TechNovaCorp/TaskManagerPro.git\n    path: kubernetes\n...",
+      "errorOutput": "Échec de l'exportation de la configuration GitOps."
+    },
+    {
+      "title": "Créer une branche dédiée aux modifications GitOps",
+      "description": "Créez une nouvelle branche pour isoler vos modifications GitOps dans votre dépôt.",
+      "hint": "Utilisez 'git checkout -b feature/gitops-update'.",
+      "command": "git checkout -b feature/gitops-update",
+      "successOutput": "Switched to a new branch 'feature/gitops-update'",
+      "errorOutput": "Erreur lors de la création de la branche 'feature/gitops-update'."
+    },
+    {
+      "title": "Modifier la configuration de déploiement",
+      "description": "Modifiez le fichier deployment.yaml pour augmenter le nombre de réplicas de 2 à 3.",
+      "hint": "Utilisez 'sed' pour remplacer 'replicas: 2' par 'replicas: 3'.",
+      "command": "sed -i 's/replicas: 2/replicas: 3/' deployment.yaml",
+      "successOutput": "File deployment.yaml updated: replicas set to 3",
+      "errorOutput": "Erreur lors de la modification de deployment.yaml."
+    },
+    {
+      "title": "Vérifier la modification du fichier YAML",
+      "description": "Affichez le contenu du fichier deployment.yaml pour confirmer la modification.",
+      "hint": "Utilisez 'cat deployment.yaml' pour visualiser le fichier.",
+      "command": "cat deployment.yaml",
+      "successOutput": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: taskmanagerpro\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: taskmanagerpro\n  template:\n    metadata:\n      labels:\n        app: taskmanagerpro\n    spec:\n      containers:\n      - name: taskmanagerpro\n        image: technovacorp/taskmanagerpro:latest\n        ports:\n        - containerPort: 3000",
+      "errorOutput": "Erreur lors de l'affichage du fichier deployment.yaml."
+    },
+    {
+      "title": "Committer les modifications sur la branche",
+      "description": "Ajoutez et committez le fichier modifié dans votre branche Git dédiée aux changements GitOps.",
+      "hint": "Utilisez 'git add deployment.yaml && git commit -m \"Augmenter les réplicas à 3\"'.",
+      "command": "git add deployment.yaml && git commit -m \"Augmenter les réplicas à 3\"",
+      "successOutput": "[feature/gitops-update abcdef1] Augmenter les réplicas à 3\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+      "errorOutput": "Échec du commit sur la branche feature/gitops-update."
+    },
+    {
+      "title": "Pousser la branche vers le dépôt distant",
+      "description": "Envoyez votre branche 'feature/gitops-update' vers le dépôt distant pour préparer une Pull Request.",
+      "hint": "Utilisez 'git push origin feature/gitops-update'.",
+      "command": "git push origin feature/gitops-update",
+      "successOutput": "Counting objects: 5, done.\nDelta compression using up to 4 threads.\nCompressing objects: 100% (3/3), done.\nWriting objects: 100% (3/3), 350 bytes | 350.00 KiB/s, done.\nremote: Branch 'feature/gitops-update' set up to track remote branch 'feature/gitops-update'.",
+      "errorOutput": "Erreur lors du push de la branche 'feature/gitops-update'."
+    },
+    {
+      "title": "Créer une Pull Request via GitHub CLI",
+      "description": "Générez une Pull Request pour intégrer vos modifications dans la branche principale.",
+      "hint": "Utilisez 'gh pr create --title \"Mise à jour réplicas à 3\" --body \"Augmentation des réplicas dans deployment.yaml\"'.",
+      "command": "gh pr create --title \"Mise à jour réplicas à 3\" --body \"Augmentation des réplicas dans deployment.yaml\"",
+      "successOutput": "Pull request created: https://github.com/TechNovaCorp/TaskManagerPro/pull/42",
+      "errorOutput": "Échec de la création de la Pull Request."
+    },
+    {
+      "title": "Fusionner la Pull Request",
+      "description": "Fusionnez la Pull Request pour appliquer vos modifications dans la branche principale.",
+      "hint": "Utilisez 'gh pr merge 42 --squash --delete-branch' pour fusionner et supprimer la branche.",
+      "command": "gh pr merge 42 --squash --delete-branch",
+      "successOutput": "Pull request merged and branch deleted.",
+      "errorOutput": "Échec de la fusion de la Pull Request."
+    },
+    {
+      "title": "Vérifier la détection de dérive par ArgoCD",
+      "description": "Comparez l'état actuel du cluster avec l'état défini dans Git pour détecter toute dérive.",
+      "hint": "Utilisez 'argocd app diff taskmanagerpro'.",
+      "command": "argocd app diff taskmanagerpro",
+      "successOutput": "No differences found between live and desired state.",
+      "errorOutput": "Des différences ont été détectées ou la commande a échoué."
+    },
+    {
+      "title": "Forcer la synchronisation de l'application ArgoCD",
+      "description": "Synchronisez l'application pour appliquer les modifications récentes sur le cluster.",
+      "hint": "Utilisez 'argocd app sync taskmanagerpro'.",
+      "command": "argocd app sync taskmanagerpro",
+      "successOutput": "Application 'taskmanagerpro' synced successfully.\nResource tasks: 3/3 synced",
+      "errorOutput": "La synchronisation de l'application a échoué."
+    },
+    {
+      "title": "Afficher l'historique des synchronisations ArgoCD",
+      "description": "Listez l'historique des synchronisations pour suivre l'évolution des déploiements.",
+      "hint": "Utilisez 'argocd app history taskmanagerpro'.",
+      "command": "argocd app history taskmanagerpro",
+      "successOutput": "REVISION  STATUS    CREATED              MESSAGE\n1         Synced    2025-02-03T10:00:00Z  Initial deploy\n2         Synced    2025-02-03T12:00:00Z  Update replicas",
+      "errorOutput": "Erreur lors de l'affichage de l'historique des synchronisations."
+    },
+    {
+      "title": "Vérifier le statut du rollout Kubernetes",
+      "description": "Assurez-vous que le déploiement a été correctement effectué en vérifiant le statut du rollout.",
+      "hint": "Utilisez 'kubectl rollout status deployment/taskmanagerpro'.",
+      "command": "kubectl rollout status deployment/taskmanagerpro",
+      "successOutput": "deployment \"taskmanagerpro\" successfully rolled out",
+      "errorOutput": "Le déploiement n'est pas terminé ou a échoué."
+    },
+    {
+      "title": "Créer un rapport d'historique GitOps",
+      "description": "Exportez la configuration actuelle de l'application ArgoCD en YAML pour documentation.",
+      "hint": "Utilisez 'argocd app get taskmanagerpro -o yaml > gitops_report.yaml'.",
+      "command": "argocd app get taskmanagerpro -o yaml > gitops_report.yaml",
+      "successOutput": "Configuration exported to gitops_report.yaml",
+      "errorOutput": "Erreur lors de l'exportation de la configuration."
+    },
+    {
+      "title": "Afficher le début du rapport d'historique",
+      "description": "Affichez les 10 premières lignes du rapport pour un aperçu rapide de la configuration.",
+      "hint": "Utilisez 'head -n 10 gitops_report.yaml'.",
+      "command": "head -n 10 gitops_report.yaml",
+      "successOutput": "apiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: taskmanagerpro\n  namespace: argocd\n...",
+      "errorOutput": "Impossible d'afficher le début du rapport."
+    },
+    {
+      "title": "Créer un Helm chart pour TaskManagerPro",
+      "description": "Initialisez un nouveau Helm chart afin de packager TaskManagerPro.",
+      "hint": "Utilisez 'helm create taskmanagerpro-chart'.",
+      "command": "helm create taskmanagerpro-chart",
+      "successOutput": "Creating taskmanagerpro-chart\nchart \"taskmanagerpro-chart\" created successfully.",
+      "errorOutput": "Échec de la création du Helm chart."
+    },
+    {
+      "title": "Mettre à jour la version du chart",
+      "description": "Modifiez le fichier values.yaml du chart pour mettre à jour la version à 0.2.0.",
+      "hint": "Utilisez 'sed -i' pour remplacer 'version: 0.1.0' par 'version: 0.2.0'.",
+      "command": "sed -i 's/version: 0.1.0/version: 0.2.0/' taskmanagerpro-chart/values.yaml",
+      "successOutput": "Version updated to 0.2.0 in taskmanagerpro-chart/values.yaml",
+      "errorOutput": "Erreur lors de la mise à jour de la version du chart."
+    },
+    {
+      "title": "Packager le Helm chart",
+      "description": "Générez un package du Helm chart pour déployer TaskManagerPro.",
+      "hint": "Utilisez 'helm package taskmanagerpro-chart'.",
+      "command": "helm package taskmanagerpro-chart",
+      "successOutput": "Successfully packaged chart and saved it to: taskmanagerpro-chart-0.2.0.tgz",
+      "errorOutput": "Échec du packaging du Helm chart."
+    },
+    {
+      "title": "Uploader le Helm chart dans le repository OCI",
+      "description": "Déployez le package du chart dans votre repository OCI pour le versioning.",
+      "hint": "Utilisez 'helm push taskmanagerpro-chart-0.2.0.tgz oci://myhelmrepo'.",
+      "command": "helm push taskmanagerpro-chart-0.2.0.tgz oci://myhelmrepo",
+      "successOutput": "Chart pushed to OCI repository successfully.",
+      "errorOutput": "Échec du push du Helm chart dans le repository OCI."
+    },
+    {
+      "title": "Committer et pousser la mise à jour du chart dans Git",
+      "description": "Ajoutez et committez la mise à jour du chart dans votre dépôt Git.",
+      "hint": "Utilisez 'git add taskmanagerpro-chart/values.yaml && git commit -m \"Mise à jour du chart vers 0.2.0\" && git push'.",
+      "command": "git add taskmanagerpro-chart/values.yaml && git commit -m \"Mise à jour du chart vers 0.2.0\" && git push",
+      "successOutput": "[feature/gitops-update 1234abc] Mise à jour du chart vers 0.2.0\n 1 file changed, 1 insertion(+)\nBranch 'feature/gitops-update' pushed to origin",
+      "errorOutput": "Erreur lors du commit ou du push de la mise à jour du chart."
+    },
+    {
+      "title": "Synchroniser l'application ArgoCD pour la mise à jour du chart",
+      "description": "Forcez la synchronisation de l'application pour appliquer la nouvelle version du chart.",
+      "hint": "Utilisez 'argocd app sync taskmanagerpro'.",
+      "command": "argocd app sync taskmanagerpro",
+      "successOutput": "Application 'taskmanagerpro' synced successfully.",
+      "errorOutput": "La synchronisation de l'application a échoué."
+    },
+    {
+      "title": "Vérifier l'état du déploiement après la mise à jour",
+      "description": "Confirmez que le déploiement de TaskManagerPro est à jour en vérifiant le statut du rollout.",
+      "hint": "Utilisez 'kubectl rollout status deployment/taskmanagerpro'.",
+      "command": "kubectl rollout status deployment/taskmanagerpro",
+      "successOutput": "deployment \"taskmanagerpro\" successfully rolled out",
+      "errorOutput": "Le rollout n'est pas terminé ou a échoué."
+    },
+    {
+      "title": "Analyser les différences entre les versions de déploiement",
+      "description": "Comparez la version précédente et actuelle du fichier deployment.yaml pour identifier les modifications.",
+      "hint": "Utilisez 'diff deployment_old.yaml deployment.yaml' pour comparer les deux versions.",
+      "command": "diff deployment_old.yaml deployment.yaml",
+      "successOutput": "No differences found\n",
+      "errorOutput": "Des différences ont été détectées."
+    },
+    {
+      "title": "Afficher l'historique complet des commits GitOps",
+      "description": "Consultez l'historique des commits pour suivre l'évolution de votre configuration GitOps.",
+      "hint": "Utilisez 'git log --oneline' pour afficher l'historique.",
+      "command": "git log --oneline",
+      "successOutput": "abc1234 Ajout du déploiement TaskManagerPro\n1234def Mise à jour réplicas à 3\n...",
+      "errorOutput": "Erreur lors de l'affichage de l'historique Git."
+    },
+    {
+      "title": "Exporter un rapport complet de la configuration GitOps",
+      "description": "Générez un rapport YAML complet de la configuration actuelle de l'application ArgoCD.",
+      "hint": "Utilisez 'argocd app get taskmanagerpro -o yaml > gitops_full_report.yaml'.",
+      "command": "argocd app get taskmanagerpro -o yaml > gitops_full_report.yaml",
+      "successOutput": "Configuration exported to gitops_full_report.yaml",
+      "errorOutput": "Erreur lors de l'exportation de la configuration."
+    },
+    {
+      "title": "Analyser le rapport complet de GitOps",
+      "description": "Affichez les premières lignes du rapport complet pour vérifier les détails du déploiement.",
+      "hint": "Utilisez 'head -n 15 gitops_full_report.yaml'.",
+      "command": "head -n 15 gitops_full_report.yaml",
+      "successOutput": "apiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: taskmanagerpro\n  namespace: argocd\n...",
+      "errorOutput": "Impossible d'afficher le rapport complet."
+    },
+    {
+      "title": "Créer un script de surveillance GitOps automatisé",
+      "description": "Créez un script shell qui vérifie périodiquement l'état de l'application GitOps et envoie un rapport de synchronisation.",
+      "hint": "Utilisez un here-document pour créer 'monitor_gitops.sh', rendez-le exécutable avec 'chmod +x', puis exécutez-le.",
+      "command": "cat << 'EOF' > monitor_gitops.sh\n#!/bin/bash\nstatus=$(argocd app get taskmanagerpro | grep 'Status:')\necho \"Current GitOps Status: $status\"\nEOF\nchmod +x monitor_gitops.sh\n./monitor_gitops.sh",
+      "successOutput": "Current GitOps Status: Status: Synced",
+      "errorOutput": "Le script de surveillance GitOps a échoué."
+    },
+    {
+      "title": "Planifier un scan GitOps avec cron",
+      "description": "Créez une tâche cron qui exécute le script de surveillance GitOps toutes les heures et envoie un rapport par e-mail.",
+      "hint": "Utilisez 'crontab -e' ou redirigez la commande via echo pour ajouter une tâche cron.",
+      "command": "echo '0 * * * * /path/to/monitor_gitops.sh | mail -s \"GitOps Status Report\" user@example.com' | crontab -",
+      "successOutput": "Crontab updated. GitOps monitoring scheduled every hour.",
+      "errorOutput": "Échec de la planification du scan GitOps avec cron."
+    }
+  ]
+}

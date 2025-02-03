@@ -1,0 +1,207 @@
+{
+  "title": "Intégration et déploiement continus (CI/CD)",
+  "description": "Comprendre les principes de l’intégration continue (CI) et du déploiement continu (CD), ainsi que les outils permettant de les automatiser.",
+  "category": "cours-devops",
+  "missions": [
+    {
+      "title": "Créer un fichier de workflow GitHub Actions",
+      "description": "Créez un fichier `.github/workflows/ci-cd.yml` pour automatiser le pipeline CI/CD.",
+      "hint": "Utilisez `mkdir -p .github/workflows` pour créer le dossier, puis `touch .github/workflows/ci-cd.yml` pour créer le fichier.",
+      "command": "mkdir -p .github/workflows && touch .github/workflows/ci-cd.yml",
+      "successOutput": "Fichier de workflow créé.",
+      "errorOutput": "Échec de la création du fichier."
+    },
+    {
+      "title": "Configurer un pipeline CI/CD avec GitHub Actions",
+      "description": "Ajoutez un pipeline CI/CD basique qui exécute des tests unitaires à chaque push sur `develop`.",
+      "hint": "Ajoutez ce contenu avec la commande suivante :\n\n```bash\necho \"name: CI/CD Pipeline\\n\\n on:\\n push:\\n branches:\\n - develop\\n\\n jobs:\\n build:\\n runs-on: ubuntu-latest\\n steps:\\n - name: Checkout code\\n uses: actions/checkout@v3\\n - name: Set up Node.js\\n uses: actions/setup-node@v3\\n with:\\n node-version: '18'\\n - name: Install dependencies\\n run: npm install\\n - name: Run tests\\n run: npm test\" > .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"name: CI/CD Pipeline\\n\\n on:\\n push:\\n branches:\\n - develop\\n\\n jobs:\\n build:\\n runs-on: ubuntu-latest\\n steps:\\n - name: Checkout code\\n uses: actions/checkout@v3\\n - name: Set up Node.js\\n uses: actions/setup-node@v3\\n with:\\n node-version: '18'\\n - name: Install dependencies\\n run: npm install\\n - name: Run tests\\n run: npm test\" > .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline CI/CD configuré.",
+      "errorOutput": "Échec de la configuration du pipeline."
+    },
+    {
+      "title": "Pousser le pipeline CI/CD sur le dépôt",
+      "description": "Ajoutez et poussez le fichier de pipeline sur la branche `develop`.",
+      "hint": "Ajoutez le fichier de workflow à Git, créez un commit et poussez-le :\n\n```bash\ngit add .github/workflows/ci-cd.yml\ngit commit -m \"Ajout du pipeline CI/CD\"\ngit push origin develop\n```",
+      "command": "git add .github/workflows/ci-cd.yml && git commit -m 'Ajout du pipeline CI/CD' && git push origin develop",
+      "successOutput": "Pipeline CI/CD ajouté au dépôt.",
+      "errorOutput": "Échec du push. Vérifiez votre connexion ou les permissions."
+    },
+    {
+      "title": "Ajouter la construction d'une image Docker",
+      "description": "Ajoutez un job qui génère une image Docker après les tests.",
+      "hint": "Utilisez cette commande pour injecter la configuration :\n\n```bash\necho \"- name: Build Docker image\\n run: docker build -t taskmanagerpro .\" >> .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"- name: Build Docker image\\n run: docker build -t taskmanagerpro .\" >> .github/workflows/ci-cd.yml",
+      "successOutput": "Build Docker ajouté.",
+      "errorOutput": "Échec de l'ajout du build Docker."
+    },
+    {
+      "title": "Pousser l'image Docker vers un registre",
+      "description": "Ajoutez une étape pour pousser l'image Docker vers Docker Hub.",
+      "hint": "Ajoutez ces étapes après la construction de l'image dans `ci-cd.yml` :\n\n```yaml\n- name: Log in to Docker Hub\n  run: echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin\n- name: Push Docker image\n  run: |\n    docker tag taskmanagerpro $DOCKER_USERNAME/taskmanagerpro:latest\n    docker push $DOCKER_USERNAME/taskmanagerpro:latest\n```",
+      "command": "nano .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline mis à jour avec le push de l’image Docker.",
+      "errorOutput": "Échec de la mise à jour du pipeline."
+    },
+    {
+      "title": "Déployer automatiquement sur un serveur",
+      "description": "Ajoutez une étape pour déployer l’application sur un serveur distant.",
+      "hint": "Ajoutez ces commandes au job `deploy` dans `ci-cd.yml` :\n\n```yaml\n- name: Deploy to server\n  run: |\n    ssh user@server_ip \"docker pull $DOCKER_USERNAME/taskmanagerpro:latest && docker run -d -p 80:3000 $DOCKER_USERNAME/taskmanagerpro:latest\"\n```",
+      "command": "nano .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline mis à jour avec un déploiement automatisé.",
+      "errorOutput": "Échec de la mise à jour du pipeline."
+    },
+    {
+      "title": "Vérifier l’exécution complète du pipeline",
+      "description": "Effectuez un push sur `develop` et vérifiez que tout fonctionne.",
+      "hint": "Ajoutez et poussez les modifications :\n\n```bash\ngit add .github/workflows/ci-cd.yml\ngit commit -m \"Ajout du déploiement Docker\"\ngit push origin develop\n```",
+      "command": "git add .github/workflows/ci-cd.yml && git commit -m 'Ajout du déploiement Docker' && git push origin develop",
+      "successOutput": "Pipeline CI/CD exécuté avec succès.",
+      "errorOutput": "Échec du pipeline. Vérifiez les logs sur GitHub Actions."
+    },
+    {
+      "title": "Lister les jobs d'un pipeline GitHub Actions",
+      "description": "Affichez les jobs exécutés lors de la dernière exécution du pipeline CI/CD.",
+      "hint": "Utilisez l'API GitHub pour récupérer les runs récents. Voici une commande pour lister les exécutions :\n\n```bash\ncurl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs\n```",
+      "command": "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs",
+      "successOutput": "Liste des exécutions du pipeline affichée.",
+      "errorOutput": "Échec de la récupération des exécutions. Vérifiez l'URL et les permissions."
+    },
+    {
+      "title": "Analyser les logs d’un job GitHub Actions",
+      "description": "Récupérez les logs d’un job spécifique pour identifier des erreurs.",
+      "hint": "D'abord, obtenez l’ID de la dernière exécution avec cette commande :\n\n```bash\ncurl -s -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs | jq '.workflow_runs[0].id'\n```\n\nPuis, utilisez cet ID pour récupérer les logs d’un job spécifique :\n\n```bash\ncurl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/logs\n```",
+      "command": "curl -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/logs",
+      "successOutput": "Logs du job affichés.",
+      "errorOutput": "Échec de la récupération des logs."
+    },
+    {
+      "title": "Simuler un échec de pipeline",
+      "description": "Faites planter le pipeline intentionnellement pour voir comment GitHub Actions réagit.",
+      "hint": "Ajoutez cette étape dans le pipeline avec :\n\n```bash\necho \"- name: Fail intentionally\\n run: exit 1\" >> .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"- name: Fail intentionally\\n run: exit 1\" >> .github/workflows/ci-cd.yml",
+      "successOutput": "Échec simulé ajouté.",
+      "errorOutput": "Impossible d'ajouter l'échec."
+    },
+    {
+      "title": "Relancer un pipeline en ligne de commande",
+      "description": "Utilisez l'API GitHub pour relancer manuellement un pipeline CI/CD.",
+      "hint": "Utilisez la commande suivante pour relancer un workflow spécifique :\n\n```bash\ncurl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/workflows/<workflow_id>/dispatches -d '{\"ref\":\"develop\"}'\n```",
+      "command": "curl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/workflows/<workflow_id>/dispatches -d '{\"ref\":\"develop\"}'",
+      "successOutput": "Pipeline relancé avec succès.",
+      "errorOutput": "Échec du redémarrage du pipeline. Vérifiez les permissions."
+    },
+    {
+      "title": "Tester l'exécution planifiée du pipeline",
+      "description": "Vérifiez si le pipeline se déclenche bien à l'heure prévue.",
+      "hint": "Forcez l'exécution immédiate du pipeline planifié avec :\n\n```bash\ngit commit --allow-empty -m \"Test exécution planifiée\" && git push origin develop\n```",
+      "command": "git commit --allow-empty -m \"Test exécution planifiée\" && git push origin develop",
+      "successOutput": "Pipeline déclenché avec succès.",
+      "errorOutput": "Échec du déclenchement du pipeline."
+    },    
+    {
+      "title": "Restreindre l’exécution du pipeline aux pull requests",
+      "description": "Modifiez le pipeline pour qu’il ne s'exécute que lorsqu'une pull request est ouverte sur `develop`.",
+      "hint": "Ajoutez cette configuration dans `ci-cd.yml` sous `on:` :\n\n```yaml\non:\n  pull_request:\n    branches:\n      - develop\n```",
+      "command": "nano .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline mis à jour pour s’exécuter uniquement sur les pull requests.",
+      "errorOutput": "Échec de la mise à jour du pipeline."
+    },
+    {
+      "title": "Configurer une condition pour ignorer certains fichiers",
+      "description": "Empêchez le pipeline de se déclencher si seules certaines catégories de fichiers sont modifiées.",
+      "hint": "Ajoutez cette condition sous `on:` dans `ci-cd.yml` :\n\n```yaml\non:\n  push:\n    paths-ignore:\n      - 'docs/**'\n      - '*.md'\n```",
+      "command": "nano .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline mis à jour avec une exclusion de fichiers.",
+      "errorOutput": "Échec de la mise à jour du pipeline."
+    },
+    {
+      "title": "Annuler un pipeline en cours d'exécution",
+      "description": "Utilisez l'API GitHub pour stopper un pipeline en cours d'exécution.",
+      "hint": "Trouvez l’ID du dernier workflow en cours avec cette commande :\n\n```bash\ncurl -s -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/<owner>/<repo>/actions/runs | jq '.workflow_runs[0].id'\n```\n\nPuis, annulez-le avec :\n\n```bash\ncurl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/cancel\n```",
+      "command": "curl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/cancel",
+      "successOutput": "Pipeline annulé avec succès.",
+      "errorOutput": "Échec de l'annulation du pipeline."
+    },
+    {
+      "title": "Ajouter une exécution planifiée du pipeline",
+      "description": "Configurez une exécution automatique du pipeline tous les jours à minuit.",
+      "hint": "Ajoutez cette configuration dans `ci-cd.yml` sous `on:` :\n\n```yaml\non:\n  schedule:\n    - cron: '0 0 * * *'\n```",
+      "command": "nano .github/workflows/ci-cd.yml",
+      "successOutput": "Pipeline mis à jour avec une exécution planifiée.",
+      "errorOutput": "Échec de la mise à jour du pipeline."
+    },
+    {
+      "title": "Ajouter une mise en cache des dépendances",
+      "description": "Ajoutez une mise en cache des dépendances pour accélérer les builds.",
+      "hint": "Ajoutez automatiquement une configuration pour stocker les dépendances avec cette commande :\n\n```bash\necho \"- name: Cache dependencies\\n  uses: actions/cache@v3\\n  with:\\n    path: ~/.npm\\n    key: \\${{ runner.os }}-npm-\\${{ hashFiles('**/package-lock.json') }}\\n    restore-keys: |\\n      \\${{ runner.os }}-npm-\" >> .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"- name: Cache dependencies\\n  uses: actions/cache@v3\\n  with:\\n    path: ~/.npm\\n    key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}\\n    restore-keys: |\\n      ${{ runner.os }}-npm-\" >> .github/workflows/ci-cd.yml",
+      "successOutput": "Mise en cache ajoutée dans le pipeline.",
+      "errorOutput": "Échec de l'ajout de la mise en cache."
+    },
+    {
+      "title": "Vérifier si le pipeline est bien configuré",
+      "description": "Affichez le contenu du fichier de configuration pour vous assurer qu’il est bien écrit.",
+      "hint": "Utilisez `cat` pour voir le contenu du pipeline :\n\n```bash\ncat .github/workflows/ci-cd.yml\n```",
+      "command": "cat .github/workflows/ci-cd.yml",
+      "successOutput": "Affichage du contenu du pipeline.",
+      "errorOutput": "Fichier introuvable. Assurez-vous qu'il existe."
+    },
+    {
+      "title": "Lister les étapes du pipeline",
+      "description": "Utilisez `grep` pour voir les noms des étapes du pipeline CI/CD.",
+      "hint": "Filtrez le fichier YAML avec cette commande :\n\n```bash\ngrep \"- name:\" .github/workflows/ci-cd.yml\n```",
+      "command": "grep \"- name:\" .github/workflows/ci-cd.yml",
+      "successOutput": "Liste des étapes affichée.",
+      "errorOutput": "Aucune étape trouvée. Vérifiez la syntaxe du fichier."
+    },
+    {
+      "title": "Rechercher des erreurs dans le fichier de pipeline",
+      "description": "Utilisez `grep` pour repérer rapidement des erreurs potentielles dans le pipeline.",
+      "hint": "Cherchez des mots-clés courants liés aux erreurs dans le pipeline YAML :\n\n```bash\ngrep -i \"error\\|fail\\|warning\" .github/workflows/ci-cd.yml\n```",
+      "command": "grep -i \"error\\|fail\\|warning\" .github/workflows/ci-cd.yml",
+      "successOutput": "Erreurs ou avertissements trouvés dans le fichier.",
+      "errorOutput": "Aucune erreur détectée."
+    },
+    {
+      "title": "Vérifier la validité du fichier YAML",
+      "description": "Utilisez `yq` pour valider la syntaxe du fichier de pipeline CI/CD.",
+      "hint": "Vérifiez si le fichier YAML est bien formatté avec :\n\n```bash\nyq eval .github/workflows/ci-cd.yml > /dev/null && echo \"YAML valide\" || echo \"Erreur dans YAML\"\n```",
+      "command": "yq eval .github/workflows/ci-cd.yml > /dev/null && echo \"YAML valide\" || echo \"Erreur dans YAML\"",
+      "successOutput": "Le fichier YAML est valide.",
+      "errorOutput": "Erreur de syntaxe détectée dans le fichier."
+    },
+    {
+      "title": "Simuler une exécution locale du pipeline",
+      "description": "Utilisez `act` pour tester votre pipeline en local.",
+      "hint": "Installez `act` si besoin avec :\n\n```bash\ncurl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | bash\n```\n\nPuis exécutez le pipeline localement avec :\n\n```bash\nact\n```",
+      "command": "act",
+      "successOutput": "Le pipeline s'exécute en local.",
+      "errorOutput": "Erreur d'exécution. Vérifiez les logs."
+    },
+    {
+      "title": "Relancer un pipeline échoué via l'API GitHub",
+      "description": "Utilisez l'API GitHub pour redémarrer un pipeline en ligne de commande.",
+      "hint": "Utilisez cette commande :\n\n```bash\ncurl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/rerun\n```",
+      "command": "curl -X POST -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token <GITHUB_TOKEN>\" https://api.github.com/repos/<owner>/<repo>/actions/runs/<ID>/rerun",
+      "successOutput": "Pipeline relancé.",
+      "errorOutput": "Échec du redémarrage. Vérifiez les permissions."
+    },
+    {
+      "title": "Empêcher la fuite de secrets dans les logs",
+      "description": "Ajoutez une règle qui empêche d'afficher des tokens secrets dans les logs.",
+      "hint": "Ajoutez une commande de filtrage pour masquer les secrets :\n\n```bash\necho \"::add-mask::${{ secrets.GITHUB_TOKEN }}\" >> .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"::add-mask::${{ secrets.GITHUB_TOKEN }}\" >> .github/workflows/ci-cd.yml",
+      "successOutput": "Sécurité renforcée : les secrets ne s'afficheront plus dans les logs.",
+      "errorOutput": "Échec de l’ajout de la règle de sécurité."
+    },
+    {
+      "title": "Scanner les vulnérabilités des dépendances",
+      "description": "Ajoutez une analyse automatique de la sécurité des dépendances avec `npm audit`.",
+      "hint": "Ajoutez une commande de scan de vulnérabilités :\n\n```bash\necho \"- name: Security audit\n  run: npm audit\" >> .github/workflows/ci-cd.yml\n```",
+      "command": "echo \"- name: Security audit\n  run: npm audit\" >> .github/workflows/ci-cd.yml",
+      "successOutput": "Audit de sécurité ajouté.",
+      "errorOutput": "Échec de l’ajout de l’audit."
+    }
+  ]
+}

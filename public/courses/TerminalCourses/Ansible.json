@@ -1,0 +1,175 @@
+{
+  "title": "De Zéro à Héro Ninja Ansible",
+  "description": "Ce cours vous guide pas à pas pour devenir un expert Ansible, en passant des fondamentaux jusqu'aux techniques avancées pour automatiser vos infrastructures comme un véritable ninja.",
+  "category": "cours-ansible",
+  "missions": [
+    {
+      "title": "Configurer un fichier ansible.cfg",
+      "description": "Créez un fichier de configuration Ansible pour définir l'inventaire par défaut et d'autres paramètres essentiels.",
+      "hint": "Utilisez un éditeur de texte comme nano ou vim pour créer un fichier ansible.cfg avec une section [defaults].",
+      "command": "nano ansible.cfg",
+      "successOutput": "Le fichier ansible.cfg a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir ansible.cfg."
+    },
+    {
+      "title": "Créer un fichier d'inventaire",
+      "description": "Ajoutez un fichier 'hosts' qui liste les serveurs que vous voulez gérer avec Ansible.",
+      "hint": "Le fichier d'inventaire suit un format de groupe, par exemple [webserver] suivi des IPs des machines.",
+      "command": "nano hosts",
+      "successOutput": "Le fichier d'inventaire a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir hosts."
+    },
+    {
+      "title": "Vérifier la connexion aux hôtes",
+      "description": "Utilisez Ansible pour vérifier que les hôtes listés dans votre inventaire sont accessibles.",
+      "hint": "Utilisez la commande 'ansible all -m ping -i hosts' pour tester la connectivité de tous les hôtes.",
+      "command": "ansible all -m ping -i hosts",
+      "successOutput": "webserver | SUCCESS => { 'ping': 'pong' }",
+      "errorOutput": "Erreur : Aucun hôte ne correspond au modèle spécifié."
+    },
+    {
+      "title": "Exécuter une commande à distance",
+      "description": "Utilisez Ansible pour exécuter une commande sur une machine distante sans écrire de playbook.",
+      "hint": "La commande 'ansible all -m command -a' permet d'exécuter une commande simple comme 'uptime'.",
+      "command": "ansible all -m command -a 'uptime' -i hosts",
+      "successOutput": "webserver | SUCCESS | rc=0 >>  10:30:01 up 5 days, 2:32, 1 user, load average: 0.15, 0.10, 0.08",
+      "errorOutput": "Erreur : Impossible d'exécuter la commande sur l'hôte distant."
+    },
+    {
+      "title": "Créer un playbook basique",
+      "description": "Créez un playbook Ansible qui installe Apache sur un serveur.",
+      "hint": "Un playbook Ansible est un fichier YAML contenant une liste de tâches.",
+      "command": "nano install_apache.yml",
+      "successOutput": "Le fichier install_apache.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir install_apache.yml."
+    },
+    {
+      "title": "Exécuter un playbook",
+      "description": "Lancez un playbook pour installer Apache sur votre serveur.",
+      "hint": "Utilisez la commande 'ansible-playbook' avec le fichier d'inventaire et le playbook que vous avez créé.",
+      "command": "ansible-playbook -i hosts install_apache.yml",
+      "successOutput": "PLAY RECAP\nwebserver : ok=2 changed=1 unreachable=0 failed=0",
+      "errorOutput": "Erreur : Le playbook n'a pas pu être exécuté."
+    },
+    {
+      "title": "Créer un rôle Ansible",
+      "description": "Créez un rôle Ansible pour organiser votre code et réutiliser vos tâches facilement.",
+      "hint": "Utilisez la commande 'ansible-galaxy init' suivie du nom du rôle.",
+      "command": "ansible-galaxy init mon_role",
+      "successOutput": "- mon_role créé avec succès dans le répertoire actuel",
+      "errorOutput": "Erreur : Impossible de créer le rôle Ansible."
+    },
+    {
+      "title": "Ajouter une tâche à un rôle",
+      "description": "Ajoutez une tâche simple dans le rôle que vous venez de créer.",
+      "hint": "Éditez le fichier tasks/main.yml dans le dossier du rôle et ajoutez une tâche d'installation de package.",
+      "command": "nano mon_role/tasks/main.yml",
+      "successOutput": "Le fichier tasks/main.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir tasks/main.yml."
+    },
+    {
+      "title": "Exécuter un rôle dans un playbook",
+      "description": "Utilisez le rôle créé précédemment dans un playbook et exécutez-le.",
+      "hint": "Ajoutez '- name: Appliquer mon rôle' suivi de 'roles: - mon_role' dans un playbook.",
+      "command": "nano playbook_roles.yml",
+      "successOutput": "Le fichier playbook_roles.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir playbook_roles.yml."
+    },
+    {
+      "title": "Utiliser des variables dans un playbook",
+      "description": "Ajoutez une variable pour personnaliser l'exécution d'une tâche dans un playbook.",
+      "hint": "Les variables sont définies sous la section 'vars' dans un playbook.",
+      "command": "nano playbook_vars.yml",
+      "successOutput": "Le fichier playbook_vars.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir playbook_vars.yml."
+    },
+    {
+      "title": "Créer un fichier de variables séparé",
+      "description": "Utilisez un fichier externe pour stocker des variables et les appeler dans un playbook.",
+      "hint": "Les fichiers de variables ont une extension '.yml' et sont inclus dans le playbook via 'vars_files'.",
+      "command": "nano variables.yml",
+      "successOutput": "Le fichier variables.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir variables.yml."
+    },
+    {
+      "title": "Définir une condition dans un playbook",
+      "description": "Ajoutez une condition pour exécuter une tâche uniquement si une variable a une certaine valeur.",
+      "hint": "Utilisez la clause 'when' pour exécuter une tâche uniquement dans certaines conditions.",
+      "command": "nano playbook_conditions.yml",
+      "successOutput": "Le fichier playbook_conditions.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir playbook_conditions.yml."
+    },
+    {
+      "title": "Utiliser une boucle dans un playbook",
+      "description": "Ajoutez une boucle pour exécuter une tâche plusieurs fois avec différentes valeurs.",
+      "hint": "Utilisez la directive 'loop' pour exécuter une tâche avec plusieurs éléments.",
+      "command": "nano playbook_loops.yml",
+      "successOutput": "Le fichier playbook_loops.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir playbook_loops.yml."
+    },
+    {
+      "title": "Gérer les erreurs avec ignore_errors",
+      "description": "Ajoutez ignore_errors: yes à une tâche pour qu'elle continue même si elle échoue.",
+      "hint": "Ceci est utile pour éviter l'arrêt complet d'un playbook en cas d'erreur.",
+      "command": "nano playbook_ignore_errors.yml",
+      "successOutput": "Le fichier playbook_ignore_errors.yml a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir playbook_ignore_errors.yml."
+    },
+    {
+      "title": "Créer un fichier hosts simplifié",
+      "description": "Ajoutez un hôte unique dans un fichier d'inventaire minimaliste.",
+      "hint": "Un inventaire peut contenir une simple adresse IP ou un nom de domaine.",
+      "command": "nano hosts",
+      "successOutput": "Le fichier hosts a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir hosts."
+    },
+    {
+      "title": "Vérifier les variables d'un hôte",
+      "description": "Utilisez Ansible pour afficher toutes les variables disponibles sur un hôte.",
+      "hint": "Utilisez le module setup pour récupérer les facts de l'hôte.",
+      "command": "ansible all -m setup -i hosts",
+      "successOutput": "webserver | SUCCESS => { ... longue liste de facts ... }",
+      "errorOutput": "Erreur : Impossible de récupérer les facts de l'hôte."
+    },
+    {
+      "title": "Utiliser Ansible Vault pour chiffrer un fichier",
+      "description": "Protégez un fichier de variables sensibles en le chiffrant avec Ansible Vault.",
+      "hint": "Utilisez 'ansible-vault encrypt' suivi du nom du fichier.",
+      "command": "ansible-vault encrypt secret.yml",
+      "successOutput": "Encryption successful",
+      "errorOutput": "Erreur : Impossible de chiffrer le fichier."
+    },
+    {
+      "title": "Déchiffrer un fichier avec Ansible Vault",
+      "description": "Accédez au contenu d'un fichier chiffré en le déchiffrant temporairement.",
+      "hint": "Utilisez 'ansible-vault view' pour afficher le contenu sans le modifier.",
+      "command": "ansible-vault view secret.yml",
+      "successOutput": "Affichage du contenu déchiffré de secret.yml",
+      "errorOutput": "Erreur : Mot de passe incorrect ou fichier corrompu."
+    },
+    {
+      "title": "Ajouter un hôte dynamique",
+      "description": "Utilisez un inventaire dynamique pour récupérer des hôtes dynamiquement depuis AWS ou d'autres fournisseurs de cloud.",
+      "hint": "Utilisez un script d'inventaire dynamique compatible Ansible.",
+      "command": "nano dynamic_inventory.py",
+      "successOutput": "Le fichier dynamic_inventory.py a été ouvert avec succès.",
+      "errorOutput": "Erreur : Impossible d'ouvrir dynamic_inventory.py."
+    },
+    {
+      "title": "Exécuter un playbook avec un inventaire dynamique",
+      "description": "Utilisez un inventaire dynamique pour exécuter un playbook sur des hôtes en cloud.",
+      "hint": "Spécifiez l'inventaire dynamique avec '-i' suivi du script Python.",
+      "command": "ansible-playbook -i dynamic_inventory.py playbook.yml",
+      "successOutput": "PLAY RECAP\ncloud-server : ok=3 changed=2 unreachable=0 failed=0",
+      "errorOutput": "Erreur : Impossible d'utiliser l'inventaire dynamique."
+    },
+    {
+      "title": "Gérer les logs d'exécution d'un playbook",
+      "description": "Activez l'affichage détaillé des logs lors de l'exécution d'un playbook.",
+      "hint": "Utilisez l'option '-vvv' pour obtenir un affichage détaillé.",
+      "command": "ansible-playbook -i hosts playbook.yml -vvv",
+      "successOutput": "PLAY [all] *****************************************************\nTASK [Gathering Facts] ****************************************\nok: [webserver] => {... logs détaillés ...}",
+      "errorOutput": "Erreur : Impossible d'exécuter le playbook avec logs détaillés."
+    }
+  ]
+}
