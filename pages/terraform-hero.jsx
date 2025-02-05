@@ -1,7 +1,7 @@
 // pages/terraform-hero.jsx
 import matter from 'gray-matter';
 import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/terraform-hero.module.css';
 import Navbar from "../components/Navbar";
@@ -10,6 +10,7 @@ import Navbar from "../components/Navbar";
 
 // Crée un composant basique sans SSR
 function TerraformHeroPage( courses ) {
+  const [activeSection, setActiveSection] = useState(null);
   
   useEffect(() => {
     // 1) On ajoute les classes au <body> quand la page est montée
@@ -957,20 +958,125 @@ function TerraformHeroPage( courses ) {
 
   }, []);
 
+  // return (
+  //   <>
+  //     <Navbar />
+  //     <div className={`${styles.terraformHeroContainer} pt-0 flex flex-col md:flex-row h-[calc(100vh-112px)] md:h-[calc(100vh-104px)]`}>
+  //       <nav
+  //         id="mobile-nav"
+  //         className="md:hidden fixed bottom-0 left-0 right-0 bg-dracula-current z-50 p-2"
+  //       >
+  //         <div className="flex justify-around items-center ${styles.terraformHeroContainer}">
+  //           <button
+  //             className="p-3 text-dracula-cyan"
+  //             onClick={() =>
+  //               document.getElementById("sidebar")?.classList.toggle("hidden")
+  //             }
+  //           >
+  //             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+  //             </svg>
+  //           </button>
+  //           <button
+  //             id="mobile-validate-btn"
+  //             className="bg-dracula-blue px-4 py-2 rounded-lg"
+  //           >
+  //             Valider
+  //           </button>
+  //           <button id="mobile-hint-btn" className="p-3 text-dracula-yellow">
+  //             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+  //             </svg>
+  //           </button>
+  //         </div>
+  //       </nav>
+  
+  //       <nav
+  //         id="sidebar"
+  //         className="hidden md:block md:w-80 bg-dracula-current p-4 overflow-y-auto h-[89vh] md:h-auto  [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-thumb]:bg-[#6272a4] [&::-webkit-scrollbar-thumb]:rounded-[3px]">
+  //         <div className="flex items-center gap-3 mb-6">
+  //           <svg width="32" height="32" viewBox="0 0 40 40" className="text-dracula-cyan">
+  //             <path d="M23.4 15.6v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+  //             <path d="M14.2 11.2v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+  //             <path d="M5 15.6v8.8l7.6-4.4v-8.8L5 15.6z" fill="currentColor" />
+  //             <path d="M14.2 24.4v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+  //           </svg>
+  //           <h1 className="text-xl font-bold text-dracula-cyan">Terraform Hero</h1>
+  //         </div>
+  
+  //         <div className="w-full h-1 bg-dracula-background rounded mb-4">
+  //           <div
+  //             id="progress-bar"
+  //             className="h-full bg-dracula-cyan rounded transition-all duration-300"
+  //           />
+  //         </div>
+  
+  //         <ul id="lessons-list" className="space-y-2" />
+  //       </nav>
+  
+  //       <main className="pt-0 flex-1 p-4 flex flex-col h-[calc(100vh-112px)] md:h-[calc(100vh-104px)] overflow-y-auto">
+  //         <div id="lesson-container" className="flex flex-col md:flex-row gap-4 h-full">
+  //           <div
+  //             id="lesson-content"
+  //             className="md:w-1/2 bg-dracula-current p-6 rounded-lg overflow-y-auto"
+  //           />
+  //           <div id="challenge-container" className="md:w-1/2 flex flex-col gap-4">
+  //             <div
+  //               id="editor"
+  //               className="flex-1 rounded-lg overflow-hidden min-h-[200px]"
+  //             />
+  //             <div
+  //               id="terminal"
+  //               className="h-32 bg-dracula-background rounded-lg p-4 font-mono text-sm overflow-y-auto"
+  //             />
+  //             <div className="flex gap-4">
+  //               <button
+  //                 id="validate-btn"
+  //                 className="hidden md:block flex-1 bg-dracula-blue hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+  //               >
+  //                 Valider
+  //               </button>
+  //               <button
+  //                 id="hint-btn"
+  //                 className="hidden md:block flex-1 bg-dracula-comment hover:bg-opacity-80 text-white py-2 px-4 rounded-lg transition-colors"
+  //               >
+  //                 Indice
+  //               </button>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </main>
+  //     </div>
+  
+  //     <div
+  //       id="success-modal"
+  //       className="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+  //     >
+  //       <div className="bg-dracula-current p-8 rounded-lg text-center max-w-md w-full">
+  //         <h2 className="text-2xl text-dracula-green mb-4">Félicitations! 🎉</h2>
+  //         <p className="mb-6">Vous avez réussi ce niveau!</p>
+  //         <button
+  //           id="next-lesson-btn"
+  //           className="bg-dracula-green hover:bg-opacity-80 text-dracula-background py-2 px-6 rounded-lg transition-colors"
+  //         >
+  //           Niveau suivant
+  //         </button>
+  //       </div>
+  //     </div>
+  //   </>
+  // );
+
   return (
     <>
       <Navbar />
-      <div className={`${styles.terraformHeroContainer} pt-0 flex flex-col md:flex-row h-[calc(100vh-112px)] md:h-[calc(100vh-104px)]`}>
-        <nav
-          id="mobile-nav"
-          className="md:hidden fixed bottom-0 left-0 right-0 bg-dracula-current z-50 p-2"
-        >
-          <div className="flex justify-around items-center ${styles.terraformHeroContainer}">
+      <div className={`${styles.terraformHeroContainer} pt-0 flex flex-col h-[calc(100vh-112px)] md:h-[calc(100vh-104px)]`}>
+        {/* Mobile Navigation */}
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-dracula-current z-50 p-2 border-t border-dracula-comment">
+          <div className="flex justify-around items-center">
             <button
               className="p-3 text-dracula-cyan"
-              onClick={() =>
-                document.getElementById("sidebar")?.classList.toggle("hidden")
-              }
+              onClick={() => document.getElementById("sidebar")?.classList.toggle("hidden")}
+              aria-label="Toggle sidebar"
             >
               <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -978,11 +1084,15 @@ function TerraformHeroPage( courses ) {
             </button>
             <button
               id="mobile-validate-btn"
-              className="bg-dracula-blue px-4 py-2 rounded-lg"
+              className="bg-dracula-blue px-4 py-2 rounded-lg text-sm"
             >
               Valider
             </button>
-            <button id="mobile-hint-btn" className="p-3 text-dracula-yellow">
+            <button 
+              id="mobile-hint-btn" 
+              className="p-3 text-dracula-yellow"
+              aria-label="Show hint"
+            >
               <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
@@ -990,81 +1100,101 @@ function TerraformHeroPage( courses ) {
           </div>
         </nav>
   
-        <nav
-          id="sidebar"
-          className="hidden md:block md:w-80 bg-dracula-current p-4 overflow-y-auto h-[89vh] md:h-auto  [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar]:h-[6px] [&::-webkit-scrollbar-thumb]:bg-[#6272a4] [&::-webkit-scrollbar-thumb]:rounded-[3px]">
-          <div className="flex items-center gap-3 mb-6">
-            <svg width="32" height="32" viewBox="0 0 40 40" className="text-dracula-cyan">
-              <path d="M23.4 15.6v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
-              <path d="M14.2 11.2v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
-              <path d="M5 15.6v8.8l7.6-4.4v-8.8L5 15.6z" fill="currentColor" />
-              <path d="M14.2 24.4v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
-            </svg>
-            <h1 className="text-xl font-bold text-dracula-cyan">Terraform Hero</h1>
-          </div>
+        {/* Main Content */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* Sidebar (Hidden on mobile) */}
+          <nav
+            id="sidebar"
+            className="hidden md:block w-80 bg-dracula-current p-4 overflow-y-auto border-r border-dracula-comment"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <svg width="32" height="32" viewBox="0 0 40 40" className="text-dracula-cyan">
+                <path d="M23.4 15.6v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+                <path d="M14.2 11.2v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+                <path d="M5 15.6v8.8l7.6-4.4v-8.8L5 15.6z" fill="currentColor" />
+                <path d="M14.2 24.4v8.8l7.6-4.4v-8.8l-7.6 4.4z" fill="currentColor" />
+              </svg>
+              <h1 className="text-xl font-bold text-dracula-cyan">Terraform Hero</h1>
+            </div>
   
-          <div className="w-full h-1 bg-dracula-background rounded mb-4">
-            <div
-              id="progress-bar"
-              className="h-full bg-dracula-cyan rounded transition-all duration-300"
-            />
-          </div>
-  
-          <ul id="lessons-list" className="space-y-2" />
-        </nav>
-  
-        <main className="pt-0 flex-1 p-4 flex flex-col h-[calc(100vh-112px)] md:h-[calc(100vh-104px)] overflow-y-auto">
-          <div id="lesson-container" className="flex flex-col md:flex-row gap-4 h-full">
-            <div
-              id="lesson-content"
-              className="md:w-1/2 bg-dracula-current p-6 rounded-lg overflow-y-auto"
-            />
-            <div id="challenge-container" className="md:w-1/2 flex flex-col gap-4">
+            <div className="w-full h-1 bg-dracula-background rounded mb-4">
               <div
-                id="editor"
-                className="flex-1 rounded-lg overflow-hidden min-h-[200px]"
+                id="progress-bar"
+                className="h-full bg-dracula-cyan rounded transition-all duration-300"
               />
-              <div
-                id="terminal"
-                className="h-32 bg-dracula-background rounded-lg p-4 font-mono text-sm overflow-y-auto"
-              />
-              <div className="flex gap-4">
-                <button
-                  id="validate-btn"
-                  className="hidden md:block flex-1 bg-dracula-blue hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
-                >
-                  Valider
-                </button>
-                <button
-                  id="hint-btn"
-                  className="hidden md:block flex-1 bg-dracula-comment hover:bg-opacity-80 text-white py-2 px-4 rounded-lg transition-colors"
-                >
-                  Indice
-                </button>
+            </div>
+  
+            <ul id="lessons-list" className="space-y-2" />
+          </nav>
+  
+          {/* Content Area */}
+          <main className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row overflow-auto">
+              {/* Lesson Content */}
+              <div 
+                id="lesson-container" 
+                className="flex-1 md:w-1/2 bg-dracula-current p-4 md:p-6 overflow-y-auto"
+              >
+                <div id="lesson-content" className="prose prose-invert max-w-none" />
+              </div>
+  
+              {/* Editor & Terminal */}
+              <div className="flex-1 md:w-1/2 flex flex-col border-t md:border-t-0 md:border-l border-dracula-comment">
+                {/* Editor */}
+                <div className="flex-1 relative min-h-[300px]">
+                  <div 
+                    id="editor" 
+                    className="absolute inset-0 bg-dracula-background rounded-lg"
+                  />
+                </div>
+  
+                {/* Terminal */}
+                <div className="h-48 border-t border-dracula-comment">
+                  <div 
+                    id="terminal" 
+                    className="h-full bg-dracula-background p-4 font-mono text-sm overflow-y-auto"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </main>
-      </div>
   
-      <div
-        id="success-modal"
-        className="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-      >
-        <div className="bg-dracula-current p-8 rounded-lg text-center max-w-md w-full">
-          <h2 className="text-2xl text-dracula-green mb-4">Félicitations! 🎉</h2>
-          <p className="mb-6">Vous avez réussi ce niveau!</p>
-          <button
-            id="next-lesson-btn"
-            className="bg-dracula-green hover:bg-opacity-80 text-dracula-background py-2 px-6 rounded-lg transition-colors"
-          >
-            Niveau suivant
-          </button>
+            {/* Desktop Buttons */}
+            <div className="hidden md:flex gap-4 p-4 border-t border-dracula-comment">
+              <button
+                id="validate-btn"
+                className="flex-1 bg-dracula-blue hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+              >
+                Valider
+              </button>
+              <button
+                id="hint-btn"
+                className="flex-1 bg-dracula-comment hover:bg-opacity-80 text-white py-2 px-4 rounded-lg transition-colors"
+              >
+                Indice
+              </button>
+            </div>
+          </main>
+        </div>
+  
+        {/* Success Modal */}
+        <div
+          id="success-modal"
+          className="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        >
+          <div className="bg-dracula-current p-8 rounded-lg text-center max-w-md w-full mx-4">
+            <h2 className="text-2xl text-dracula-green mb-4">Félicitations! 🎉</h2>
+            <p className="mb-6">Vous avez réussi ce niveau!</p>
+            <button
+              id="next-lesson-btn"
+              className="bg-dracula-green hover:bg-opacity-80 text-dracula-background py-2 px-6 rounded-lg transition-colors w-full"
+            >
+              Niveau suivant
+            </button>
+          </div>
         </div>
       </div>
     </>
   );
-  
   
   
 }
