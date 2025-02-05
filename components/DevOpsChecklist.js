@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { saveAs } from "file-saver";
 import axios from "axios";
 import LoadingRobot from "./LoadingRobot";
 import ReactMarkdown from "react-markdown";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export default function DevOpsChecklist() {
   const questions = [
@@ -14,73 +16,92 @@ export default function DevOpsChecklist() {
     "Comment sont gérées les bases de données et migrations ?",
   ];
 
-  const [answers, setAnswers] = useState(questions.reduce((acc, q) => ({ ...acc, [q]: "" }), {}));
+  const [answers, setAnswers] = useState(
+    questions.reduce((acc, q) => ({ ...acc, [q]: "" }), {})
+  );
   const [loading, setLoading] = useState(false);
   const [generatedSteps, setGeneratedSteps] = useState([]);
-  const [currentResponseIndex, setCurrentResponseIndex] = useState(-1);
+  const generatedStepsRef = useRef([]);
 
   const handleChange = (question, value) => {
     setAnswers({ ...answers, [question]: value });
   };
 
   const fetchResponseWithRetry = async (prompt) => {
-    while (true) {
+    let attempts = 0;
+    while (attempts < 5) {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Pause de 1s entre les requêtes
         const response = await axios.post(
-          "https://openrouter.ai/api/v1/completions",
+          "https://api.mistral.ai/v1/chat/completions", // Utilisation de l'API Mistral
           {
-            model: "deepseek/deepseek-r1:free",
-            prompt,
+            model: "mistral-medium",
+            messages: [{ role: "user", content: prompt }],
             max_tokens: 500,
           },
           {
             headers: {
-              "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
+              "Authorization": `Bearer ${process.env.NEXT_PUBLIC_MISTRAL_API_KEY}`,
               "Content-Type": "application/json",
             },
           }
         );
-
-        let textResponse = response.data.choices[0].text.trim();
-        textResponse = textResponse.replace(/\n{2,}/g, "\n"); // Nettoie les lignes vides en excès
-
-        if (response.data.choices[0].finish_reason === "length") {
-          const additionalResponse = await fetchResponseWithRetry(textResponse + "\n\nContinue la réponse...");
-          return textResponse + additionalResponse;
-        }
-        return textResponse;
+        return response.data.choices[0].message.content.trim();
       } catch (error) {
-        console.error("⚠️ Erreur, nouvelle tentative... Attente de 30 secondes avant de réessayer.");
-        await new Promise(resolve => setTimeout(resolve, 30000));
+        attempts++;
+        console.error(`⚠️ Erreur, tentative ${attempts}/5...`);
+        if (error.response && error.response.status === 429) {
+          await new Promise((resolve) => setTimeout(resolve, 30000)); // Attente de 30s en cas de rate-limit
+        } else {
+          throw error;
+        }
       }
     }
+    throw new Error("Échec après plusieurs tentatives.");
   };
 
   const generateInstructions = async () => {
     setLoading(true);
     setGeneratedSteps([]);
-    setCurrentResponseIndex(-1);
-    
-    try {
-      for (let i = 0; i < questions.length; i++) {
-        const question = questions[i];
-        const fullPrompt = `En tant que DevOps, voici une question importante : '${question}'. Voici la réponse fournie par l'utilisateur : '${answers[question] || "Non renseigné"}'. En te basant sur cette réponse, génère des instructions détaillées expliquant comment mettre en place cette étape dans un environnement DevOps.`;
-        
-        const responseText = await fetchResponseWithRetry(fullPrompt);
-        setGeneratedSteps(prevSteps => [...prevSteps, { question, response: responseText }]);
-        setCurrentResponseIndex(i);
-      }
-    } catch (error) {
-      console.error("❌ Erreur lors de la génération des instructions :", error.message);
-    }
+
+    const prompts = questions.map((question) => ({
+      question,
+      prompt: `En tant que DevOps, voici une question importante : '${question}'. Voici la réponse fournie par l'utilisateur : '${answers[question] || "Non renseigné"}'. En te basant sur cette réponse, génère des instructions détaillées expliquant comment mettre en place cette étape dans un environnement DevOps.`,
+    }));
+
+    const responses = await Promise.all(
+      prompts.map(async ({ question, prompt }) => {
+        const responseText = await fetchResponseWithRetry(prompt);
+        return { question, response: responseText };
+      })
+    );
+
+    generatedStepsRef.current = responses;
+    setGeneratedSteps(responses);
     setLoading(false);
   };
 
-  const downloadPDF = () => {
-    const pdfContent = generatedSteps.map(({ question, response }) => `### ${question}\n${response}`).join("\n\n");
-    const blob = new Blob([pdfContent], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "devops_roadmap.pdf");
+  const downloadPDF = async () => {
+    const pdf = new jsPDF();
+    pdf.setFontSize(18);
+    pdf.text("DevOps Checklist", 10, 10);
+    pdf.setFontSize(12);
+    pdf.text("Instructions détaillées pour chaque étape", 10, 20);
+
+    const tableData = generatedSteps.map(({ question, response }) => [question, response]);
+
+    autoTable(pdf, {
+      head: [["Question", "Réponse"]],
+      body: tableData,
+      startY: 30,
+      styles: { fontSize: 10, cellWidth: 'wrap' },
+      columnStyles: { 0: { cellWidth: 60 }, 1: { cellWidth: 'auto' } },
+    });
+
+    pdf.save("devops_checklist.pdf");
   };
+
+  const progress = (generatedSteps.length / questions.length) * 100;
 
   return (
     <div className="p-8 bg-gray-900 text-white min-h-screen">
@@ -101,16 +122,20 @@ export default function DevOpsChecklist() {
         onClick={generateInstructions}
         disabled={loading}
       >
-        {loading ? "Génération..." : "📄 Générer les instructions"}
+        {loading ? <LoadingRobot /> : "📄 Générer les instructions"}
       </button>
 
-      {loading && <div className="flex justify-center items-center min-h-screen bg-[#282a36]"><LoadingRobot /></div>} 
-      
+      {loading && (
+        <div className="w-full bg-gray-700 rounded-lg h-2 mt-4">
+          <div className="bg-green-500 h-2 rounded-lg" style={{ width: `${progress}%` }}></div>
+        </div>
+      )}
+
       {generatedSteps.length > 0 && (
-        <div className="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div id="pdf-content" className="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-yellow-400 mb-4">📌 Instructions générées</h2>
           {generatedSteps.map(({ question, response }, index) => (
-            <div key={index} className={`mb-6 border-2 border-yellow-500 p-4`}>
+            <div key={index} className="mb-6 border-2 border-yellow-500 p-4">
               <h3 className="text-xl font-semibold text-blue-300">{question}</h3>
               <ReactMarkdown className="text-gray-300 mt-2 whitespace-pre-line">{response}</ReactMarkdown>
             </div>
