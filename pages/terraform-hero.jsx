@@ -69,25 +69,22 @@ function TerraformHeroPage( courses ) {
         validation: "provider_aws_region"
       },
       {
-        title: "Variables et Types de Données",
-        content:
-          "<div class='prose prose-invert'><p class='mb-4'>Les variables permettent de rendre votre code Terraform plus flexible et réutilisable.</p><div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'><strong class='text-dracula-cyan'>🎯 Objectif:</strong><p>Définir des variables de différents types.</p></div><p>Créez les variables suivantes:</p><ul class='list-disc pl-6 mb-4'><li>instance_type (string)</li><li>instance_count (number)</li><li>tags (map)</li></ul></div>",
-        initialCode: "# Définissez vos variables ici\n",
-        solution:
-          'variable "instance_type" {\n  type = string\n  default = "t2.micro"\n}\n\nvariable "instance_count" {\n  type = number\n  default = 1\n}\n\nvariable "tags" {\n  type = map(string)\n  default = {\n    Environment = "dev"\n    Project     = "terraform-learning"\n  }\n}',
-        hint:
-          "N'oubliez pas de spécifier le type et une valeur par défaut pour chaque variable",
-        validation: "variables_types"
+        "title": "Variables et Types de Données",
+        "content": "<div class='prose prose-invert'>\n    <p class='mb-4'>Les variables permettent de rendre votre code Terraform plus flexible et réutilisable. Elles évitent la duplication et permettent d’adapter facilement une configuration.</p>\n    <div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'>\n      <strong class='text-dracula-cyan'>🎯 Objectif:</strong>\n      <p>Définir des variables de différents types et les utiliser dans une ressource.</p>\n    </div>\n    <p>Voici les variables à créer :</p>\n    <ul class='list-disc pl-6 mb-4'>\n      <li><strong>instance_type</strong> (type : string, valeur par défaut : \"t2.micro\")</li>\n      <li><strong>instance_count</strong> (type : number, valeur par défaut : 1)</li>\n      <li><strong>tags</strong> (type : map, contenant au moins 2 valeurs)</li>\n    </ul>\n    <p><strong>Exemple d'utilisation des variables :</strong></p>\n    <pre class='bg-dracula-background p-4 rounded-lg mb-4'><code>\n    variable \"instance_type\" {\n      type    = string\n      default = \"t2.micro\"\n    }\n    </code></pre>\n    <p class='mb-4'>À vous de jouer ! Déclarez ces variables dans l'éditeur.</p>\n  </div>",
+        "initialCode": "# Définissez vos variables ici\n",
+        "solution": "variable \"instance_type\" {\n  type = string\n  default = \"t2.micro\"\n}\n\nvariable \"instance_count\" {\n  type = number\n  default = 1\n}\n\nvariable \"tags\" {\n  type = map(string)\n  default = {\n    Environment = \"dev\"\n    Project     = \"terraform-learning\"\n  }\n}",
+        "hint": "Déclarez chaque variable avec `variable \"nom\" { type = TYPE }` et définissez une valeur par défaut avec `default = VALEUR`.",
+        "validation": "variables_types_correctes"
       },
       {
         title: "Premier Resource AWS EC2",
         content:
-          "<div class='prose prose-invert'><p class='mb-4'>Créons notre première ressource AWS: une instance EC2.</p><div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'><strong class='text-dracula-cyan'>🎯 Objectif:</strong><p>Créer une instance EC2 avec les spécifications de base.</p></div><p>Utilisez le bloc resource pour définir une instance EC2 avec:</p><ul class='list-disc pl-6 mb-4'><li>AMI: ami-0c55b159cbfafe1f0</li><li>Instance type: t2.micro</li><li>Tags: Name = 'terraform-instance'</li></ul></div>",
-        initialCode: "# Créez votre instance EC2 ici\n",
+          "<div class='prose prose-invert'><p class='mb-4'>Créons notre première ressource AWS : une instance EC2.</p><div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'><strong class='text-dracula-cyan'>🎯 Objectif:</strong><p>Créer une instance EC2 avec les spécifications de base.</p></div><p>Utilisez le bloc <code>resource</code> pour définir une instance EC2 avec :</p><ul class='list-disc pl-6 mb-4'><li>Une AMI (Amazon Machine Image) valide</li><li>Un type d'instance défini</li><li>Des tags pour identifier votre instance</li></ul><p class='mb-4'>Exemple :</p><pre class='bg-dracula-background p-4 rounded-lg mb-4'><code>resource \"aws_instance\" \"mon_instance\" {\n  ami           = \"ami-0c55b159cbfafe1f0\"\n  instance_type = \"t2.micro\"\n  \n  tags = {\n    Name = \"mon-instance\"\n  }\n}</code></pre><p class='mb-4'>À vous de jouer ! Définissez votre première instance EC2.</p></div>",
+        initialCode: "# Définissez ici votre ressource EC2\n# Exemple:\n# resource \"aws_instance\" \"mon_instance\" {\n#   ami           = \"ami-xxxxxxxxxxxxxxxxx\"\n#   instance_type = \"t2.micro\"\n#   tags = {\n#     Name = \"mon-instance\"\n#   }\n# }",
         solution:
-          'resource "aws_instance" "example" {\n  ami           = "ami-0c55b159cbfafe1f0"\n  instance_type = "t2.micro"\n\n  tags = {\n    Name = "terraform-instance"\n  }\n}',
+          "resource \"aws_instance\" \"mon_instance\" {\n  ami           = \"ami-0c55b159cbfafe1f0\"\n  instance_type = \"t2.micro\"\n  \n  tags = {\n    Name = \"mon-instance\"\n  }\n}",
         hint:
-          "La ressource doit être de type 'aws_instance' et avoir un identifiant unique",
+          "Utilisez le bloc 'resource' avec le type 'aws_instance'. Pensez à bien spécifier l'AMI et le type d'instance.",
         validation: "ec2_instance"
       },
       {
@@ -577,7 +574,7 @@ function TerraformHeroPage( courses ) {
       const patterns = {
         provider_aws_region: /provider\s*"aws"\s*{[^}]*region\s*=\s*"us-west-2"[^}]*}/i,
         variables_types: /variable\s*"instance_type"\s*{[^}]*type\s*=\s*string[^}]*}.*variable\s*"instance_count"\s*{[^}]*type\s*=\s*number[^}]*}.*variable\s*"tags"\s*{[^}]*type\s*=\s*map\s*\(\s*string\s*\)[^}]*}/is,
-        ec2_instance: /resource\s*"aws_instance"\s*"[^"]*"\s*{[^}]*ami\s*=\s*"ami-0c55b159cbfafe1f0"[^}]*instance_type\s*=\s*"t2\.micro"[^}]*}/i,
+        ec2_instance: /resource\s+"aws_instance"\s+"\w+"\s+{\s*ami\s*=\s*"\w+"\s*instance_type\s*=\s*"\w+"\s*tags\s*=\s*{\s*Name\s*=\s*"\w+"\s*}\s*}/s,
         outputs: /output\s*"instance_id"\s*{[^}]*value\s*=[^}]*}.*output\s*"public_ip"\s*{[^}]*value\s*=[^}]*}.*output\s*"public_dns"\s*{[^}]*value\s*=[^}]*}/is,
         data_source_ami: /data\s*"aws_ami"\s*"[^"]*"\s*{[^}]*most_recent\s*=\s*true[^}]*owners\s*=\s*\[\s*"amazon"\s*\][^}]*}/i,
         module_structure: /variable\s*"[^"]+"\s*{[^}]*}.*resource\s*"[^"]+"\s*"[^"]+"\s*{[^}]*}.*output\s*"[^"]+"\s*{[^}]*}/is,
