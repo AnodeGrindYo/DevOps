@@ -133,11 +133,11 @@ function TerraformHeroPage( courses ) {
       {
         title: "Data Sources",
         content:
-        "<div class='prose prose-invert'><p class='mb-4'>Les data sources permettent de récupérer des informations sur des ressources existantes.</p><div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'><strong class='text-dracula-cyan'>🎯 Objectif:</strong><p>Utiliser une data source pour récupérer la dernière AMI Amazon Linux 2.</p></div><p>Créez une data source qui:</p><ul class='list-disc pl-6 mb-4'><li>Recherche l'AMI Amazon Linux 2 la plus récente</li><li>Utilise les filtres appropriés</li></ul></div>",
+          "<div class='prose prose-invert'><p class='mb-4'>Les data sources permettent de récupérer des informations sur des ressources existantes. Elles sont utiles lorsque vous voulez utiliser une ressource qui n'est pas directement gérée par votre configuration Terraform.</p><div class='bg-dracula-selection border-l-4 border-dracula-cyan p-4 rounded my-6'><strong class='text-dracula-cyan'>🎯 Objectif:</strong><p>Utiliser une data source pour récupérer la dernière AMI Amazon Linux 2.</p></div><p>Dans cet exercice, vous allez configurer une data source qui :</p><ul class='list-disc pl-6 mb-4'><li>Recherche l'AMI Amazon Linux 2 la plus récente</li><li>Utilise les filtres appropriés pour s'assurer qu'on sélectionne la bonne image</li></ul><p>Voici un exemple de syntaxe pour une data source :</p><pre class='bg-dracula-background p-4 rounded-lg mb-4'><code>data \"aws_ami\" \"amazon_linux_2\" {\n  most_recent = true\n  filter {\n    name   = \"name\"\n    values = [\"amzn2-ami-hvm-*-x86_64-gp2\"]\n  }\n  owners = [\"amazon\"]\n}</code></pre><p>À vous de jouer ! Déclarez une data source similaire dans l'éditeur.</p></div>",
         initialCode: "# Définissez votre data source ici\n",
         solution:
-        'data "aws_ami" "amazon_linux_2" {\n  most_recent = true\n\n  filter {\n    name   = "name"\n    values = ["amzn2-ami-hvm-*-x86_64-gp2"]\n  }\n\n  filter {\n    name   = "virtualization-type"\n    values = ["hvm"]\n  }\n\n  owners = ["amazon"]\n}',
-        hint: "Utilisez le type de data source 'aws_ami' avec les bons filtres",
+          'data "aws_ami" "amazon_linux_2" {\n  most_recent = true\n\n  filter {\n    name   = "name"\n    values = ["amzn2-ami-hvm-*-x86_64-gp2"]\n  }\n\n  filter {\n    name   = "virtualization-type"\n    values = ["hvm"]\n  }\n\n  owners = ["amazon"]\n}',
+        hint: "Utilisez le type de data source 'aws_ami' avec les bons filtres pour récupérer l'AMI la plus récente.",
         validation: "data_source_ami"
       },
       {
@@ -609,7 +609,7 @@ function TerraformHeroPage( courses ) {
         variables_types: /variable\s*"instance_type"\s*{[^}]*type\s*=\s*string[^}]*}.*variable\s*"instance_count"\s*{[^}]*type\s*=\s*number[^}]*}.*variable\s*"tags"\s*{[^}]*type\s*=\s*map\s*\(\s*string\s*\)[^}]*}/is,
         ec2_instance: /resource\s+"aws_instance"\s+"\w+"\s+{\s*ami\s*=\s*"\w+"\s*instance_type\s*=\s*"\w+"\s*tags\s*=\s*{\s*Name\s*=\s*"\w+"\s*}\s*}/s,
         outputs: /output\s*"\w+"\s*{[^}]*value\s*=\s*aws_instance\.\w+\.(id|public_ip|public_dns)[^}]*}/gis,
-        data_source_ami: /data\s*"aws_ami"\s*"[^"]*"\s*{[^}]*most_recent\s*=\s*true[^}]*owners\s*=\s*\[\s*"amazon"\s*\][^}]*}/i,
+        data_source_ami: /data\s*"aws_ami"\s*"[^"]*"\s*{[^}]*most_recent\s*=\s*true[^}]*filter\s*{[^}]*name\s*=\s*"name"[^}]*values\s*=\s*\["amzn2-ami-hvm-\*-x86_64-gp2"\][^}]*}[^}]*filter\s*{[^}]*name\s*=\s*"virtualization-type"[^}]*values\s*=\s*\["hvm"\][^}]*}[^}]*owners\s*=\s*\[\s*"amazon"\s*\][^}]*}/i,
         module_structure: /variable\s*"[^"]+"\s*{[^}]*}.*resource\s*"[^"]+"\s*"[^"]+"\s*{[^}]*}.*output\s*"[^"]+"\s*{[^}]*}/is,
         
         conditionnels_locals: /locals\s*{[^}]*environment\s*=\s*["']dev["'][^}]*\?[^:]*:[^}]*}[\s\S]*resource\s+"aws_instance"/i,
