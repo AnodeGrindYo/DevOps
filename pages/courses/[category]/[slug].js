@@ -10,6 +10,7 @@ import Quiz from "@/components/Quiz";
 import TerminalTrainer from "@/components/TerminalTrainer";
 import { useState } from "react";
 
+
 export async function getStaticPaths() {
   const categories = ["cours_devops", "outils", "tp"];
   let paths = [];
@@ -133,24 +134,27 @@ export default function CoursePage({ data, content, courses, quiz, hasTerminalMi
 
         {/* Bouton d'ouverture du Terminal si un fichier de mission existe */}
         {hasTerminalMission && (
-  <div className="mt-10 p-6 bg-gray-800 rounded-lg shadow-lg text-center">
-    <h2 className="text-2xl font-bold text-green-400 mb-4">
-      🖥️ Terminal Trainer : Pratique tes commandes !
-    </h2>
-    <button
-      onClick={() => setShowTerminal((prev) => !prev)}
-      className="bg-green-600 px-4 py-2 rounded-lg text-white font-semibold hover:bg-green-700 transition"
-    >
-      {showTerminal ? "❌ Fermer le Terminal" : "🖥️ Lancer le Terminal"}
-    </button>
-  </div>
-)}
+          <div className="mt-10 p-6 bg-gray-800 rounded-lg shadow-lg text-center">
+            <h2 className="text-2xl font-bold text-green-400 mb-4">
+              🖥️ Terminal Trainer : Pratique tes commandes !
+            </h2>
+            <button
+              onClick={() => setShowTerminal((prev) => !prev)}
+              className="bg-green-600 px-4 py-2 rounded-lg text-white font-semibold hover:bg-green-700 transition"
+            >
+              {showTerminal ? "❌ Fermer le Terminal" : "🖥️ Lancer le Terminal"}
+            </button>
+          </div>
+        )}
 
-{/* Affichage du TerminalTrainer */}
-{showTerminal && hasTerminalMission && (
-  <TerminalTrainer missionSlug={data.slug} />
-)}
+        {/* Affichage du TerminalTrainer */}
+        {showTerminal && hasTerminalMission && (
+          <TerminalTrainer missionSlug={data.slug} />
+        )}
+
+
       </div>
     </div>
   );
 }
+

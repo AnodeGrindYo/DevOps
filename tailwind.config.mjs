@@ -10,6 +10,18 @@ const tailwindConfig = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        dracula: {
+          background: '#282a36',
+          current: '#44475a',
+          selection: '#44475a',
+          foreground: '#f8f8f2',
+          comment: '#6272a4',
+          cyan: '#8be9fd',
+          green: '#50fa7b',
+          orange: '#ffb86c',
+          blue: '#2196f3',
+          yellow: '#f1fa8c',
+        }
       },
     },
   },

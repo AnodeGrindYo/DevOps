@@ -1,0 +1,55 @@
+/* terraform-hero.module.css */
+
+.terraformHeroContainer {
+  
+}
+
+/* Media query pour mobile */
+@media (max-width: 768px) {
+  .terraformHeroContainer #editor {
+    font-size: 16px !important; /* Larger font for mobile */
+  }
+  .terraformHeroContainer .ace_content {
+    padding: 8px !important; /* More padding for touch */
+  }
+  .terraformHeroContainer #terminal {
+    font-size: 14px !important;
+  }
+  .terraformHeroContainer .prose {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+  .terraformHeroContainer pre code {
+    font-size: 14px !important;
+    padding: 12px !important;
+  }
+  .terraformHeroContainer button {
+    min-height: 44px !important;
+    font-size: 16px !important;
+  }
+}
+
+.terraformHeroContainer input,
+.terraformHeroContainer textarea,
+.terraformHeroContainer select,
+.terraformHeroContainer button {
+  font-size: 16px !important;
+}
+
+/* Scrollbar styling pour les navigateurs Webkit (Chrome, Safari, etc.) */
+.terraformHeroContainer::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.terraformHeroContainer::-webkit-scrollbar-thumb {
+  background: #6272a4;
+  border-radius: 3px;
+}
+
+/* Pour activer le scrolling fluide sur mobile */
+.terraformHeroContainer * {
+  -webkit-overflow-scrolling: touch;
+}
+
+
