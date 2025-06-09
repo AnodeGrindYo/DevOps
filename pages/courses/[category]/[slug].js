@@ -157,6 +157,23 @@ export default function CoursePage({ data, content, courses, quiz, hasTerminalMi
                   </code>
                 );
               },
+              table: ({ node, ...props }) => (
+                <table className="table-auto w-full text-left border-collapse border border-gray-700" {...props} />
+              ),
+              thead: ({ node, ...props }) => (
+                <thead className="bg-gray-800 text-white" {...props} />
+              ),
+              tbody: ({ node, ...props }) => <tbody {...props} />,
+              tr: ({ node, ...props }) => (
+                <tr className="border-t border-gray-700 hover:bg-gray-800 transition" {...props} />
+              ),
+              th: ({ node, ...props }) => (
+                <th className="px-4 py-2 font-bold border border-gray-700 bg-gray-900 text-white" {...props} />
+              ),
+              td: ({ node, ...props }) => (
+                <td className="px-4 py-2 border border-gray-700 text-gray-300" {...props} />
+              ),
+              
             }}
             
                       
