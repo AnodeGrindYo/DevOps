@@ -6,7 +6,6 @@ category: "securite"
 
 ---
 
-# Maîtriser AWS IAM
 
 ## 1. Introduction à AWS IAM
 
